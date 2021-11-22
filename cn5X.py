@@ -1898,6 +1898,7 @@ class winMain(QtWidgets.QMainWindow):
       self.setEnableDisableGroupes()
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
+      self.__decode.disableAxisLeds()
 
 
   @pyqtSlot(int)
@@ -2212,7 +2213,7 @@ class winMain(QtWidgets.QMainWindow):
       self.__decode.setNbAxis(self.__nbAxis)'''
       # Mise à jour classe grblProbe
       self.__probe.setAxisNames(self.__axisNames)
-      
+
     # Memorise les courses maxi pour calcul des jogs max.
     elif data[:4] == "$130":
       self.__maxTravel[0] = float(data[5:])

@@ -15,6 +15,7 @@
 ' WITHOUT ANY WARRANTY; without even the implied warranty of              '
 ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           '
 ' GNU General Public License for more details.                            '
+' You should have received a copy of the GNU General Public License       '
 '                                                                         '
 ' You should have received a copy of the GNU General Public License       '
 ' along with this program.  If not, see <http://www.gnu.org/licenses/>.   '
@@ -138,8 +139,8 @@ class grblDecode(QObject):
     for D in tblDecode:
       if D in self.__validMachineState:
         if D != self.__etatMachine:
-          self.ui.lblEtat.setText(D)
-          self.__etatMachine = D
+          self.set_etatMachine(D)
+
           if D == GRBL_STATUS_IDLE:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(False)
@@ -279,11 +280,6 @@ class grblDecode(QObject):
       elif D[:3] == "Pn:": # Input Pin State
         flagPn = True
         triggered = D[3:]
-        for L in ['X', 'Y', 'Z', 'A', 'B', 'C', 'P', 'D', 'H', 'R', 'S']:
-          if L in triggered:
-            exec("self.ui.cnLed" + L + ".setLedStatus(True)")
-          else:
-            exec("self.ui.cnLed" + L + ".setLedStatus(False)")
 
       '''
       elif D[:3] == "Ln:": # Line Number
@@ -301,8 +297,7 @@ class grblDecode(QObject):
       '''
     if not flagPn:
       # Eteint toute les leds. Si on a pas trouve la chaine Pn:, c'est que toute les leds sont eteintes.
-      for L in ['X', 'Y', 'Z', 'A', 'B', 'C', 'P', 'D', 'H', 'R', 'S']:
-        exec("self.ui.cnLed" + L + ".setLedStatus(False)")
+      disableAxisLeds(self)
 
 
     if self.__getNextStatusOutput:
@@ -453,7 +448,7 @@ class grblDecode(QObject):
                 lbl.setFont(font)
             # Mise à jour des labels dépendant du système de coordonnées actif
             self.updateAxisDefinition()
-          
+
           elif S in ["G17", "G18", "G19"]:
             self.ui.lblPlan.setText(S)
             if S == 'G17': self.ui.lblPlan.setToolTip(self.tr(" Working plane = XY "))
@@ -545,7 +540,6 @@ class grblDecode(QObject):
         if self.__getNextGCodeState:
           self.__getNextGCodeState = False
           return grblOutput
-      
       elif grblOutput[:5] == "[AXS:":
         # Recupère le nombre d'axes et leurs noms
         self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
@@ -555,12 +549,13 @@ class grblDecode(QObject):
           # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
           self.__nbAxis = len(self.__axisNames);
         self.updateAxisDefinition()
+        self.updateAxisLedStatus()
         return grblOutput
-      
+
       else:
         # Autre reponse [] ?
         return grblOutput
-        
+
     else:
       # Autre reponse ?
       if grblOutput != "": self.log(logSeverity.info.value, self.tr("Not decoded Grbl reply : [{}]").format(grblOutput))
@@ -572,10 +567,29 @@ class grblDecode(QObject):
 
 
   def set_etatMachine(self, etat):
+
       if etat in self.__validMachineState:
+
         if etat != self.__etatMachine:
           self.ui.lblEtat.setText(etat)
           self.__etatMachine = etat
+          if self.__etatMachine == GRBL_STATUS_ALARM:
+            self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                          "background-color: red;")
+          elif self.__etatMachine == GRBL_STATUS_RUN or self.__etatMachine == GRBL_STATUS_JOG :
+            self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                          "background-color: blue;")
+          elif self.__etatMachine == GRBL_STATUS_HOME:
+            self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                          "background-color: cyan;")
+
+          elif self.__etatMachine == GRBL_STATUS_IDLE:
+            self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                          "background-color: green;")
+          else :
+            self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                          "background-color: black;")
+
 
   def get_etatMachine(self):
     return self.__etatMachine
@@ -722,16 +736,29 @@ class grblDecode(QObject):
       champ_2 = grblSettingsCodes[num][2]
     except KeyError as e:
       champ_2 = ""
-    
+
     return (champ_0 + " (" + champ_1 + ")" + " : " + champ_2)
 
+  def updateAxisLedStatus(self):
+    n = 0
+    for L in self.__axisNames:
+      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
+      exec("self.ui.lblLed{:02d}".format(n) + f".setText('{L}')")
+      n+=1
+  def disableAxisLeds(self):
+      n = 0
+      for L in self.__axisNames:
+        exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(False)")
+        n+=1
 
   def updateAxisDefinition(self):
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
-    
+
     self.ui.lblLblPosX.setText(self.__axisNames[0])
     self.ui.lblLblPosY.setText(self.__axisNames[1])
     self.ui.lblLblPosZ.setText(self.__axisNames[2])
+
+
     self.ui.rbtDefineOriginXY_G54.setText("G{} offset".format(self.__G5actif))
     self.ui.rbtDefineOriginZ_G54.setText("G{} offset".format(self.__G5actif))
     self.ui.mnuG5X_reset.setText("Turn off and reset G{} offsets of all axis".format(self.__G5actif))
@@ -828,7 +855,6 @@ class grblDecode(QObject):
       self.ui.btnJogMoinsC.setEnabled(False)
       self.ui.btnJogPlusC.setEnabled(False)
 
-
   @pyqtSlot()
   def waitForGrblReply(self):
     ''' Attente d'une réponse de Grbl, OK ou error ou Alarm '''
@@ -857,7 +883,7 @@ class grblDecode(QObject):
   def waitForGrblProbe(self):
     ''' Attente d'une réponse de Grbl, Probe ou error ou Alarm '''
     self.__probeRecu = None
-    
+
     def quitOnProbe(data: str):
       resultatProbe = []
       tblData   = data.split(":")
@@ -886,6 +912,6 @@ class grblDecode(QObject):
     self.__grblCom.sig_probe.disconnect(quitOnProbe)
     self.__grblCom.sig_error.disconnect(quitOnError)
     self.__grblCom.sig_alarm.disconnect(quitOnAlarm)
-    
+
     return self.__probeRecu
 
