@@ -6,7 +6,7 @@ import numpy as np
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 XMAX = 500
-XPREC = 0.5
+XYPREC = 0.3
 class cnPlot():
     def __init__(self):
 
@@ -21,11 +21,13 @@ class cnPlot():
     def add_point(self, point):
         x = float(point[0])
         y = float(point[1])
-        if abs(x-self.xprev) >= XPREC:
+        if abs(x-self.xprev) >= XYPREC or abs(y-self.prev) >= XYPREC:
             self.xplot = np.append(self.xplot,x)
             self.yplot = np.append(self.yplot,y)
             self.xprev = x
+            self.yprev = y
         now = time.time()
+
         if self.time == None:
             self.time = now
         elif now > self.time + 2:
