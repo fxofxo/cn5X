@@ -40,6 +40,7 @@ class grblDecode(QObject):
   '''
   def __init__(self, ui, log, grbl: grblCom):
     super().__init__()
+    self.__mpos_callback = None
     self.ui = ui
     self.log = log
     self.__grblCom   = grbl
@@ -191,6 +192,11 @@ class grblDecode(QObject):
         if self.ui.mnu_WPos.isChecked():
           self.ui.mnu_WPos.setChecked(False)
         tblPos = D[5:].split(",")
+
+        #plot posision
+        if self.__mpos_callback != None:
+          self.__mpos_callback(tblPos)
+
         self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Machine Position (MPos)."))
         self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Machine Position (MPos)."))
         self.ui.lblPosZ.setText('{:+0.3f}'.format(float(tblPos[2]))); self.ui.lblPosZ.setToolTip(self.tr("Machine Position (MPos)."))
@@ -237,6 +243,7 @@ class grblDecode(QObject):
 
       elif D[:4] == "WCO:": # Work Coordinate Offset
         tblPos = D[4:].split(",")
+
         for I in range(len(tblPos)):
           self.__wco[I] = float(tblPos[I])
         self.ui.lblWcoX.setText('{:+0.3f}'.format(self.__wco[0]))
@@ -914,4 +921,7 @@ class grblDecode(QObject):
     self.__grblCom.sig_alarm.disconnect(quitOnAlarm)
 
     return self.__probeRecu
+
+  def set_mpos_callback(self, callbkp_fn):
+    self.__mpos_callback = callbkp_fn
 

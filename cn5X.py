@@ -2701,6 +2701,9 @@ class winMain(QtWidgets.QMainWindow):
     self.setEnableDisableGroupes()
 
 
+  def set_decode_callback(self,callbkp_fn):
+    self.__decode.set_mpos_callback(callbkp_fn)
+
 """******************************************************************"""
 
 
@@ -2708,7 +2711,6 @@ if __name__ == '__main__':
   import sys
 
   app = QtWidgets.QApplication(sys.argv)
-
   # Retrouve le répertoire de l'exécutable
   if getattr(sys, 'frozen', False):
     # frozen
@@ -2737,6 +2739,31 @@ if __name__ == '__main__':
   # Définition de la locale pour affichage des dates dans la langue du systeme
   locale.setlocale(locale.LC_TIME, '')
 
-  window = winMain()
-  window.show()
-  sys.exit(app.exec_())
+window = winMain()
+
+#-------------------------------------------------------------------------
+import numpy as np
+
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+
+x = 1
+'''
+# Create Matplotlib figure and canvas
+fig = Figure()
+ax = fig.add_subplot(1, 1, 1)
+canvas = FigureCanvasQTAgg(fig)
+
+layout=window.ui.plot0
+layout.addWidget(canvas)
+'''
+from cnPlot import cnPlot
+plot=cnPlot()
+window.set_decode_callback(plot.add_point)
+layout=window.ui.plot0
+layout.addWidget(plot.canvas)
+
+
+#---------------------------------------------------------
+window.show()
+sys.exit(app.exec_())

@@ -8719,7 +8719,7 @@ G43.1</string>
        <item>
         <widget class="QTabWidget" name="qtabConsole">
          <property name="currentIndex">
-          <number>0</number>
+          <number>4</number>
          </property>
          <widget class="QWidget" name="tabGrblOutput">
           <attribute name="title">
@@ -8742,27 +8742,6 @@ G43.1</string>
             <number>0</number>
            </property>
            <item>
-            <widget class="QTextEdit" name="txtGrblOutput">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Monospace</family>
-              </font>
-             </property>
-             <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarAlwaysOn</enum>
-             </property>
-             <property name="lineWrapMode">
-              <enum>QTextEdit::NoWrap</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QWidget" name="frmGcodeInput" native="true">
              <property name="enabled">
               <bool>false</bool>
@@ -8780,6 +8759,27 @@ G43.1</string>
               <property name="bottomMargin">
                <number>2</number>
               </property>
+              <item>
+               <widget class="QTextEdit" name="txtGrblOutput">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Monospace</family>
+                 </font>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOn</enum>
+                </property>
+                <property name="lineWrapMode">
+                 <enum>QTextEdit::NoWrap</enum>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QLabel" name="label_8">
                 <property name="text">
@@ -9037,6 +9037,25 @@ G43.1</string>
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QWidget" name="tabPlot">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Plots current job&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <attribute name="title">
+           <string>Page</string>
+          </attribute>
+          <widget class="QWidget" name="horizontalLayoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>431</width>
+             <height>121</height>
+            </rect>
+           </property>
+           <layout class="QHBoxLayout" name="plot0"/>
+          </widget>
          </widget>
         </widget>
        </item>
