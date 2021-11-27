@@ -49,6 +49,8 @@ from cn5X_helpProbe import cn5XHelpProbe
 from grblG92 import dlgG92
 from grblG28_30_1 import dlgG28_30_1
 from cn5X_jog import dlgJog
+from cnPlot import cnPlot
+
 
 class upperCaseValidator(QValidator):
   def validate(self, string, pos):
@@ -384,6 +386,11 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnHomePlusY.clicked.connect(lambda: self.on_btnHomeXY("plusY"))
     self.ui.btnResetResults.clicked.connect(self.resetProbeResults)
 
+    self.__cnplot = cnPlot()
+    self.__decode.set_mpos_callback(self.__cnplot.add_point)
+    layout=self.ui.plot0
+    layout.addWidget(self.__cnplot.canvas)
+
     #--------------------------------------------------------------------------------------
     # Traitement des arguments de la ligne de commande
     #--------------------------------------------------------------------------------------
@@ -399,6 +406,7 @@ class winMain(QtWidgets.QMainWindow):
         if not self.ui.btnDebug.isChecked():
           self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_FILE)
         self.setWindowTitle(APP_NAME + " - " + self.__gcodeFile.fileName())
+        self.__cnplot.load_gcode_file(self.__args.file)
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
@@ -420,7 +428,8 @@ class winMain(QtWidgets.QMainWindow):
 
     # Restore le curseur souris sablier en fin d'initialisation
     QtWidgets.QApplication.restoreOverrideCursor()
-    
+
+
     ### GBGB tests ###
     ###print(locale.getlocale(locale.LC_TIME))
     ###print(datetime.now().strftime("%A %x %H:%M:%S"))
@@ -620,6 +629,7 @@ class winMain(QtWidgets.QMainWindow):
         if not self.ui.btnDebug.isChecked():
           self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_FILE)
         self.setWindowTitle(APP_NAME + " - " + self.__gcodeFile.fileName())
+        self.__cnplot.load_gcode_file(fileName[0])
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
@@ -2701,8 +2711,6 @@ class winMain(QtWidgets.QMainWindow):
     self.setEnableDisableGroupes()
 
 
-  def set_decode_callback(self,callbkp_fn):
-    self.__decode.set_mpos_callback(callbkp_fn)
 
 """******************************************************************"""
 
@@ -2757,11 +2765,8 @@ canvas = FigureCanvasQTAgg(fig)
 layout=window.ui.plot0
 layout.addWidget(canvas)
 '''
-from cnPlot import cnPlot
-plot=cnPlot()
-window.set_decode_callback(plot.add_point)
-layout=window.ui.plot0
-layout.addWidget(plot.canvas)
+
+
 
 
 #---------------------------------------------------------
