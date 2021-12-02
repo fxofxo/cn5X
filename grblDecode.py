@@ -195,7 +195,7 @@ class grblDecode(QObject):
 
         #plot posision
         if self.__mpos_callback != None:
-          self.__mpos_callback(tblPos)
+          self.__mpos_callback([float(i) for i in tblPos])
 
         self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Machine Position (MPos)."))
         self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Machine Position (MPos)."))

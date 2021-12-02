@@ -38,6 +38,18 @@ adduser <username> dialout
 *To install the prerequisites on a Linux system such as Debian:*  
 ```
 apt-get install python3 python3-pyqt5 python3-serial
+
+or 
+pip install pySerial
+pip install pyqt5
+pip install numpy
+
+```
+
+To user qt desinger install
+```
+sudo apt-get install qttools5-dev-tools
+pip install pyuic5-tool
 ```
 *When using under Linux, the user must be part of the Unix dialout group to be able to use the serial ports:*  
 ```

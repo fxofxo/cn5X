@@ -30,7 +30,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>700</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -42,6 +42,12 @@
   <property name="minimumSize">
    <size>
     <width>1024</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1078</width>
     <height>600</height>
    </size>
   </property>
@@ -8714,6 +8720,31 @@ G43.1</string>
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="tabPlot">
+          <attribute name="title">
+           <string>Plot G</string>
+          </attribute>
+          <widget class="QWidget" name="plot0" native="true">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>691</width>
+             <height>181</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QWidget" name="plot1" native="true">
+           <property name="geometry">
+            <rect>
+             <x>-1</x>
+             <y>189</y>
+             <width>691</width>
+             <height>171</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
         </widget>
        </item>
        <item>
@@ -8879,59 +8910,11 @@ G43.1</string>
               <bool>true</bool>
              </attribute>
              <attribute name="verticalHeaderDefaultSectionSize">
-              <number>21</number>
+              <number>22</number>
              </attribute>
             </widget>
            </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="tabGrblPlot">
-          <attribute name="title">
-           <string>Plot</string>
-          </attribute>
-          <widget class="QWidget" name="horizontalLayoutWidget">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>200</y>
-             <width>691</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_21">
-            <item>
-             <spacer name="horizontalSpacer_33">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnClearPlot">
-              <property name="text">
-               <string>Clear Plot</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QWidget" name="verticalLayoutWidget">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>9</y>
-             <width>691</width>
-             <height>191</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="plot0"/>
-          </widget>
          </widget>
          <widget class="QWidget" name="tabConsole">
           <attribute name="title">
@@ -9099,7 +9082,7 @@ G43.1</string>
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="mnuApplication">
