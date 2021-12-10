@@ -2652,7 +2652,7 @@ to unlock urgent stop</string>
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tabMainPage">
           <property name="styleSheet">
@@ -5444,6 +5444,21 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QWidget" name="tabPlot">
+          <attribute name="title">
+           <string>Plot G</string>
+          </attribute>
+          <widget class="QWidget" name="plot0" native="true">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>691</width>
+             <height>361</height>
+            </rect>
+           </property>
+          </widget>
          </widget>
          <widget class="QWidget" name="tabProbeXY">
           <property name="enabled">
@@ -8719,31 +8734,6 @@ G43.1</string>
             </spacer>
            </item>
           </layout>
-         </widget>
-         <widget class="QWidget" name="tabPlot">
-          <attribute name="title">
-           <string>Plot G</string>
-          </attribute>
-          <widget class="QWidget" name="plot0" native="true">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>691</width>
-             <height>181</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QWidget" name="plot1" native="true">
-           <property name="geometry">
-            <rect>
-             <x>-1</x>
-             <y>189</y>
-             <width>691</width>
-             <height>171</height>
-            </rect>
-           </property>
-          </widget>
          </widget>
         </widget>
        </item>

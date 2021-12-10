@@ -22,7 +22,8 @@ class plotGcode():
         self.xprv_p = 0
         self.uprv_p = 0
 
-        self.chart = QtChart.QChart()
+        self.chart_xy = QtChart.QChart()
+        self.chart_uz = QtChart.QChart()
 
         #self.xy_serie = QtChart.QScatterSeries()
         #self.xy_serie.setMarkerSize(5.0)
@@ -31,29 +32,35 @@ class plotGcode():
         self.xy_base_serie.setColor(QtGui.QColor("cyan"))
         self.xy_serie.setColor(QtGui.QColor("red"))
 
+        self.uz_base_serie = QtChart.QLineSeries()
         self.uz_serie = QtChart.QLineSeries()
+        self.uz_base_serie.setColor(QtGui.QColor("cyan"))
+        self.uz_serie.setColor(QtGui.QColor("red"))
 
 
-        self.chart.addSeries(self.xy_base_serie)
-        self.chart.addSeries(self.xy_serie)
-        self.chart.addSeries(self.uz_serie)
+        self.chart_xy.addSeries(self.xy_base_serie)
+        self.chart_xy.addSeries(self.xy_serie)
+        self.chart_uz.addSeries(self.uz_base_serie)
+        self.chart_uz.addSeries(self.uz_serie)
 
+        self.chart_xy.createDefaultAxes()
+        self.chart_uz.createDefaultAxes()
+        self.chart_xy.legend().hide()
+        self.chart_uz.legend().hide()
 
-
-        self.chart.createDefaultAxes()
-        self.chart.legend().hide()
-
-        #self.chart.axisX(self.ma5).setVisible(False)
 
         # self.chart.setAnimationOptions(QtChart.QChart.SeriesAnimations)
 
-        self.chartview = QtChart.QChartView(self.chart)
+        self.chartview_xy = QtChart.QChartView(self.chart_xy)
+        self.chartview_uz = QtChart.QChartView(self.chart_uz)
+
         # self.chart_container.setContentsMargins(0, 0, 0, 0)
         # lay = QtWidgets.QHBoxLayout(self.chart_container)
 
-        lay = QtWidgets.QHBoxLayout(widget)
+        lay = QtWidgets.QVBoxLayout(widget)
         lay.setContentsMargins(0, 0, 0, 0)
-        lay.addWidget(self.chartview)
+        lay.addWidget(self.chartview_xy)
+        lay.addWidget(self.chartview_uz)
 
 
     def load_gcode_file(self, filename):
@@ -85,8 +92,11 @@ class plotGcode():
                 self.axis_values = np.append(self.axis_values,[row],axis=0)
             print(self.axis_values)
             print(self.axis_values.shape)
-            self.xmax = np.max(self.axis_values[:,0])
-            self.ymax = np.max(self.axis_values[:,1])
+            max_value_axis = np.max(self.axis_values,axis=0)
+            self.xmax = max_value_axis[0]
+            self.ymax = max_value_axis[1]
+            self.umax = max_value_axis[2]
+            self.zmax = max_value_axis[3]
             self.n = len(self.axis_values)
             self.set_limits()
 
@@ -95,8 +105,8 @@ class plotGcode():
         return np.sqrt(np.sum( d * d))
 
     def filter_by_dist(self):
-         self.filter_axe_dist(self.axis_values[:, [0, 1]], self.xy_serie)
-         self.filter_axe_dist(self.axis_values[:, [2, 3]], self.uz_serie)
+         self.filter_axe_dist(self.axis_values[:, [0, 1]], self.xy_base_serie)
+         self.filter_axe_dist(self.axis_values[:, [2, 3]], self.uz_base_serie)
 
     def filter_axe_dist(self, xy_values, serie):
         serie.clear()
@@ -106,10 +116,7 @@ class plotGcode():
             if dist > DMIN:
                 self.xprv_p = i
                 xpos_2_plot.append(i)
-                self.xy_base_serie.append(QtCore.QPointF(p[0],p[1]))
-
-        xy_filtered = xy_values[xpos_2_plot,:]
-        print(f"{xy_values.shape}{xy_filtered.shape}")
+                serie.append(QtCore.QPointF(p[0],p[1]))
 
     def add_point_fake(self):
         t0 = time.time()
@@ -119,20 +126,28 @@ class plotGcode():
         self.xy_serie.append(QtCore.QPointF(p[0], p[1]))
         t1 = time.time()
         print(t0-t1)
-    def add_point(self,p):
+    def add_point(self,p): # (x,y, z, u)
         self.xy_serie.append(QtCore.QPointF(p[0],p[1]))
+        if len(p) > 2:
+            self.uz_serie.append(QtCore.QPointF(p[3],p[2]))
     def set_limits(self):
         widget_w = self.widget.width()
-        widget_h = self.widget.height()
+        widget_h = self.widget.height() / 2 # Two chartview on widget
         print(f"{widget_w} x {widget_h}")
-        x_min = -10
-        x_max = self.xmax
-        y_min = -10
+        x_min = -5
+        x_max = max(self.xmax,self.umax)
+        y_min = -5
         y_max = self.xmax *(  widget_h / widget_w)
-        self.chart.axisX(self.xy_serie).setMin(x_min)
-        self.chart.axisX(self.xy_serie).setMax(x_max)
-        self.chart.axisY(self.xy_serie).setMin(y_min)
-        self.chart.axisY(self.xy_serie).setMax(y_max)
+
+        self.chart_xy.axisX(self.xy_serie).setMin(x_min)
+        self.chart_xy.axisX(self.xy_serie).setMax(x_max)
+        self.chart_xy.axisY(self.xy_serie).setMin(y_min)
+        self.chart_xy.axisY(self.xy_serie).setMax(y_max)
+
+        self.chart_uz.axisX(self.uz_serie).setMin(x_min)
+        self.chart_uz.axisX(self.uz_serie).setMax(x_max)
+        self.chart_uz.axisY(self.uz_serie).setMin(y_min)
+        self.chart_uz.axisY(self.uz_serie).setMax(y_max)
 
 
 
