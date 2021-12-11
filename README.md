@@ -43,7 +43,7 @@ or
 pip install pySerial
 pip install pyqt5
 pip install numpy
-
+pip install PyQtChart
 ```
 
 To user qt desinger install
