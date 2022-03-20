@@ -37,10 +37,13 @@ adduser <username> dialout
 *cn5X ++ is based on Python3, PyQT5 and python-serial.*  
 *To install the prerequisites on a Linux system such as Debian:*  
 ```
-apt-get install python3 python3-pyqt5 python3-serial
+apt-get install python3-serial
+apt-get install python3 python3-pyqt5
 
-or 
-pip install pySerial
+or  
+python3 -m pip install serial
+python3 -m pip install serial.tools
+
 pip install pyqt5
 pip install numpy
 pip install PyQtChart
