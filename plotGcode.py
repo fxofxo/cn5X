@@ -72,18 +72,22 @@ class plotGcode():
         with open(filename,"r") as f:
             for line in f:
                 fields = line.split(' ')
+                print(fields)
                 if fields[0] != "G1":
                     continue
-                print(len(fields))
+                fields = fields[: -1]  # get rid of \n char
+                print(f"n fiels in line  is {len(fields)}")
+
                 if (len(fields) - 1 ) /2 > self.n_axis:
                     self.n_axis = int ( (len(fields) - 1 ) /2 )
-                print(self.n_axis)
+                print(f"nAxis: {self.n_axis}")
                 if np.size(self.axis_values) == 0:
                     self.axis_values = np.empty((0,self.n_axis),float)
                 row = []
                 names = []
                 for ax in range(1,self.n_axis+1):
                     pos = ax * 2
+                    print(f"pos: {pos}")
                     names.append(fields[pos - 1])
                     row.append( float(fields[pos ] ))
                     print(self.axis_names)

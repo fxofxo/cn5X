@@ -42,6 +42,7 @@ apt-get install python3 python3-pyqt5 python3-serial
 or 
 pip install pySerial
 pip install pyqt5
+pip install pyqtchart
 pip install numpy
 
 ```
