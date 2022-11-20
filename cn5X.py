@@ -388,6 +388,7 @@ class winMain(QtWidgets.QMainWindow):
 
     self.__plotGcode = plotGcode(self.ui.plot0)
     self.__decode.set_mpos_callback(self.__plotGcode.add_point)
+    self.__decode.set_wpos_callback(self.__plotGcode.add_point)
 
 
     #--------------------------------------------------------------------------------------
@@ -575,6 +576,7 @@ class winMain(QtWidgets.QMainWindow):
         self.ui.frmCycle.setEnabled(True)
       else:
         self.ui.frmCycle.setEnabled(False)
+
 
 
   @pyqtSlot()
@@ -2341,7 +2343,6 @@ class winMain(QtWidgets.QMainWindow):
     else:
       self.__grblCom.startPooling()
 
-
   @pyqtSlot()
   def clearDebug(self):
     self.logDebug.clear()
@@ -2388,6 +2389,12 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnStart.setButtonStatus(False)
       self.ui.btnPause.setButtonStatus(True)
       self.ui.btnStop.setButtonStatus(False)
+
+      print(f"PAUSE pressed :{self.__gcodeFile.getGCodeSelectedLine()}")
+      self.__plotGcode.add_point((100,10,100,10))
+      self.__plotGcode.add_point((100, 15, 150, 15))
+
+
 
 
   def stopCycle(self):

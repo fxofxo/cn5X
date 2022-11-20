@@ -41,6 +41,7 @@ class grblDecode(QObject):
   def __init__(self, ui, log, grbl: grblCom):
     super().__init__()
     self.__mpos_callback = None
+    self.__wpos_callback = None
     self.ui = ui
     self.log = log
     self.__grblCom   = grbl
@@ -133,7 +134,7 @@ class grblDecode(QObject):
       return self.tr("grblDecode.py.decodeGrblStatus():error ! \n[{}] Incorrect status.").format(grblOutput)
 
     # Affiche la chaine complette dans la barrs de status self.__statusText
-    self.ui.statusBar.showMessage("{} + {}".format(self.__grblCom.grblVersion(), grblOutput))
+    self.ui.statusBar.showMessage("{} + {}  ".format(self.__grblCom.grblVersion(), grblOutput))
 
     flagPn = False
     tblDecode = grblOutput[1:-1].split("|")
@@ -191,11 +192,9 @@ class grblDecode(QObject):
           self.ui.mnu_MPos.setChecked(True)
         if self.ui.mnu_WPos.isChecked():
           self.ui.mnu_WPos.setChecked(False)
-        tblPos = D[5:].split(",")
+        #tblPos = D[5:].split(",")
 
-        #plot posision
-        if self.__mpos_callback != None:
-          self.__mpos_callback([float(i) for i in tblPos])
+        print(f"mpos: {tblPos}")
 
         self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Machine Position (MPos)."))
         self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Machine Position (MPos)."))
@@ -223,8 +222,12 @@ class grblDecode(QObject):
         if not self.ui.mnu_WPos.isChecked():
           self.ui.mnu_WPos.setChecked(True)
         if self.ui.mnu_MPos.isChecked():
-          self.ui.mnu_MPos.setChecked(False)
-        tblPos = D[5:].split(",")
+           self.ui.mnu_MPos.setChecked(False)
+        #tblPos = D[5:].split(",")
+
+        if self.__wpos_callback != None:
+          self.__wpos_callback([float(i) for i in tblPos])
+
         self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Working Position (WPos)."))
         self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Working Position (WPos)."))
         self.ui.lblPosZ.setText('{:+0.3f}'.format(float(tblPos[2]))); self.ui.lblPosZ.setToolTip(self.tr("Working Position (WPos)."))
@@ -924,4 +927,7 @@ class grblDecode(QObject):
 
   def set_mpos_callback(self, callbkp_fn):
     self.__mpos_callback = callbkp_fn
+
+  def set_wpos_callback(self, callbkp_fn):
+    self.__wpos_callback = callbkp_fn
 

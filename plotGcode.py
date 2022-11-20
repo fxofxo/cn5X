@@ -5,7 +5,7 @@ import time
 import random
 
 XMAX = 500
-DMIN = 1
+DMIN = 4
 class plotGcode():
 
     def __init__(self, widget):
@@ -68,30 +68,30 @@ class plotGcode():
         self.set_limits()
         self.filter_by_dist()
 
+
     def read_file(self,filename):
         with open(filename,"r") as f:
             for line in f:
                 fields = line.split(' ')
-                print(fields)
+
                 if fields[0] != "G1":
                     continue
                 fields = fields[: -1]  # get rid of \n char
-                print(f"n fiels in line  is {len(fields)}")
+
 
                 if (len(fields) - 1 ) /2 > self.n_axis:
                     self.n_axis = int ( (len(fields) - 1 ) /2 )
-                print(f"nAxis: {self.n_axis}")
+
                 if np.size(self.axis_values) == 0:
                     self.axis_values = np.empty((0,self.n_axis),float)
                 row = []
                 names = []
                 for ax in range(1,self.n_axis+1):
                     pos = ax * 2
-                    print(f"pos: {pos}")
+
                     names.append(fields[pos - 1])
                     row.append( float(fields[pos ] ))
-                    print(self.axis_names)
-                    print(row)
+
                 self.axis_names = names
                 self.axis_values = np.append(self.axis_values,[row],axis=0)
             print(self.axis_values)
@@ -102,7 +102,7 @@ class plotGcode():
             self.umax = max_value_axis[2]
             self.zmax = max_value_axis[3]
             self.n = len(self.axis_values)
-            self.set_limits()
+            #self.set_limits()
 
     def __distance(self,a0,a1):
         d = a1 - a0
@@ -112,12 +112,16 @@ class plotGcode():
          self.filter_axe_dist(self.axis_values[:, [0, 1]], self.xy_base_serie)
          self.filter_axe_dist(self.axis_values[:, [2, 3]], self.uz_base_serie)
 
+
     def filter_axe_dist(self, xy_values, serie):
         serie.clear()
         xpos_2_plot = [0]
+        p_prv = [0,0]
         for i, p in enumerate(xy_values):
-            dist = self.__distance(p, xy_values[self.xprv_p-1])
+            #dist = self.__distance(p, xy_values[self.xprv_p-1])
+            dist = self.__distance(p,p_prv)
             if dist > DMIN:
+                p_prv = p
                 self.xprv_p = i
                 xpos_2_plot.append(i)
                 serie.append(QtCore.QPointF(p[0],p[1]))
@@ -131,8 +135,9 @@ class plotGcode():
         t1 = time.time()
         print(t0-t1)
     def add_point(self,p): # (x,y, z, u)
+
         self.xy_serie.append(QtCore.QPointF(p[0],p[1]))
-        if len(p) > 2:
+        if len(p) > 3:
             self.uz_serie.append(QtCore.QPointF(p[3],p[2]))
     def set_limits(self):
         widget_w = self.widget.width()
