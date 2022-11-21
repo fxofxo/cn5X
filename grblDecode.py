@@ -40,8 +40,7 @@ class grblDecode(QObject):
   '''
   def __init__(self, ui, log, grbl: grblCom):
     super().__init__()
-    self.__mpos_callback = None
-    self.__wpos_callback = None
+    self.__mwpos_callback = None
     self.ui = ui
     self.log = log
     self.__grblCom   = grbl
@@ -192,9 +191,9 @@ class grblDecode(QObject):
           self.ui.mnu_MPos.setChecked(True)
         if self.ui.mnu_WPos.isChecked():
           self.ui.mnu_WPos.setChecked(False)
-        #tblPos = D[5:].split(",")
-
-        print(f"mpos: {tblPos}")
+       # plot advance
+        if self.__mwpos_callback != None:
+          self.__mwpos_callback([float(i) for i in tblPos])
 
         self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Machine Position (MPos)."))
         self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Machine Position (MPos)."))
@@ -223,10 +222,10 @@ class grblDecode(QObject):
           self.ui.mnu_WPos.setChecked(True)
         if self.ui.mnu_MPos.isChecked():
            self.ui.mnu_MPos.setChecked(False)
-        #tblPos = D[5:].split(",")
 
-        if self.__wpos_callback != None:
-          self.__wpos_callback([float(i) for i in tblPos])
+        # plot advance
+        if self.__mwpos_callback != None:
+          self.__mwpos_callback([float(i) for i in tblPos])
 
         self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Working Position (WPos)."))
         self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Working Position (WPos)."))
@@ -844,12 +843,12 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_6.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_6.setEnabled(False)
 
-    if 'A' in self.__axisNames:
-      self.ui.btnJogMoinsA.setEnabled(True)
-      self.ui.btnJogPlusA.setEnabled(True)
+    if 'U' in self.__axisNames:
+      self.ui.btnJogMoinsU.setEnabled(True)
+      self.ui.btnJogPlusU.setEnabled(True)
     else:
-      self.ui.btnJogMoinsA.setEnabled(False)
-      self.ui.btnJogPlusA.setEnabled(False)
+      self.ui.btnJogMoinsU.setEnabled(False)
+      self.ui.btnJogPlusU.setEnabled(False)
 
     if 'B' in self.__axisNames:
       self.ui.btnJogMoinsB.setEnabled(True)
@@ -925,9 +924,8 @@ class grblDecode(QObject):
 
     return self.__probeRecu
 
-  def set_mpos_callback(self, callbkp_fn):
-    self.__mpos_callback = callbkp_fn
+  def set_mwpos_callback(self, callbkp_fn):
+    self.__mwpos_callback = callbkp_fn
 
-  def set_wpos_callback(self, callbkp_fn):
-    self.__wpos_callback = callbkp_fn
+
 

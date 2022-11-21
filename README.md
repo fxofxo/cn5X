@@ -42,7 +42,7 @@ apt-get install python3 python3-pyqt5
 
 or  
 python3 -m pip install serial
-python3 -m pip install serial.tools
+python3 -m pip install pyserial
 
 pip install pyqt5
 pip install pyqtchart
@@ -50,7 +50,7 @@ pip install numpy
 pip install PyQtChart
 ```
 
-To user qt desinger install
+To user (qt) designer tool and pyuci5 install:
 ```
 sudo apt-get install qttools5-dev-tools
 pip install pyuic5-tool

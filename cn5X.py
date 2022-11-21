@@ -285,8 +285,8 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogPlusY.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsZ.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusZ.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsA.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusA.mousePress.connect(self.on_jog)
+    self.ui.btnJogMoinsU.mousePress.connect(self.on_jog)
+    self.ui.btnJogPlusU.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsB.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusB.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
@@ -298,8 +298,8 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogPlusY.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsZ.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusZ.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsA.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusA.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogMoinsU.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogPlusU.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsB.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusB.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsC.mouseRelease.connect(self.stop_jog)
@@ -387,8 +387,8 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnResetResults.clicked.connect(self.resetProbeResults)
 
     self.__plotGcode = plotGcode(self.ui.plot0)
-    self.__decode.set_mpos_callback(self.__plotGcode.add_point)
-    self.__decode.set_wpos_callback(self.__plotGcode.add_point)
+    self.__decode.set_mwpos_callback(self.__plotGcode.add_point)
+
 
 
     #--------------------------------------------------------------------------------------

@@ -945,7 +945,7 @@ to unlock urgent stop</string>
               </widget>
              </item>
              <item row="3" column="3" rowspan="2">
-              <widget class="cnQPushButton" name="btnJogMoinsA">
+              <widget class="cnQPushButton" name="btnJogMoinsU">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1291,7 +1291,7 @@ to unlock urgent stop</string>
               </widget>
              </item>
              <item row="0" column="0" rowspan="2">
-              <widget class="cnQPushButton" name="btnJogPlusA">
+              <widget class="cnQPushButton" name="btnJogPlusU">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -8900,7 +8900,7 @@ G43.1</string>
               <bool>true</bool>
              </attribute>
              <attribute name="verticalHeaderDefaultSectionSize">
-              <number>22</number>
+              <number>23</number>
              </attribute>
             </widget>
            </item>
@@ -9072,7 +9072,7 @@ G43.1</string>
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="mnuApplication">
