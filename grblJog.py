@@ -48,23 +48,25 @@ class grblJog():
     la course maxi.
     '''
     axis = cnButton.name()[-1]  # L'axe est definit par le dernier caractere du nom du Bouton
-
+    print(f"JOG: axis:{axis} distance{jogDistance} maxtravel {maxTravel}")
     if jogDistance != 0:
       if cnButton.name()[-5:-1] == "Plus":
         value = jogDistance
       else:
         value = -jogDistance
+
       if self.__grblCom.grblStatus() in ['Idle', 'Jog']:
         cmdJog = CMD_GRBL_JOG + "G91G21F{}{}{}".format(self.__jogSpeed, axis, value)
         self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
 
     elif maxTravel != 0:  # jogDistance == 0 & maxTravel !=0
       if cnButton.name()[-5:-1] == "Plus":
-        value = 0
+        value = maxTravel
       else:
-        value = -maxTravel
+        value = 0
       if self.__grblCom.grblStatus() in ['Idle', 'Jog']:
         cmdJog = CMD_GRBL_JOG + "G53F{}{}{}".format(self.__jogSpeed, axis, value)
+        print(cmdJog)
         self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
 
 

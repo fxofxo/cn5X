@@ -50,10 +50,22 @@ pip install numpy
 pip install PyQtChart
 ```
 
-To user (qt) designer tool and pyuic5 install:
+Interface design:
+
+designer
+pyrcc5 cn5X.qrc -o cn5X_rc.py 
+pyuic5 mainWindow.ui >mainWindow.py 
+
+
+
+To use qt tools  designer, pyrcc5 and pyuic5 install:
 ```
 sudo apt-get install qttools5-dev-tools
+pip  install pyqt5-dev-tools
 pip install pyuic5-tool
+Some equivalen utilities as pyside2 can be installed
+pip3 install pyside2
+
 ```
 *When using under Linux, the user must be part of the Unix dialout group to be able to use the serial ports:*  
 ```
