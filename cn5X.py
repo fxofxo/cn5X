@@ -49,6 +49,8 @@ from cn5X_helpProbe import cn5XHelpProbe
 from grblG92 import dlgG92
 from grblG28_30_1 import dlgG28_30_1
 from cn5X_jog import dlgJog
+from plotGcode import plotGcode
+
 
 class upperCaseValidator(QValidator):
   def validate(self, string, pos):
@@ -283,8 +285,8 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogPlusY.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsZ.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusZ.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsA.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusA.mousePress.connect(self.on_jog)
+    self.ui.btnJogMoinsU.mousePress.connect(self.on_jog)
+    self.ui.btnJogPlusU.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsB.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusB.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
@@ -296,8 +298,8 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogPlusY.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsZ.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusZ.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsA.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusA.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogMoinsU.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogPlusU.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsB.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusB.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsC.mouseRelease.connect(self.stop_jog)
@@ -384,6 +386,11 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnHomePlusY.clicked.connect(lambda: self.on_btnHomeXY("plusY"))
     self.ui.btnResetResults.clicked.connect(self.resetProbeResults)
 
+    self.__plotGcode = plotGcode(self.ui.plot0)
+    self.__decode.set_mwpos_callback(self.__plotGcode.add_point)
+
+
+
     #--------------------------------------------------------------------------------------
     # Traitement des arguments de la ligne de commande
     #--------------------------------------------------------------------------------------
@@ -399,6 +406,7 @@ class winMain(QtWidgets.QMainWindow):
         if not self.ui.btnDebug.isChecked():
           self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_FILE)
         self.setWindowTitle(APP_NAME + " - " + self.__gcodeFile.fileName())
+        self.__cnplot.load_gcode_file(self.__args.file)
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
@@ -420,7 +428,8 @@ class winMain(QtWidgets.QMainWindow):
 
     # Restore le curseur souris sablier en fin d'initialisation
     QtWidgets.QApplication.restoreOverrideCursor()
-    
+
+
     ### GBGB tests ###
     ###print(locale.getlocale(locale.LC_TIME))
     ###print(datetime.now().strftime("%A %x %H:%M:%S"))
@@ -569,6 +578,7 @@ class winMain(QtWidgets.QMainWindow):
         self.ui.frmCycle.setEnabled(False)
 
 
+
   @pyqtSlot()
   def on_mnuBar(self):
     if self.__gcodeFile.isFileLoaded():
@@ -620,6 +630,7 @@ class winMain(QtWidgets.QMainWindow):
         if not self.ui.btnDebug.isChecked():
           self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_FILE)
         self.setWindowTitle(APP_NAME + " - " + self.__gcodeFile.fileName())
+        self.__plotGcode.load_gcode_file(fileName[0])
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
@@ -1898,6 +1909,7 @@ class winMain(QtWidgets.QMainWindow):
       self.setEnableDisableGroupes()
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
+      self.__decode.disableAxisLeds()
 
 
   @pyqtSlot(int)
@@ -2212,7 +2224,7 @@ class winMain(QtWidgets.QMainWindow):
       self.__decode.setNbAxis(self.__nbAxis)'''
       # Mise à jour classe grblProbe
       self.__probe.setAxisNames(self.__axisNames)
-      
+
     # Memorise les courses maxi pour calcul des jogs max.
     elif data[:4] == "$130":
       self.__maxTravel[0] = float(data[5:])
@@ -2331,7 +2343,6 @@ class winMain(QtWidgets.QMainWindow):
     else:
       self.__grblCom.startPooling()
 
-
   @pyqtSlot()
   def clearDebug(self):
     self.logDebug.clear()
@@ -2378,6 +2389,12 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnStart.setButtonStatus(False)
       self.ui.btnPause.setButtonStatus(True)
       self.ui.btnStop.setButtonStatus(False)
+
+      print(f"PAUSE pressed :{self.__gcodeFile.getGCodeSelectedLine()}")
+      self.__plotGcode.add_point((100,10,100,10))
+      self.__plotGcode.add_point((100, 15, 150, 15))
+
+
 
 
   def stopCycle(self):
@@ -2700,6 +2717,7 @@ class winMain(QtWidgets.QMainWindow):
     self.setEnableDisableGroupes()
 
 
+
 """******************************************************************"""
 
 
@@ -2707,7 +2725,6 @@ if __name__ == '__main__':
   import sys
 
   app = QtWidgets.QApplication(sys.argv)
-
   # Retrouve le répertoire de l'exécutable
   if getattr(sys, 'frozen', False):
     # frozen
@@ -2736,6 +2753,6 @@ if __name__ == '__main__':
   # Définition de la locale pour affichage des dates dans la langue du systeme
   locale.setlocale(locale.LC_TIME, '')
 
-  window = winMain()
-  window.show()
-  sys.exit(app.exec_())
+window = winMain()
+window.show()
+sys.exit(app.exec_())

@@ -81,6 +81,7 @@ class gcodeFile(QObject):
       self.__gcodeFileUi.setModel(self.__gcodeFileUiModel)
       # Selectionne la premiere ligne du fichier dans la liste
       self.selectGCodeFileLine(0)
+      print(self.__gcodeFileUiModel)
       # Selectionne l'onglet du fichier
     except Exception as e:
       self.sig_log.emit(logSeverity.error.value, self.tr("Reading file error: {}").format(filePath))

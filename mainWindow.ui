@@ -45,6 +45,12 @@
     <height>600</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>1078</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string notr="true">cn5X++</string>
   </property>
@@ -939,7 +945,7 @@ to unlock urgent stop</string>
               </widget>
              </item>
              <item row="3" column="3" rowspan="2">
-              <widget class="cnQPushButton" name="btnJogMoinsA">
+              <widget class="cnQPushButton" name="btnJogMoinsU">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1285,7 +1291,7 @@ to unlock urgent stop</string>
               </widget>
              </item>
              <item row="0" column="0" rowspan="2">
-              <widget class="cnQPushButton" name="btnJogPlusA">
+              <widget class="cnQPushButton" name="btnJogPlusU">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1592,6 +1598,19 @@ to unlock urgent stop</string>
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>18</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QGroupBox" name="grpConnexion">
@@ -1943,27 +1962,17 @@ to unlock urgent stop</string>
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>18</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QWidget" name="frmLedsLimites" native="true">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_24">
+         <layout class="QHBoxLayout" name="_2">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -1993,7 +2002,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedX">
+           <widget class="QLabel" name="lblLed00">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2010,12 +2019,12 @@ to unlock urgent stop</string>
              <number>1</number>
             </property>
             <property name="text">
-             <string notr="true">X</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedX">
+           <widget class="cnLed" name="cnLed00">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2056,7 +2065,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedY">
+           <widget class="QLabel" name="lblLed01">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2064,12 +2073,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">Y</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedY">
+           <widget class="cnLed" name="cnLed01">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2110,7 +2119,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedZ">
+           <widget class="QLabel" name="lblLed02">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2118,12 +2127,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">Z</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedZ">
+           <widget class="cnLed" name="cnLed02">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2164,7 +2173,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedA">
+           <widget class="QLabel" name="lblLed03">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2172,12 +2181,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">A</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedA">
+           <widget class="cnLed" name="cnLed03">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2221,7 +2230,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedB">
+           <widget class="QLabel" name="lblLed04">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2229,12 +2238,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">B</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedB">
+           <widget class="cnLed" name="cnLed04">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2275,7 +2284,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedC">
+           <widget class="QLabel" name="lblLed05">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2283,12 +2292,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">C</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedC">
+           <widget class="cnLed" name="cnLed05">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2329,7 +2338,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedP">
+           <widget class="QLabel" name="lblLed06">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2337,12 +2346,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">P</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedP">
+           <widget class="cnLed" name="cnLed08">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2383,7 +2392,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedD">
+           <widget class="QLabel" name="lblLed07">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2391,12 +2400,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">D</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedD">
+           <widget class="cnLed" name="cnLed06">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2437,7 +2446,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedH">
+           <widget class="QLabel" name="lblLed08">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2445,12 +2454,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">H</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedH">
+           <widget class="cnLed" name="cnLed07">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2491,7 +2500,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedR">
+           <widget class="QLabel" name="lblLed09">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2499,12 +2508,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">R</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedR">
+           <widget class="cnLed" name="cnLed09">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2545,7 +2554,7 @@ to unlock urgent stop</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="lblLedS">
+           <widget class="QLabel" name="lblLed10">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2553,12 +2562,12 @@ to unlock urgent stop</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string notr="true">S</string>
+             <string notr="true">_</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="cnLed" name="cnLedS">
+           <widget class="cnLed" name="cnLed10">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2643,7 +2652,7 @@ to unlock urgent stop</string>
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tabMainPage">
           <property name="styleSheet">
@@ -4026,7 +4035,7 @@ color: rgb(248, 255, 192);</string>
                           <string notr="true">G54</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4068,7 +4077,7 @@ color: rgb(0, 0, 63);
                           <string notr="true">G55</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4110,7 +4119,7 @@ color: rgb(0, 0, 63);
                           <string notr="true">G56</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4152,7 +4161,7 @@ color: rgb(0, 0, 63);
                           <string notr="true">G57</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4197,7 +4206,7 @@ color: rgb(0, 0, 63);
                           <string notr="true">G58</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4239,7 +4248,7 @@ color: rgb(0, 0, 63);
                           <string notr="true">G59</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -5435,6 +5444,21 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QWidget" name="tabPlot">
+          <attribute name="title">
+           <string>Plot G</string>
+          </attribute>
+          <widget class="QWidget" name="plot0" native="true">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>691</width>
+             <height>361</height>
+            </rect>
+           </property>
+          </widget>
          </widget>
          <widget class="QWidget" name="tabProbeXY">
           <property name="enabled">
@@ -8716,7 +8740,7 @@ G43.1</string>
        <item>
         <widget class="QTabWidget" name="qtabConsole">
          <property name="currentIndex">
-          <number>3</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tabGrblOutput">
           <attribute name="title">
@@ -8876,7 +8900,7 @@ G43.1</string>
               <bool>true</bool>
              </attribute>
              <attribute name="verticalHeaderDefaultSectionSize">
-              <number>21</number>
+              <number>23</number>
              </attribute>
             </widget>
            </item>
@@ -9048,7 +9072,7 @@ G43.1</string>
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="mnuApplication">
