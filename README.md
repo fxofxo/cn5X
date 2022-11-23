@@ -50,7 +50,7 @@ pip install numpy
 pip install PyQtChart
 ```
 
-To user (qt) designer tool and pyuci5 install:
+To user (qt) designer tool and pyuic5 install:
 ```
 sudo apt-get install qttools5-dev-tools
 pip install pyuic5-tool

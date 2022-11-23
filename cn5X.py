@@ -279,9 +279,9 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.lblG59.clicked.connect(self.on_lblG5xClick)
 
     # Jogging buttons
-    self.ui.btnJogMoinsX.mousePress.connect(self.on_jog)
+    self.ui.btnJogMinusX.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusX.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsY.mousePress.connect(self.on_jog)
+    self.ui.btnJogMinusY.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusY.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsZ.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusZ.mousePress.connect(self.on_jog)
@@ -292,9 +292,9 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusC.mousePress.connect(self.on_jog)
 
-    self.ui.btnJogMoinsX.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogMinusX.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusX.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsY.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogMinusY.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusY.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsZ.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusZ.mouseRelease.connect(self.stop_jog)
