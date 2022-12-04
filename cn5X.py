@@ -2413,8 +2413,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnStop.setButtonStatus(False)
 
       print(f"PAUSE pressed :{self.__gcodeFile.getGCodeSelectedLine()}")
-      self.__plotGcode.add_point((100,10,100,10))
-      self.__plotGcode.add_point((100, 15, 150, 15))
+
 
 
 
@@ -2775,6 +2774,6 @@ if __name__ == '__main__':
   # Définition de la locale pour affichage des dates dans la langue du systeme
   locale.setlocale(locale.LC_TIME, '')
 
-window = winMain()
-window.show()
-sys.exit(app.exec_())
+  window = winMain()
+  window.show()
+  sys.exit(app.exec_())
