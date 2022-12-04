@@ -26,8 +26,8 @@ from PyQt5 import QtGui
 
 ORG_NAME           = "fra589"
 APP_NAME           = "cn5X++"
-APP_VERSION_STRING = "0.8.5"
-APP_VERSION_DATE   = "20210924"
+APP_VERSION_STRING = "1.0.1"
+APP_VERSION_DATE   = "20220101"
 
 DEFAULT_NB_AXIS    = 3 # Laisser 3 permet de gerer un Grbl original a 3 axes
 DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z']

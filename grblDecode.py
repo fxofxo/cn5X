@@ -82,7 +82,7 @@ class grblDecode(QObject):
     self.__offsetG92  = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__offsetG5x  = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__etatArrosage = None
-    self.__etatMachine = None
+    self.__machineStatus = None
     self.__getNextStatusOutput = False
     self.__getNextGCodeParams = False
     self.__getNextGCodeState = False
@@ -132,163 +132,137 @@ class grblDecode(QObject):
     if grblOutput[0] != "<" or grblOutput[-1] != ">":
       return self.tr("grblDecode.py.decodeGrblStatus():error ! \n[{}] Incorrect status.").format(grblOutput)
 
-    # Affiche la chaine complette dans la barrs de status self.__statusText
+    # Display the full string in the status bar self.__statusText
     self.ui.statusBar.showMessage("{} + {}  ".format(self.__grblCom.grblVersion(), grblOutput))
 
     flagPn = False
     tblDecode = grblOutput[1:-1].split("|")
-    for D in tblDecode:
-      if D in self.__validMachineState:
-        if D != self.__etatMachine:
-          self.set_etatMachine(D)
 
-          if D == GRBL_STATUS_IDLE:
+    for D in tblDecode:
+      split_D = D.split(":")
+      key=split_D[0]
+      if key in self.__validMachineState:
+        if key != self.__machineStatus:
+          self.setMachineStatus(D)
+
+          if key == GRBL_STATUS_IDLE:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(False)
             if not self.ui.btnStop.getButtonStatus(): self.ui.btnStop.setButtonStatus(True)
             self.ui.lblEtat.setToolTip(self.tr("Grbl is waiting for work."))
-          elif D ==GRBL_STATUS_HOLD0:
+          elif key ==GRBL_STATUS_HOLD0:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if not self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(True)
             if self.ui.btnStop.getButtonStatus(): self.ui.btnStop.setButtonStatus(False)
             self.ui.lblEtat.setToolTip(self.tr("Hold complete. Ready to resume."))
-          elif D ==GRBL_STATUS_HOLD1:
+          elif key ==GRBL_STATUS_HOLD1:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if not self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(True)
             if self.ui.btnStop.getButtonStatus(): self.ui.btnStop.setButtonStatus(False)
             self.ui.lblEtat.setToolTip(self.tr("Hold in-progress. Reset will throw an alarm."))
-          elif D =="Door:0":
+          elif key =="Door:0":
             self.ui.lblEtat.setToolTip(self.tr("Door closed. Ready to resume."))
-          elif D =="Door:1":
+          elif key =="Door:1":
             self.ui.lblEtat.setToolTip(self.tr("Machine stopped. Door still ajar. Can't resume until closed."))
-          elif D =="Door:2":
+          elif key =="Door:2":
             self.ui.lblEtat.setToolTip(self.tr("Door opened. Hold (or parking retract) in-progress. Reset will throw an alarm."))
-          elif D =="Door:3":
+          elif key =="Door:3":
             self.ui.lblEtat.setToolTip(self.tr("Door closed and resuming. Restoring from park, if applicable. Reset will throw an alarm."))
-          elif D == GRBL_STATUS_RUN:
+          elif key == GRBL_STATUS_RUN:
             if not self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(True)
             if self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(False)
             if self.ui.btnStop.getButtonStatus(): self.ui.btnStop.setButtonStatus(False)
             self.ui.lblEtat.setToolTip(self.tr("Grbl running..."))
-          elif D == GRBL_STATUS_JOG:
+          elif key == GRBL_STATUS_JOG:
             self.ui.lblEtat.setToolTip(self.tr("Grbl jogging..."))
-          elif D == GRBL_STATUS_ALARM:
+          elif key == GRBL_STATUS_ALARM:
             self.ui.lblEtat.setToolTip(self.tr("Grbl Alarm! see Grbl communication."))
-          elif D == GRBL_STATUS_HOME:
+          elif key == GRBL_STATUS_HOME:
             self.ui.lblEtat.setToolTip(self.tr("Grbl homing, wait for finish..."))
           else:
             self.ui.lblEtat.setToolTip("")
+      else:
+        key_data = split_D[1]
+         # Machine position MPos ($10=0 ou 2) ou WPos ($10=1 ou 3)?
+        if key == "MPos":
+          # memorizes the last machine position received
+          tblPos = key_data.split(",")
+          for axe in range(len(tblPos)):
+            self.__mpos[axe] = float(tblPos[axe])
+            self.__wpos[axe] = self.__mpos[axe] - self.__wco[axe]
+          # Met à jour l'interface
+          if not self.ui.mnu_MPos.isChecked():
+            self.ui.mnu_MPos.setChecked(True)
+          if self.ui.mnu_WPos.isChecked():
+            self.ui.mnu_WPos.setChecked(False)
 
-      # Machine position MPos ($10=0 ou 2) ou WPos ($10=1 ou 3)?
-      elif D[:5] == "MPos:":
-        # Mémorise la dernière position machine reçue
-        tblPos = D[5:].split(",")
-        for I in range(len(tblPos)):
-          self.__mpos[I] = float(tblPos[I])
-          self.__wpos[I] = float(tblPos[I]) - self.__wco[I]
-        # Met à jour l'interface
-        if not self.ui.mnu_MPos.isChecked():
-          self.ui.mnu_MPos.setChecked(True)
-        if self.ui.mnu_WPos.isChecked():
-          self.ui.mnu_WPos.setChecked(False)
-       # plot advance
-        if self.__mwpos_callback != None:
-          self.__mwpos_callback([float(i) for i in tblPos])
+        elif key == "WPos":
+          # Mémorise la dernière position de travail reçue
+          tblPos = key_data.split(",")
+          for I in range(len(tblPos)):
+            self.__wpos[I] = float(tblPos[I])
+            self.__mpos[I] = float(tblPos[I]) + self.__wco[I]
+          # Met à jour l'interface
+          if not self.ui.mnu_WPos.isChecked():
+            self.ui.mnu_WPos.setChecked(True)
+          if self.ui.mnu_MPos.isChecked():
+             self.ui.mnu_MPos.setChecked(False)
 
-        self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Machine Position (MPos)."))
-        self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Machine Position (MPos)."))
-        self.ui.lblPosZ.setText('{:+0.3f}'.format(float(tblPos[2]))); self.ui.lblPosZ.setToolTip(self.tr("Machine Position (MPos)."))
-        if self.__nbAxis > 3:
-          self.ui.lblPosA.setText('{:+0.3f}'.format(float(tblPos[3]))); self.ui.lblPosA.setToolTip(self.tr("Machine Position (MPos)."))
-        else:
-          self.ui.lblPosA.setText("-")
-        if self.__nbAxis > 4:
-          self.ui.lblPosB.setText('{:+0.3f}'.format(float(tblPos[4]))); self.ui.lblPosB.setToolTip(self.tr("Machine Position (MPos)."))
-        else:
-          self.ui.lblPosB.setText("-")
-        if self.__nbAxis > 5:
-          self.ui.lblPosC.setText('{:+0.3f}'.format(float(tblPos[5]))); self.ui.lblPosB.setToolTip(self.tr("Machine Position (MPos)."))
-        else:
-          self.ui.lblPosC.setText("-")
+        elif key == "WCO": # Work Coordinate Offset
+          tblPos = key_data.split(",")
 
-      elif D[:5] == "WPos:":
-        # Mémorise la dernière position de travail reçue
-        tblPos = D[5:].split(",")
-        for I in range(len(tblPos)):
-          self.__wpos[I] = float(tblPos[I])
-          self.__mpos[I] = float(tblPos[I]) + self.__wco[I]
-        # Met à jour l'interface
-        if not self.ui.mnu_WPos.isChecked():
-          self.ui.mnu_WPos.setChecked(True)
-        if self.ui.mnu_MPos.isChecked():
-           self.ui.mnu_MPos.setChecked(False)
+          for I in range(len(tblPos)):
+            self.__wco[I] = float(tblPos[I])
+          self.ui.lblWcoX.setText('{:+0.3f}'.format(self.__wco[0]))
+          self.ui.lblWcoY.setText('{:+0.3f}'.format(self.__wco[1]))
+          self.ui.lblWcoZ.setText('{:+0.3f}'.format(self.__wco[2]))
+          if self.__nbAxis > 3:
+            self.ui.lblWcoA.setText('{:+0.3f}'.format(self.__wco[3]))
+          else:
+            self.ui.lblWcoA.setText("-")
+          if self.__nbAxis > 4:
+            self.ui.lblWcoB.setText('{:+0.3f}'.format(self.__wco[4]))
+          else:
+            self.ui.lblWcoB.setText("-")
+          if self.__nbAxis > 5:
+            self.ui.lblWcoC.setText('{:+0.3f}'.format(self.__wco[5]))
+          else:
+            self.ui.lblWcoC.setText("-")
 
+        elif key == "Bf": # Buffer State (Bf:15,128)
+          tblValue = key_data.split(",")
+          self.ui.progressBufferState.setValue(int(tblValue[0]))
+          self.ui.progressBufferState.setMaximum(int(tblValue[1]))
+          self.ui.progressBufferState.setToolTip("Buffer stat : " + tblValue[0] + "/" + tblValue[1])
+
+        elif key == "Ov": # Override Values for feed, rapids, and spindle
+          values =key_data.split(',')
+          # Avance de travail
+          if int(self.ui.lblAvancePourcent.text()[:-1]) != int(values[0]):
+            adjustFeedOverride(int(values[0]), int(self.ui.lblAvancePourcent.text()[:-1]), self.__grblCom)
+          # Avance rapide
+          if values[1] == 25:
+            self.ui.rbRapid025.setChecked(True)
+          if values[1] == 50:
+            self.ui.rbRapid050.setChecked(True)
+          if values[1] == 25:
+            self.ui.rbRapid100.setChecked(True)
+          # Ajuste la vitesse de broche
+          if int(self.ui.lblBrochePourcent.text()[:-1]) != int(values[2]):
+            adjustSpindleOverride(int(values[2]), int(self.ui.lblBrochePourcent.text()[:-1]), self.__grblCom)
+
+        elif key == "Pn": # Input Pin State
+          flagPn = True
+          #triggered = D[3:]
+
+        #UPDATE Ui
+        self.updatePosLabels()
         # plot advance
         if self.__mwpos_callback != None:
-          self.__mwpos_callback([float(i) for i in tblPos])
+          self.__mwpos_callback([float(i) for i in  self.__wpos])
 
-        self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Working Position (WPos)."))
-        self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Working Position (WPos)."))
-        self.ui.lblPosZ.setText('{:+0.3f}'.format(float(tblPos[2]))); self.ui.lblPosZ.setToolTip(self.tr("Working Position (WPos)."))
-        if self.__nbAxis > 3:
-          self.ui.lblPosA.setText('{:+0.3f}'.format(float(tblPos[3]))); self.ui.lblPosA.setToolTip(self.tr("Working Position (WPos)."))
-        else:
-          self.ui.lblPosA.setText("-")
-        if self.__nbAxis > 4:
-          self.ui.lblPosB.setText('{:+0.3f}'.format(float(tblPos[4]))); self.ui.lblPosB.setToolTip(self.tr("Working Position (WPos)."))
-        else:
-          self.ui.lblPosB.setText("-")
-        if self.__nbAxis > 5:
-          self.ui.lblPosC.setText('{:+0.3f}'.format(float(tblPos[5]))); self.ui.lblPosB.setToolTip(self.tr("Working Position (WPos)."))
-        else:
-          self.ui.lblPosC.setText("-")
 
-      elif D[:4] == "WCO:": # Work Coordinate Offset
-        tblPos = D[4:].split(",")
 
-        for I in range(len(tblPos)):
-          self.__wco[I] = float(tblPos[I])
-        self.ui.lblWcoX.setText('{:+0.3f}'.format(self.__wco[0]))
-        self.ui.lblWcoY.setText('{:+0.3f}'.format(self.__wco[1]))
-        self.ui.lblWcoZ.setText('{:+0.3f}'.format(self.__wco[2]))
-        if self.__nbAxis > 3:
-          self.ui.lblWcoA.setText('{:+0.3f}'.format(self.__wco[3]))
-        else:
-          self.ui.lblWcoA.setText("-")
-        if self.__nbAxis > 4:
-          self.ui.lblWcoB.setText('{:+0.3f}'.format(self.__wco[4]))
-        else:
-          self.ui.lblWcoB.setText("-")
-        if self.__nbAxis > 5:
-          self.ui.lblWcoC.setText('{:+0.3f}'.format(self.__wco[5]))
-        else:
-          self.ui.lblWcoC.setText("-")
-
-      elif D[:3] == "Bf:": # Buffer State (Bf:15,128)
-        tblValue = D[3:].split(",")
-        self.ui.progressBufferState.setValue(int(tblValue[0]))
-        self.ui.progressBufferState.setMaximum(int(tblValue[1]))
-        self.ui.progressBufferState.setToolTip("Buffer stat : " + tblValue[0] + "/" + tblValue[1])
-
-      elif D[:3] == "Ov:": # Override Values for feed, rapids, and spindle
-        values = D.split(':')[1].split(',')
-        # Avance de travail
-        if int(self.ui.lblAvancePourcent.text()[:-1]) != int(values[0]):
-          adjustFeedOverride(int(values[0]), int(self.ui.lblAvancePourcent.text()[:-1]), self.__grblCom)
-        # Avance rapide
-        if values[1] == 25:
-          self.ui.rbRapid025.setChecked(True)
-        if values[1] == 50:
-          self.ui.rbRapid050.setChecked(True)
-        if values[1] == 25:
-          self.ui.rbRapid100.setChecked(True)
-        # Ajuste la vitesse de broche
-        if int(self.ui.lblBrochePourcent.text()[:-1]) != int(values[2]):
-          adjustSpindleOverride(int(values[2]), int(self.ui.lblBrochePourcent.text()[:-1]), self.__grblCom)
-
-      elif D[:3] == "Pn:": # Input Pin State
-        flagPn = True
-        triggered = D[3:]
 
       '''
       elif D[:3] == "Ln:": # Line Number
@@ -305,8 +279,8 @@ class grblDecode(QObject):
         return D
       '''
     if not flagPn:
-      # Eteint toute les leds. Si on a pas trouve la chaine Pn:, c'est que toute les leds sont eteintes.
-      disableAxisLeds(self)
+      # ATurn off all LEDs. If the Pn: string is not found, all the LEDs are off.
+      self.disableAxisLeds()
 
 
     if self.__getNextStatusOutput:
@@ -314,6 +288,31 @@ class grblDecode(QObject):
       return grblOutput
     else:
       return ""
+  def updatePosLabels(self):
+    self.ui.lblMPosX.setText('{:+08.3f}'.format(float(self.__mpos[0])))
+    self.ui.lblMPosY.setText('{:+08.3f}'.format(float(self.__mpos[1])))
+    self.ui.lblMPosZ.setText('{:+08.3f}'.format(float(self.__mpos[2])))
+
+    self.ui.lblWPosX.setText('{:+08.3f}'.format(float(self.__wpos[0])))
+    self.ui.lblWPosY.setText('{:+08.3f}'.format(float(self.__wpos[1])))
+    self.ui.lblWPosZ.setText('{:+08.3f}'.format(float(self.__wpos[2])))
+
+    if self.__nbAxis > 3:
+      self.ui.lblMPosA.setText('{:+08.3f}'.format(float(self.__mpos[3])))
+      self.ui.lblWPosA.setText('{:+08.3f}'.format(float(self.__wpos[3])))
+    else:
+      self.ui.lblMPosA.setText("-")
+    if self.__nbAxis > 4:
+      self.ui.lblPosB.setText('{:+0.3f}'.format(float(self.__wpos[4])));
+      self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
+    else:
+      self.ui.lblPosB.setText("-")
+    if self.__nbAxis > 5:
+      self.ui.lblPosC.setText('{:+0.3f}'.format(float(self.__wpos[5])));
+      self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
+    else:
+      self.ui.lblPosC.setText("-")
+
 
   def decodeGrblResponse(self, grblOutput):
 
@@ -575,24 +574,24 @@ class grblDecode(QObject):
     return self.__etatArrosage
 
 
-  def set_etatMachine(self, etat):
+  def setMachineStatus(self, etat):
 
       if etat in self.__validMachineState:
 
-        if etat != self.__etatMachine:
+        if etat != self.__machineStatus:
           self.ui.lblEtat.setText(etat)
-          self.__etatMachine = etat
-          if self.__etatMachine == GRBL_STATUS_ALARM:
+          self.__machineStatus = etat
+          if self.__machineStatus == GRBL_STATUS_ALARM:
             self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
                                           "background-color: red;")
-          elif self.__etatMachine == GRBL_STATUS_RUN or self.__etatMachine == GRBL_STATUS_JOG :
+          elif self.__machineStatus == GRBL_STATUS_RUN or self.__machineStatus == GRBL_STATUS_JOG :
             self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
                                           "background-color: blue;")
-          elif self.__etatMachine == GRBL_STATUS_HOME:
+          elif self.__machineStatus == GRBL_STATUS_HOME:
             self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
                                           "background-color: cyan;")
 
-          elif self.__etatMachine == GRBL_STATUS_IDLE:
+          elif self.__machineStatus == GRBL_STATUS_IDLE:
             self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
                                           "background-color: green;")
           else :
@@ -601,7 +600,7 @@ class grblDecode(QObject):
 
 
   def get_etatMachine(self):
-    return self.__etatMachine
+    return self.__machineStatus
 
 
   def getWco(self, axis=None):
@@ -778,9 +777,9 @@ class grblDecode(QObject):
 
     if self.__nbAxis > 3:
       self.ui.lblLblPosA.setText(self.__axisNames[3])
-      self.ui.lblLblPosA.setEnabled(True)
+      #self.ui.lblLblPosA.setEnabled(True)
       self.ui.lblLblPosA.setStyleSheet("")
-      self.ui.lblPosA.setEnabled(True)
+      #self.ui.lblPosA.setEnabled(True)
       self.ui.lblPosA.setStyleSheet("")
       self.ui.lblG5xA.setStyleSheet("")
       self.ui.lblG92A.setStyleSheet("")
@@ -789,9 +788,9 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_4.setEnabled(True)
     else:
       self.ui.lblLblPosA.setText("")
-      self.ui.lblLblPosA.setEnabled(False)
+      #self.ui.lblLblPosA.setEnabled(False)
       self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
-      self.ui.lblPosA.setEnabled(False)
+      #self.ui.lblPosA.setEnabled(False)
       self.ui.lblPosA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG5xA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG92A.setStyleSheet("color: rgb(224, 224, 230);")
@@ -843,26 +842,6 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_6.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_6.setEnabled(False)
 
-    if 'U' in self.__axisNames:
-      self.ui.btnJogMoinsU.setEnabled(True)
-      self.ui.btnJogPlusU.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsU.setEnabled(False)
-      self.ui.btnJogPlusU.setEnabled(False)
-
-    if 'B' in self.__axisNames:
-      self.ui.btnJogMoinsB.setEnabled(True)
-      self.ui.btnJogPlusB.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsB.setEnabled(False)
-      self.ui.btnJogPlusB.setEnabled(False)
-
-    if 'C' in self.__axisNames:
-      self.ui.btnJogMoinsC.setEnabled(True)
-      self.ui.btnJogPlusC.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsC.setEnabled(False)
-      self.ui.btnJogPlusC.setEnabled(False)
 
   @pyqtSlot()
   def waitForGrblReply(self):

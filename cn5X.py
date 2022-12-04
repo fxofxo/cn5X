@@ -86,7 +86,7 @@ class winMain(QtWidgets.QMainWindow):
     # Retrouve le fichier de licence dans le même répertoire que l'exécutable
     self.__licenceFile = "{}/COPYING".format(app_path)
 
-    # Initialise la fenêtre princpale
+    # Initialise main window
     self.ui = mainWindow.Ui_mainWindow()
     self.ui.setupUi(self)
 
@@ -279,22 +279,22 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.lblG59.clicked.connect(self.on_lblG5xClick)
 
     # Jogging buttons
-    self.ui.btnJogMoinsX.mousePress.connect(self.on_jog)
+    self.ui.btnJogMinusX.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusX.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsY.mousePress.connect(self.on_jog)
+    self.ui.btnJogMinusY.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusY.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsZ.mousePress.connect(self.on_jog)
+    self.ui.btnJogMinusZ.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusZ.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsU.mousePress.connect(self.on_jog)
+    self.ui.btnJogMinusU.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusU.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsB.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusB.mousePress.connect(self.on_jog)
     self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusC.mousePress.connect(self.on_jog)
 
-    self.ui.btnJogMoinsX.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogMinusX.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusX.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsY.mouseRelease.connect(self.stop_jog)
+    self.ui.btnJogMinusY.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusY.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMoinsZ.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusZ.mouseRelease.connect(self.stop_jog)
@@ -385,6 +385,15 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnHomePlusX.clicked.connect(lambda: self.on_btnHomeXY("plusX"))
     self.ui.btnHomePlusY.clicked.connect(lambda: self.on_btnHomeXY("plusY"))
     self.ui.btnResetResults.clicked.connect(self.resetProbeResults)
+
+    self.ui.lblWPosX.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblWPosY.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblWPosZ.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblWPosA.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosX.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosY.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosZ.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosA.setToolTip(self.tr("Working Position (WPos)."))
 
     self.__plotGcode = plotGcode(self.ui.plot0)
     self.__decode.set_mwpos_callback(self.__plotGcode.add_point)
@@ -543,6 +552,10 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmArretUrgence.setEnabled(False)
       self.ui.frmControleVitesse.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
+      self.ui.frameX.setEnabled(False)
+      self.ui.frameY.setEnabled(False)
+      self.ui.frameA.setEnabled(False)
+      self.ui.frameZ.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
@@ -555,6 +568,10 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmArretUrgence.setEnabled(True)
       self.ui.frmControleVitesse.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
+      self.ui.frameX.setEnabled(False)
+      self.ui.frameY.setEnabled(False)
+      self.ui.frameA.setEnabled(False)
+      self.ui.frameZ.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
@@ -567,6 +584,11 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmArretUrgence.setEnabled(True)
       self.ui.frmControleVitesse.setEnabled(True)
       self.ui.grpJog.setEnabled(True)
+      self.ui.grpJog.setEnabled(True)
+      self.ui.frameX.setEnabled(True)
+      self.ui.frameY.setEnabled(True)
+      self.ui.frameA.setEnabled(True)
+      self.ui.frameZ.setEnabled(True)
       self.ui.frmGcodeInput.setEnabled(True)
       self.ui.tabMainPage.setEnabled(True)
       self.ui.tabProbeXY.setEnabled(True)
@@ -1958,7 +1980,7 @@ class winMain(QtWidgets.QMainWindow):
       return
 
     # On anticipe l'état GRBL_STATUS_JOG
-    self.__decode.set_etatMachine(GRBL_STATUS_JOG)
+    self.__decode.setMachineStatus(GRBL_STATUS_JOG)
 
     jogDistance = 0
     for qrb in [self.ui.rbtJog0000, self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
@@ -2180,7 +2202,7 @@ class winMain(QtWidgets.QMainWindow):
   @pyqtSlot(int)
   def on_sig_alarm(self, alarmNum: int):
     self.logGrbl.append(self.__decode.alarmMessage(alarmNum))
-    self.__decode.set_etatMachine(GRBL_STATUS_ALARM)
+    self.__decode.setMachineStatus(GRBL_STATUS_ALARM)
     if self.__cycleRun:
       self.__grblCom.clearCom() # Vide la file d'attente de communication
       self.__cycleRun = False

@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="cn5X">
+    <file>images/btnJogMinus.svg</file>
+    <file>images/btnJogMinusVert.svg</file>
+    <file>images/btnJogPlusVert.svg</file>
+    <file>images/btnJogPlus.svg</file>
     <file>images/btnJogNone.svg</file>
     <file>images/btnJogA.svg</file>
     <file>images/btnJogB.svg</file>
@@ -55,9 +59,6 @@
     <file>images/btnJogMoinsX.svg</file>
     <file>images/btnJogMoinsY.svg</file>
     <file>images/btnJogMoinsZ.svg</file>
-    <file>images/btnJogPlusX.svg</file>
-    <file>images/btnJogPlusY.svg</file>
-    <file>images/btnJogPlusZ.svg</file>
     <file>images/btnJogStop.svg</file>
     <file>images/btnFloodM7_down.svg</file>
     <file>images/btnFloodM7_light.svg</file>
