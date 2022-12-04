@@ -137,12 +137,10 @@ class grblDecode(QObject):
 
     flagPn = False
     tblDecode = grblOutput[1:-1].split("|")
-    print(tblDecode)
+
     for D in tblDecode:
       split_D = D.split(":")
       key=split_D[0]
-
-
       if key in self.__validMachineState:
         if key != self.__machineStatus:
           self.setMachineStatus(D)
@@ -185,7 +183,6 @@ class grblDecode(QObject):
             self.ui.lblEtat.setToolTip("")
       else:
         key_data = split_D[1]
-        print(key)
          # Machine position MPos ($10=0 ou 2) ou WPos ($10=1 ou 3)?
         if key == "MPos":
           # memorizes the last machine position received
@@ -199,12 +196,6 @@ class grblDecode(QObject):
           if self.ui.mnu_WPos.isChecked():
             self.ui.mnu_WPos.setChecked(False)
 
-          self.updatePosLabels()
-           # plot advance
-
-
-
-
         elif key == "WPos":
           # Mémorise la dernière position de travail reçue
           tblPos = key_data.split(",")
@@ -216,9 +207,6 @@ class grblDecode(QObject):
             self.ui.mnu_WPos.setChecked(True)
           if self.ui.mnu_MPos.isChecked():
              self.ui.mnu_MPos.setChecked(False)
-
-          self.updatePosLabels()
-
 
         elif key == "WCO": # Work Coordinate Offset
           tblPos = key_data.split(",")
@@ -249,7 +237,6 @@ class grblDecode(QObject):
 
         elif key == "Ov": # Override Values for feed, rapids, and spindle
           values =key_data.split(',')
-          print(values)
           # Avance de travail
           if int(self.ui.lblAvancePourcent.text()[:-1]) != int(values[0]):
             adjustFeedOverride(int(values[0]), int(self.ui.lblAvancePourcent.text()[:-1]), self.__grblCom)
@@ -268,8 +255,10 @@ class grblDecode(QObject):
           flagPn = True
           #triggered = D[3:]
 
+        #UPDATE Ui
+        self.updatePosLabels()
+        # plot advance
         if self.__mwpos_callback != None:
-          print(self.__nbAxis )
           self.__mwpos_callback([float(i) for i in  self.__wpos])
 
 
@@ -788,9 +777,9 @@ class grblDecode(QObject):
 
     if self.__nbAxis > 3:
       self.ui.lblLblPosA.setText(self.__axisNames[3])
-      self.ui.lblLblPosA.setEnabled(True)
+      #self.ui.lblLblPosA.setEnabled(True)
       self.ui.lblLblPosA.setStyleSheet("")
-      self.ui.lblPosA.setEnabled(True)
+      #self.ui.lblPosA.setEnabled(True)
       self.ui.lblPosA.setStyleSheet("")
       self.ui.lblG5xA.setStyleSheet("")
       self.ui.lblG92A.setStyleSheet("")
@@ -799,9 +788,9 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_4.setEnabled(True)
     else:
       self.ui.lblLblPosA.setText("")
-      self.ui.lblLblPosA.setEnabled(False)
+      #self.ui.lblLblPosA.setEnabled(False)
       self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
-      self.ui.lblPosA.setEnabled(False)
+      #self.ui.lblPosA.setEnabled(False)
       self.ui.lblPosA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG5xA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG92A.setStyleSheet("color: rgb(224, 224, 230);")
@@ -853,26 +842,6 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_6.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_6.setEnabled(False)
 
-    if 'U' in self.__axisNames:
-      self.ui.btnJogMoinsU.setEnabled(True)
-      self.ui.btnJogPlusU.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsU.setEnabled(False)
-      self.ui.btnJogPlusU.setEnabled(False)
-
-    if 'B' in self.__axisNames:
-      self.ui.btnJogMoinsB.setEnabled(True)
-      self.ui.btnJogPlusB.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsB.setEnabled(False)
-      self.ui.btnJogPlusB.setEnabled(False)
-
-    if 'C' in self.__axisNames:
-      self.ui.btnJogMoinsC.setEnabled(True)
-      self.ui.btnJogPlusC.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsC.setEnabled(False)
-      self.ui.btnJogPlusC.setEnabled(False)
 
   @pyqtSlot()
   def waitForGrblReply(self):
