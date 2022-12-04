@@ -86,7 +86,7 @@ class winMain(QtWidgets.QMainWindow):
     # Retrouve le fichier de licence dans le même répertoire que l'exécutable
     self.__licenceFile = "{}/COPYING".format(app_path)
 
-    # Initialise la fenêtre princpale
+    # Initialise main window
     self.ui = mainWindow.Ui_mainWindow()
     self.ui.setupUi(self)
 
@@ -386,6 +386,15 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnHomePlusY.clicked.connect(lambda: self.on_btnHomeXY("plusY"))
     self.ui.btnResetResults.clicked.connect(self.resetProbeResults)
 
+    self.ui.lblWPosX.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblWPosY.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblWPosZ.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblWPosA.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosX.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosY.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosZ.setToolTip(self.tr("Working Position (WPos)."))
+    self.ui.lblMPosA.setToolTip(self.tr("Working Position (WPos)."))
+
     self.__plotGcode = plotGcode(self.ui.plot0)
     self.__decode.set_mwpos_callback(self.__plotGcode.add_point)
 
@@ -542,7 +551,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
       self.ui.frmArretUrgence.setEnabled(False)
       self.ui.frmControleVitesse.setEnabled(False)
-      #self.ui.grpJog.setEnabled(False)
+      self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
@@ -554,7 +563,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
       self.ui.frmArretUrgence.setEnabled(True)
       self.ui.frmControleVitesse.setEnabled(False)
-      s#elf.ui.grpJog.setEnabled(False)
+      self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
@@ -1958,7 +1967,7 @@ class winMain(QtWidgets.QMainWindow):
       return
 
     # On anticipe l'état GRBL_STATUS_JOG
-    self.__decode.set_etatMachine(GRBL_STATUS_JOG)
+    self.__decode.setMachineStatus(GRBL_STATUS_JOG)
 
     jogDistance = 0
     for qrb in [self.ui.rbtJog0000, self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
@@ -2180,7 +2189,7 @@ class winMain(QtWidgets.QMainWindow):
   @pyqtSlot(int)
   def on_sig_alarm(self, alarmNum: int):
     self.logGrbl.append(self.__decode.alarmMessage(alarmNum))
-    self.__decode.set_etatMachine(GRBL_STATUS_ALARM)
+    self.__decode.setMachineStatus(GRBL_STATUS_ALARM)
     if self.__cycleRun:
       self.__grblCom.clearCom() # Vide la file d'attente de communication
       self.__cycleRun = False
