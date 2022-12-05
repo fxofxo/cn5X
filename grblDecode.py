@@ -202,7 +202,7 @@ class grblDecode(QObject):
 
       elif D[:5] == "WPos:":
         #Mémorise la dernière position de travail reçue
-        tblPos = key_data.split(",")
+        tblPos =  D[5:].split(",")
         for I in range(len(tblPos)):
           self.__wpos[I] = float(tblPos[I])
           self.__mpos[I] = self.__wpos[I] + self.__wco[I]
@@ -385,34 +385,34 @@ class grblDecode(QObject):
                 self.__digitalStatus[7] = False
 
 
-        #UPDATE Ui Position Labels text
+      #UPDATE Ui Position Labels text
 
-        self.ui.lblMPosX.setText('{:+08.3f}'.format(float(self.__mpos[0])))
-        self.ui.lblMPosY.setText('{:+08.3f}'.format(float(self.__mpos[1])))
-        self.ui.lblMPosZ.setText('{:+08.3f}'.format(float(self.__mpos[2])))
+      self.ui.lblMPosX.setText('{:+08.3f}'.format(float(self.__mpos[0])))
+      self.ui.lblMPosY.setText('{:+08.3f}'.format(float(self.__mpos[1])))
+      self.ui.lblMPosZ.setText('{:+08.3f}'.format(float(self.__mpos[2])))
 
-        self.ui.lblWPosX.setText('{:+08.3f}'.format(float(self.__wpos[0])))
-        self.ui.lblWPosY.setText('{:+08.3f}'.format(float(self.__wpos[1])))
-        self.ui.lblWPosZ.setText('{:+08.3f}'.format(float(self.__wpos[2])))
+      self.ui.lblWPosX.setText('{:+08.3f}'.format(float(self.__wpos[0])))
+      self.ui.lblWPosY.setText('{:+08.3f}'.format(float(self.__wpos[1])))
+      self.ui.lblWPosZ.setText('{:+08.3f}'.format(float(self.__wpos[2])))
 
-        if self.__nbAxis > 3:
-          self.ui.lblMPosA.setText('{:+08.3f}'.format(float(self.__mpos[3])))
-          self.ui.lblWPosA.setText('{:+08.3f}'.format(float(self.__wpos[3])))
-        else:
-          self.ui.lblMPosA.setText("-")
-        if self.__nbAxis > 4:
-          self.ui.lblPosB.setText('{:+0.3f}'.format(float(self.__wpos[4])));
-          self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
-        else:
-          self.ui.lblPosB.setText("-")
-        if self.__nbAxis > 5:
-          self.ui.lblPosC.setText('{:+0.3f}'.format(float(self.__wpos[5])));
-          self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
-        else:
-          self.ui.lblPosC.setText("-")
-        # plot advance
-        if self.__mwpos_callback != None:
-          self.__mwpos_callback([float(i) for i in  self.__wpos])
+      if self.__nbAxis > 3:
+        self.ui.lblMPosA.setText('{:+08.3f}'.format(float(self.__mpos[3])))
+        self.ui.lblWPosA.setText('{:+08.3f}'.format(float(self.__wpos[3])))
+      else:
+        self.ui.lblMPosA.setText("-")
+      if self.__nbAxis > 4:
+        self.ui.lblPosB.setText('{:+0.3f}'.format(float(self.__wpos[4])));
+        self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
+      else:
+        self.ui.lblPosB.setText("-")
+      if self.__nbAxis > 5:
+        self.ui.lblPosC.setText('{:+0.3f}'.format(float(self.__wpos[5])));
+        self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
+      else:
+        self.ui.lblPosC.setText("-")
+      # plot advance
+      if self.__mwpos_callback != None:
+        self.__mwpos_callback([float(i) for i in  self.__wpos])
 
       '''
       elif D[:3] == "Ln:": # Line Number
