@@ -48,7 +48,7 @@ class grblJog():
     la course maxi.
     '''
     axis = cnButton.name()[-1]  # L'axe est definit par le dernier caractere du nom du Bouton
-    print(f"JOG: axis:{axis} distance{jogDistance} maxtravel {maxTravel}")
+    #print(f"JOG: axis:{axis} distance{jogDistance} maxtravel {maxTravel}")
     if jogDistance != 0:
       if cnButton.name()[-5:-1] == "Plus":
         value = jogDistance

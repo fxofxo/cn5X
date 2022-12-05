@@ -207,7 +207,7 @@ class dlgJog(QObject):
 
 
   def on_btnJog(self, axisNum: int = None, spinBox: QDoubleSpinBox = None):
-
+    print(axisNum)
     gcode = "$J="
     if self.di.rbtMPos.isChecked():
       gcode += "G53"

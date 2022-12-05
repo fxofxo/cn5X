@@ -921,7 +921,7 @@ class winMain(QtWidgets.QMainWindow):
     jusqua = time.time() + 0.25
     while time.time() < jusqua:
       QCoreApplication.processEvents()
-    if self.__decode.get_etatMachine() == GRBL_STATUS_IDLE:
+    if self.__decode.get_MachineState() == GRBL_STATUS_IDLE:
       # La boite de dialogue à ete annulée ou le trajet est déja fini
       self.ui.btnG28.setButtonStatus(False)
 
@@ -941,7 +941,7 @@ class winMain(QtWidgets.QMainWindow):
     jusqua = time.time() + 0.25
     while time.time() < jusqua:
       QCoreApplication.processEvents()
-    if self.__decode.get_etatMachine() == GRBL_STATUS_IDLE:
+    if self.__decode.get_MachineState() == GRBL_STATUS_IDLE:
       # La boite de dialogue à ete annulée ou le trajet est déja fini
       self.ui.btnG30.setButtonStatus(False)
 
@@ -1037,7 +1037,7 @@ class winMain(QtWidgets.QMainWindow):
         self.__grblCom.gcodePush(retractGCode)
         # Pause pour laisser le temps à Grbl de lancer le mouvement de retract
         time.sleep(0.25)
-        while self.__decode.get_etatMachine() != GRBL_STATUS_IDLE:
+        while self.__decode.get_MachineState() != GRBL_STATUS_IDLE:
           # Process events to receive signals en attendant que le GCode soit traité
           QCoreApplication.processEvents()
         # En cas de probe en 2 fois, le second probe ne nécessite que la distance de pull off
@@ -1315,7 +1315,7 @@ class winMain(QtWidgets.QMainWindow):
         self.calculateCenterXY()
         self.__grblCom.gcodePush("G0X{}".format(-pullOffXY))
         time.sleep(0.25)
-        while self.__decode.get_etatMachine() != GRBL_STATUS_IDLE:
+        while self.__decode.get_MachineState() != GRBL_STATUS_IDLE:
           QCoreApplication.processEvents()
         fineProbeDistance = pullOffXY
       else:
@@ -1353,7 +1353,7 @@ class winMain(QtWidgets.QMainWindow):
         self.calculateCenterXY()
         self.__grblCom.gcodePush("G0X{}".format(pullOffXY))
         time.sleep(0.25)
-        while self.__decode.get_etatMachine() != GRBL_STATUS_IDLE:
+        while self.__decode.get_MachineState() != GRBL_STATUS_IDLE:
           QCoreApplication.processEvents()
         fineProbeDistance = pullOffXY
       else:
@@ -1391,7 +1391,7 @@ class winMain(QtWidgets.QMainWindow):
         self.calculateCenterXY()
         self.__grblCom.gcodePush("G0Y{}".format(-pullOffXY))
         time.sleep(0.25)
-        while self.__decode.get_etatMachine() != GRBL_STATUS_IDLE:
+        while self.__decode.get_MachineState() != GRBL_STATUS_IDLE:
           QCoreApplication.processEvents()
         fineProbeDistance = pullOffXY
       else:
@@ -1429,7 +1429,7 @@ class winMain(QtWidgets.QMainWindow):
         self.calculateCenterXY()
         self.__grblCom.gcodePush("G0Y{}".format(pullOffXY))
         time.sleep(0.25)
-        while self.__decode.get_etatMachine() != GRBL_STATUS_IDLE:
+        while self.__decode.get_MachineState() != GRBL_STATUS_IDLE:
           QCoreApplication.processEvents()
         fineProbeDistance = pullOffXY
       else:
@@ -1913,7 +1913,7 @@ class winMain(QtWidgets.QMainWindow):
       self.setEnableDisableGroupes()
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
-      self.__decode.disableAxisLeds()
+      #self.__decode.disableAxisLeds()
 
 
   @pyqtSlot(int)
@@ -1958,7 +1958,9 @@ class winMain(QtWidgets.QMainWindow):
   @pyqtSlot(cnQPushButton, QtGui.QMouseEvent)
   def on_jog(self, cnButton, e):
     # Jogging seulement si Idle
-    if self.__decode.get_etatMachine() != GRBL_STATUS_IDLE:
+    state = self.__decode.get_MachineState()
+    if state != GRBL_STATUS_IDLE:
+      print(f"job not Idle:{state}")
       return
 
     # On anticipe l'état GRBL_STATUS_JOG
@@ -2207,10 +2209,10 @@ class winMain(QtWidgets.QMainWindow):
     retour = self.__decode.decodeGrblStatus(data)
     if retour != "":
       self.logGrbl.append(retour)
-    if self.__cycleRun and self.__decode.get_etatMachine() == GRBL_STATUS_RUN:
+    if self.__cycleRun and self.__decode.get_MachineState() == GRBL_STATUS_RUN:
       self.__pBoxArmee = True
     # Masque de la boite de progression
-    if (self.__decode.get_etatMachine() == GRBL_STATUS_IDLE) and self.__pBox.isVisible() and self.__pBoxArmee:
+    if (self.__decode.get_MachineState() == GRBL_STATUS_IDLE) and self.__pBox.isVisible() and self.__pBoxArmee:
       #print(self.__decode.get_etatMachine())
       self.__pBox.stop()
 

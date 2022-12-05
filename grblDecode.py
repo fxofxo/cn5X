@@ -82,7 +82,7 @@ class grblDecode(QObject):
     self.__offsetG92  = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__offsetG5x  = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__etatArrosage = None
-    self.__machineStatus = None
+    self.__machineState = None
     self.__digitalStatus = [False, False, False, False, False, False, False, False]
     self.__getNextStatusOutput = False
     self.__getNextGCodeParams = False
@@ -145,9 +145,9 @@ class grblDecode(QObject):
     tblDecode = grblOutput[1:-1].split("|")
     for D in tblDecode:
       if D in self.__validMachineState:
-        if D != self.__machineStatus:
+        if D != self.__machineState:
           self.ui.lblEtat.setText(D)
-          self.setMachineStatus = D
+          self.__machineState = D
           if D == GRBL_STATUS_IDLE:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(False)
@@ -719,7 +719,6 @@ class grblDecode(QObject):
       
       elif grblOutput[:4] == "[D:":
         # Digital status
-        print(grblOutput)
         return grblOutput
 
       elif grblOutput[:5] == "[OPT:":
@@ -745,15 +744,15 @@ class grblDecode(QObject):
     return self.__etatArrosage
 
 
-  def setMachineStatus(self, etat):
+  def setMachineStatus(self, state):
 
-      if etat in self.__validMachineState:
-        if etat != self.__machineStatus:
-          self.ui.lblEtat.setText(etat)
-          self.__machineStatus = etat
+      if state in self.__validMachineState:
+        if state != self.__machineState:
+          self.ui.lblEtat.setText(state)
+          self.__machineState = state
 
-  def get_etatMachine(self):
-    return self.__machineStatus
+  def get_MachineState(self):
+    return self.__machineState
 
 
   def getDigitalStatus(self, digitNum):
@@ -913,7 +912,7 @@ class grblDecode(QObject):
   def disableAxisLeds(self):
 
       for L in self.__axisNames:
-        exec("self.ui.cnLed{}".format(N) + ".setLedStatus(False)")
+        exec("self.ui.cnLed{}".format(L) + ".setLedStatus(False)")
 
 
   def updateAxisDefinition(self):
