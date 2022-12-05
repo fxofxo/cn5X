@@ -40,6 +40,7 @@ class grblDecode(QObject):
   '''
   def __init__(self, ui, log, grbl: grblCom, beeper: cn5XBeeper, arretUrgence):
     super().__init__()
+    self.__mwpos_callback = None
     self.ui = ui
     self.log = log
     self.__grblCom   = grbl
@@ -81,7 +82,7 @@ class grblDecode(QObject):
     self.__offsetG92  = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__offsetG5x  = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__etatArrosage = None
-    self.__etatMachine = None
+    self.__machineStatus = None
     self.__digitalStatus = [False, False, False, False, False, False, False, False]
     self.__getNextStatusOutput = False
     self.__getNextGCodeParams = False
@@ -135,8 +136,8 @@ class grblDecode(QObject):
     if grblOutput[0] != "<" or grblOutput[-1] != ">":
       return self.tr("grblDecode.py.decodeGrblStatus():error ! \n[{}] Incorrect status.").format(grblOutput)
 
-    # Affiche la chaine complette dans la barrs de status self.__statusText
-    self.ui.statusBar.showMessage("{} + {}".format(self.__grblCom.grblVersion(), grblOutput))
+    # Display the full string in the status bar self.__statusText
+    self.ui.statusBar.showMessage("{} + {}  ".format(self.__grblCom.grblVersion(), grblOutput))
 
     flagPn = False
     flagOv = False
@@ -146,7 +147,7 @@ class grblDecode(QObject):
       if D in self.__validMachineState:
         if D != self.__etatMachine:
           self.ui.lblEtat.setText(D)
-          self.__etatMachine = D
+          self.setMachineStatus = D
           if D == GRBL_STATUS_IDLE:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(False)
@@ -192,56 +193,24 @@ class grblDecode(QObject):
         tblPos = D[5:].split(",")
         for I in range(len(tblPos)):
           self.__mpos[I] = float(tblPos[I])
-          self.__wpos[I] = float(tblPos[I]) - self.__wco[I]
+          self.__wpos[I] = self.__mpos[I] - self.__wco[I]
         # Met à jour l'interface
         if not self.ui.mnu_MPos.isChecked():
           self.ui.mnu_MPos.setChecked(True)
         if self.ui.mnu_WPos.isChecked():
           self.ui.mnu_WPos.setChecked(False)
-        tblPos = D[5:].split(",")
-        self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Machine Position (MPos)."))
-        self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Machine Position (MPos)."))
-        self.ui.lblPosZ.setText('{:+0.3f}'.format(float(tblPos[2]))); self.ui.lblPosZ.setToolTip(self.tr("Machine Position (MPos)."))
-        if self.__nbAxis > 3:
-          self.ui.lblPosA.setText('{:+0.3f}'.format(float(tblPos[3]))); self.ui.lblPosA.setToolTip(self.tr("Machine Position (MPos)."))
-        else:
-          self.ui.lblPosA.setText("-")
-        if self.__nbAxis > 4:
-          self.ui.lblPosB.setText('{:+0.3f}'.format(float(tblPos[4]))); self.ui.lblPosB.setToolTip(self.tr("Machine Position (MPos)."))
-        else:
-          self.ui.lblPosB.setText("-")
-        if self.__nbAxis > 5:
-          self.ui.lblPosC.setText('{:+0.3f}'.format(float(tblPos[5]))); self.ui.lblPosB.setToolTip(self.tr("Machine Position (MPos)."))
-        else:
-          self.ui.lblPosC.setText("-")
 
       elif D[:5] == "WPos:":
-        # Mémorise la dernière position de travail reçue
-        tblPos = D[5:].split(",")
+        #Mémorise la dernière position de travail reçue
+        tblPos = key_data.split(",")
         for I in range(len(tblPos)):
           self.__wpos[I] = float(tblPos[I])
-          self.__mpos[I] = float(tblPos[I]) + self.__wco[I]
+          self.__mpos[I] = self.__wpos[I] + self.__wco[I]
         # Met à jour l'interface
         if not self.ui.mnu_WPos.isChecked():
           self.ui.mnu_WPos.setChecked(True)
         if self.ui.mnu_MPos.isChecked():
           self.ui.mnu_MPos.setChecked(False)
-        tblPos = D[5:].split(",")
-        self.ui.lblPosX.setText('{:+0.3f}'.format(float(tblPos[0]))); self.ui.lblPosX.setToolTip(self.tr("Working Position (WPos)."))
-        self.ui.lblPosY.setText('{:+0.3f}'.format(float(tblPos[1]))); self.ui.lblPosY.setToolTip(self.tr("Working Position (WPos)."))
-        self.ui.lblPosZ.setText('{:+0.3f}'.format(float(tblPos[2]))); self.ui.lblPosZ.setToolTip(self.tr("Working Position (WPos)."))
-        if self.__nbAxis > 3:
-          self.ui.lblPosA.setText('{:+0.3f}'.format(float(tblPos[3]))); self.ui.lblPosA.setToolTip(self.tr("Working Position (WPos)."))
-        else:
-          self.ui.lblPosA.setText("-")
-        if self.__nbAxis > 4:
-          self.ui.lblPosB.setText('{:+0.3f}'.format(float(tblPos[4]))); self.ui.lblPosB.setToolTip(self.tr("Working Position (WPos)."))
-        else:
-          self.ui.lblPosB.setText("-")
-        if self.__nbAxis > 5:
-          self.ui.lblPosC.setText('{:+0.3f}'.format(float(tblPos[5]))); self.ui.lblPosB.setToolTip(self.tr("Working Position (WPos)."))
-        else:
-          self.ui.lblPosC.setText("-")
 
       elif D[:4] == "WCO:": # Work Coordinate Offset
         tblPos = D[4:].split(",")
@@ -416,6 +385,35 @@ class grblDecode(QObject):
                 self.__digitalStatus[7] = False
 
 
+        #UPDATE Ui Position Labels text
+
+        self.ui.lblMPosX.setText('{:+08.3f}'.format(float(self.__mpos[0])))
+        self.ui.lblMPosY.setText('{:+08.3f}'.format(float(self.__mpos[1])))
+        self.ui.lblMPosZ.setText('{:+08.3f}'.format(float(self.__mpos[2])))
+
+        self.ui.lblWPosX.setText('{:+08.3f}'.format(float(self.__wpos[0])))
+        self.ui.lblWPosY.setText('{:+08.3f}'.format(float(self.__wpos[1])))
+        self.ui.lblWPosZ.setText('{:+08.3f}'.format(float(self.__wpos[2])))
+
+        if self.__nbAxis > 3:
+          self.ui.lblMPosA.setText('{:+08.3f}'.format(float(self.__mpos[3])))
+          self.ui.lblWPosA.setText('{:+08.3f}'.format(float(self.__wpos[3])))
+        else:
+          self.ui.lblMPosA.setText("-")
+        if self.__nbAxis > 4:
+          self.ui.lblPosB.setText('{:+0.3f}'.format(float(self.__wpos[4])));
+          self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
+        else:
+          self.ui.lblPosB.setText("-")
+        if self.__nbAxis > 5:
+          self.ui.lblPosC.setText('{:+0.3f}'.format(float(self.__wpos[5])));
+          self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
+        else:
+          self.ui.lblPosC.setText("-")
+        # plot advance
+        if self.__mwpos_callback != None:
+          self.__mwpos_callback([float(i) for i in  self.__wpos])
+
       '''
       elif D[:3] == "Ln:": # Line Number
         return D
@@ -461,6 +459,9 @@ class grblDecode(QObject):
         exec("self.ui.cnLed" + L + ".setLedStatus(False)")
       if self.probeStatus:
         self.probeStatus = False
+      # ATurn off all LEDs. If the Pn: string is not found, all the LEDs are off.
+      #self.disableAxisLeds()
+
 
 
     if self.__getNextStatusOutput:
@@ -611,7 +612,7 @@ class grblDecode(QObject):
                 lbl.setFont(font)
             # Mise à jour des labels dépendant du système de coordonnées actif
             self.updateAxisDefinition()
-          
+
           elif S in ["G17", "G18", "G19"]:
             self.ui.lblPlan.setText(S)
             if S == 'G17': self.ui.lblPlan.setToolTip(self.tr(" Working plane = XY "))
@@ -703,7 +704,7 @@ class grblDecode(QObject):
         if self.__getNextGCodeState:
           self.__getNextGCodeState = False
           return grblOutput
-      
+
       elif grblOutput[:5] == "[AXS:":
         # Recupère le nombre d'axes et leurs noms
         self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
@@ -713,6 +714,7 @@ class grblDecode(QObject):
           # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
           self.__nbAxis = len(self.__axisNames);
         self.updateAxisDefinition()
+        self.updateAxisLedStatus()
         return grblOutput
       
       elif grblOutput[:4] == "[D:":
@@ -732,7 +734,7 @@ class grblDecode(QObject):
       else:
         # Autre reponse [] ?
         return grblOutput
-        
+
     else:
       # Autre reponse ?
       if grblOutput != "": self.log(logSeverity.info.value, self.tr("Not decoded Grbl reply : [{}]").format(grblOutput))
@@ -743,14 +745,15 @@ class grblDecode(QObject):
     return self.__etatArrosage
 
 
-  def set_etatMachine(self, etat):
+  def setMachineStatus(self, etat):
+
       if etat in self.__validMachineState:
-        if etat != self.__etatMachine:
+        if etat != self.__machineStatus:
           self.ui.lblEtat.setText(etat)
-          self.__etatMachine = etat
+          self.__machineStatus = etat
 
   def get_etatMachine(self):
-    return self.__etatMachine
+    return self.__machineStatus
 
 
   def getDigitalStatus(self, digitNum):
@@ -899,13 +902,24 @@ class grblDecode(QObject):
       champ_2 = grblSettingsCodes[num][2]
     except KeyError as e:
       champ_2 = ""
-    
+
     return (champ_0 + " (" + champ_1 + ")" + " : " + champ_2)
 
+  def updateAxisLedStatus(self):
+    n = 0
+    for L in self.__axisNames:
+      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
+      exec("self.ui.lblLed{:02d}".format(n) + f".setText('{L}')")
+      n+=1
+  def disableAxisLeds(self):
+      n = 0
+      for L in self.__axisNames:
+        exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(False)")
+        n+=1
 
   def updateAxisDefinition(self):
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
-    
+
     self.ui.lblLblPosX.setText(self.__axisNames[0])
     self.ui.lblLblPosY.setText(self.__axisNames[1])
     self.ui.lblLblPosZ.setText(self.__axisNames[2])
@@ -919,9 +933,9 @@ class grblDecode(QObject):
 
     if self.__nbAxis > 3:
       self.ui.lblLblPosA.setText(self.__axisNames[3])
-      self.ui.lblLblPosA.setEnabled(True)
+      #self.ui.lblLblPosA.setEnabled(True)
       self.ui.lblLblPosA.setStyleSheet("")
-      self.ui.lblPosA.setEnabled(True)
+      #self.ui.lblPosA.setEnabled(True)
       self.ui.lblPosA.setStyleSheet("")
       self.ui.lblG5xA.setStyleSheet("")
       self.ui.lblG92A.setStyleSheet("")
@@ -930,9 +944,9 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_4.setEnabled(True)
     else:
       self.ui.lblLblPosA.setText("")
-      self.ui.lblLblPosA.setEnabled(False)
+      #self.ui.lblLblPosA.setEnabled(False)
       self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
-      self.ui.lblPosA.setEnabled(False)
+      #self.ui.lblPosA.setEnabled(False)
       self.ui.lblPosA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG5xA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG92A.setStyleSheet("color: rgb(224, 224, 230);")
@@ -984,27 +998,6 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_6.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_6.setEnabled(False)
 
-    if 'A' in self.__axisNames:
-      self.ui.btnJogMoinsA.setEnabled(True)
-      self.ui.btnJogPlusA.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsA.setEnabled(False)
-      self.ui.btnJogPlusA.setEnabled(False)
-
-    if 'B' in self.__axisNames:
-      self.ui.btnJogMoinsB.setEnabled(True)
-      self.ui.btnJogPlusB.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsB.setEnabled(False)
-      self.ui.btnJogPlusB.setEnabled(False)
-
-    if 'C' in self.__axisNames:
-      self.ui.btnJogMoinsC.setEnabled(True)
-      self.ui.btnJogPlusC.setEnabled(True)
-    else:
-      self.ui.btnJogMoinsC.setEnabled(False)
-      self.ui.btnJogPlusC.setEnabled(False)
-
 
   @pyqtSlot()
   def waitForGrblReply(self):
@@ -1034,7 +1027,7 @@ class grblDecode(QObject):
   def waitForGrblProbe(self):
     ''' Attente d'une réponse de Grbl, Probe ou error ou Alarm '''
     self.__probeRecu = None
-    
+
     def quitOnProbe(data: str):
       resultatProbe = []
       tblData   = data.split(":")
@@ -1063,6 +1056,11 @@ class grblDecode(QObject):
     self.__grblCom.sig_probe.disconnect(quitOnProbe)
     self.__grblCom.sig_error.disconnect(quitOnError)
     self.__grblCom.sig_alarm.disconnect(quitOnAlarm)
-    
+
     return self.__probeRecu
+
+  def set_mwpos_callback(self, callbkp_fn):
+    self.__mwpos_callback = callbkp_fn
+
+
 
