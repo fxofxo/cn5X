@@ -59,6 +59,7 @@ class upperCaseValidator(QValidator):
 import mainWindow
 
 class winMain(QtWidgets.QMainWindow):
+  sig_log = pyqtSignal(int,  str)  # Message de fonctionnement du composant grblComSerial, renvoie : logSeverity, message string
 
   def __init__(self, parent=None):
 
@@ -151,7 +152,7 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblConfigLoaded = False
     self.__nbAxis           = DEFAULT_NB_AXIS
     self.__axisNames        = DEFAULT_AXIS_NAMES
-    self.__decode.updateAxisDefinition()
+    #self.__decode.updateAxisDefinition()
     self.__maxTravel        = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__firstGetSettings = False
     self.__jogModContinue   = False
@@ -1960,7 +1961,7 @@ class winMain(QtWidgets.QMainWindow):
     # Jogging seulement si Idle
     state = self.__decode.get_MachineState()
     if state != GRBL_STATUS_IDLE:
-      print(f"job not Idle:{state}")
+      self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
       return
 
     # On anticipe l'état GRBL_STATUS_JOG
@@ -2157,6 +2158,7 @@ class winMain(QtWidgets.QMainWindow):
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Error   : " + data)
       if not self.ui.btnDebug.isChecked():
         self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
+
   def log(self, severity: int, data: str):
     self.on_sig_log(severity, data)
 

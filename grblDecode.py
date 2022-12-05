@@ -45,7 +45,8 @@ class grblDecode(QObject):
     self.log = log
     self.__grblCom   = grbl
     self.__nbAxis    = DEFAULT_NB_AXIS
-    self.__axisNames = DEFAULT_AXIS_NAMES
+    self.__axisNames = DEFAULT_AXIS_NAMES                #Dynamic axis name grbl ramps
+    self.ui_axis_dict = {'X': 'X', 'Y': 'Y', 'Z': 'Z', 'U': 'A', 'V': 'Z'}
     self.__validMachineState = [
       GRBL_STATUS_IDLE,
       GRBL_STATUS_RUN,
@@ -258,10 +259,11 @@ class grblDecode(QObject):
       elif D[:3] == "Pn:": # Input Pin State
         flagPn = True
         triggered = D[3:]
-        # Affichage voyants d'interface
-        for L in ['X', 'Y', 'Z', 'A', 'B', 'C', 'P', 'D', 'H', 'R', 'S']:
+        # Affichage voyants d'interface (except axis)
+        for L in [ 'P', 'D', 'H', 'R', 'S']:
           if L in triggered:
             exec("self.ui.cnLed" + L + ".setLedStatus(True)")
+            print(f"Trigered {L}")
           else:
             exec("self.ui.cnLed" + L + ".setLedStatus(False)")
         # Beep lorsque le probe entre en contact
@@ -709,12 +711,12 @@ class grblDecode(QObject):
         # Recupère le nombre d'axes et leurs noms
         self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
         self.__axisNames        = list(grblOutput[1:-1].split(':')[2])
+
         if len(self.__axisNames) < self.__nbAxis:
           # Il est posible qu'il y ait moins de lettres que le nombre d'axes si Grbl
           # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
           self.__nbAxis = len(self.__axisNames);
         self.updateAxisDefinition()
-        #self.updateAxisLedStatus()
         return grblOutput
       
       elif grblOutput[:4] == "[D:":
@@ -904,23 +906,15 @@ class grblDecode(QObject):
 
     return (champ_0 + " (" + champ_1 + ")" + " : " + champ_2)
 
-  def updateAxisLedStatus(self):
-    for L in self.__axisNames:
-      exec("self.ui.cnLed{}".format(L) + ".setLedStatus(True)")
-      exec("self.ui.lblLed{}".format(L) + f".setText('{L}')")
-
-  def disableAxisLeds(self):
-
-      for L in self.__axisNames:
-        exec("self.ui.cnLed{}".format(L) + ".setLedStatus(False)")
-
 
   def updateAxisDefinition(self):
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
 
-    self.ui.lblLblPosX.setText(self.__axisNames[0])
-    self.ui.lblLblPosY.setText(self.__axisNames[1])
-    self.ui.lblLblPosZ.setText(self.__axisNames[2])
+    for  ax in self.__axisNames:
+      exec(f"self.ui.cnLed{self.ui_axis_dict[ax]}.setLedStatus(True)")
+      exec(f"self.ui.lblLed{self.ui_axis_dict[ax]}.setText('{ax}')")
+      exec(f"self.ui.lblLblPos{self.ui_axis_dict[ax]}.setText('{ax}')")
+
     self.ui.rbtDefineOriginXY_G54.setText("G{} offset".format(self.__G5actif))
     self.ui.rbtDefineOriginZ_G54.setText("G{} offset".format(self.__G5actif))
     self.ui.mnuG5X_reset.setText("Turn off and reset G{} offsets of all axis".format(self.__G5actif))
@@ -929,9 +923,9 @@ class grblDecode(QObject):
     self.ui.mnuG5X_origine_2.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[1]))
     self.ui.mnuG5X_origine_3.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[2]))
 
+
     if self.__nbAxis > 3:
-      self.ui.lblLblPosA.setText(self.__axisNames[3])
-      #self.ui.lblLblPosA.setEnabled(True)
+      self.ui.lblLblPosA.setEnabled(True)
       self.ui.lblLblPosA.setStyleSheet("")
       #self.ui.lblPosA.setEnabled(True)
       self.ui.lblPosA.setStyleSheet("")
@@ -952,7 +946,6 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_4.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_4.setEnabled(False)
     if self.__nbAxis > 4:
-      self.ui.lblLblPosB.setText(self.__axisNames[4])
       self.ui.lblLblPosB.setEnabled(True)
       self.ui.lblLblPosB.setStyleSheet("")
       self.ui.lblPosB.setEnabled(True)
@@ -974,7 +967,6 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_5.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_5.setEnabled(False)
     if self.__nbAxis > 5:
-      self.ui.lblLblPosC.setText(self.__axisNames[5])
       self.ui.lblLblPosC.setEnabled(True)
       self.ui.lblLblPosC.setStyleSheet("")
       self.ui.lblPosC.setEnabled(True)
