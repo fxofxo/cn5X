@@ -145,7 +145,7 @@ class grblDecode(QObject):
     tblDecode = grblOutput[1:-1].split("|")
     for D in tblDecode:
       if D in self.__validMachineState:
-        if D != self.__etatMachine:
+        if D != self.__machineStatus:
           self.ui.lblEtat.setText(D)
           self.setMachineStatus = D
           if D == GRBL_STATUS_IDLE:
@@ -714,7 +714,7 @@ class grblDecode(QObject):
           # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
           self.__nbAxis = len(self.__axisNames);
         self.updateAxisDefinition()
-        self.updateAxisLedStatus()
+        #self.updateAxisLedStatus()
         return grblOutput
       
       elif grblOutput[:4] == "[D:":
@@ -906,16 +906,15 @@ class grblDecode(QObject):
     return (champ_0 + " (" + champ_1 + ")" + " : " + champ_2)
 
   def updateAxisLedStatus(self):
-    n = 0
     for L in self.__axisNames:
-      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
-      exec("self.ui.lblLed{:02d}".format(n) + f".setText('{L}')")
-      n+=1
+      exec("self.ui.cnLed{}".format(L) + ".setLedStatus(True)")
+      exec("self.ui.lblLed{}".format(L) + f".setText('{L}')")
+
   def disableAxisLeds(self):
-      n = 0
+
       for L in self.__axisNames:
-        exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(False)")
-        n+=1
+        exec("self.ui.cnLed{}".format(N) + ".setLedStatus(False)")
+
 
   def updateAxisDefinition(self):
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''

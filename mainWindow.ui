@@ -1677,7 +1677,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed00">
+         <widget class="QLabel" name="lblLedX">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1699,7 +1699,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed00">
+         <widget class="cnLed" name="cnLedX">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1740,7 +1740,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed01">
+         <widget class="QLabel" name="lblLedY">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1753,7 +1753,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed01">
+         <widget class="cnLed" name="cnLedY">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1794,7 +1794,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed02">
+         <widget class="QLabel" name="lblLedZ">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1807,7 +1807,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed02">
+         <widget class="cnLed" name="cnLedZ">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1848,7 +1848,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed03">
+         <widget class="QLabel" name="lblLedA">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1861,7 +1861,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed03">
+         <widget class="cnLed" name="cnLedA">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1905,7 +1905,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed04">
+         <widget class="QLabel" name="lblLedB">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1918,7 +1918,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed04">
+         <widget class="cnLed" name="cnLedB">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1959,7 +1959,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed05">
+         <widget class="QLabel" name="lblLedC">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -1972,7 +1972,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed05">
+         <widget class="cnLed" name="cnLedC">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2013,7 +2013,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed06">
+         <widget class="QLabel" name="lblLedP">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2026,7 +2026,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed08">
+         <widget class="cnLed" name="cnLedH">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2067,7 +2067,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed07">
+         <widget class="QLabel" name="lblLedD">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2080,7 +2080,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed06">
+         <widget class="cnLed" name="cnLedP">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2121,7 +2121,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed08">
+         <widget class="QLabel" name="lblLedH">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2134,7 +2134,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed07">
+         <widget class="cnLed" name="cnLedD">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2175,7 +2175,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed09">
+         <widget class="QLabel" name="lblLedR">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2188,7 +2188,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed09">
+         <widget class="cnLed" name="cnLedR">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2229,7 +2229,7 @@ to unlock urgent stop</string>
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="lblLed10">
+         <widget class="QLabel" name="lblLedS">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -2242,7 +2242,7 @@ to unlock urgent stop</string>
          </widget>
         </item>
         <item>
-         <widget class="cnLed" name="cnLed10">
+         <widget class="cnLed" name="cnLedS">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -4542,6 +4542,21 @@ color: rgb(0, 0, 63);
           </sizepolicy>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <spacer name="horizontalSpacer_6">
             <property name="orientation">
@@ -4549,7 +4564,667 @@ color: rgb(0, 0, 63);
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>24</width>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="frmG28_G30" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QGridLayout" name="frmG28_G30_Layout">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>2</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="cnQPushButton" name="btnG28">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>36</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>36</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>Make a rapid move from current location to the machine position defined by the last G28.1
+If no positions are stored with G28.1 then all axes will go to the machine origin.</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 7;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnG28.svg</normaloff>:/cn5X/images/btnG28.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>36</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="cnQPushButton" name="btnG30">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>36</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>36</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="toolTip">
+                <string>Make a rapid move from current location to the machine position defined by the last G30.1
+If no positions are stored with G30.1 then all axes will go to the machine origin.</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 7;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnG30.svg</normaloff>:/cn5X/images/btnG30.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>36</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_32">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="frmDigitalIntput" native="true">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>44</width>
+              <height>52</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>44</width>
+              <height>52</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_21">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>0</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>2</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="lbl_cnLedD0">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>LED Calculator</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Di0</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="cnLed" name="cnLedD0">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Digital input 0</string>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="pixmap">
+                <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+               <property name="Couleur" stdset="0">
+                <string>Verte</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="lbl_cnLedD1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>LED Calculator</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Di1</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="cnLed" name="cnLedD1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Digital input 1</string>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="pixmap">
+                <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+               <property name="Couleur" stdset="0">
+                <string>Verte</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="lbl_cnLedD2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>LED Calculator</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Di2</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="cnLed" name="cnLedD2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Digital input 2</string>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="pixmap">
+                <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+               <property name="Couleur" stdset="0">
+                <string>Verte</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="lbl_cnLedD3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>LED Calculator</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Di3</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="cnLed" name="cnLedD3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Digital input 3</string>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="pixmap">
+                <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+               <property name="Couleur" stdset="0">
+                <string>Verte</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_34">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="frmDigitalOutput" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_20">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>2</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="cnQPushButton" name="btnM64P0">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 12;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnM64P0.svg</normaloff>:/cn5X/images/btnM64P0.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="cnQPushButton" name="btnM64P1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 12;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnM64P1.svg</normaloff>:/cn5X/images/btnM64P1.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="cnQPushButton" name="btnM64P2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 12;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnM64P2.svg</normaloff>:/cn5X/images/btnM64P2.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="cnQPushButton" name="btnM64P3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 12;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnM64P3.svg</normaloff>:/cn5X/images/btnM64P3.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_32">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_35">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
               <height>20</height>
              </size>
             </property>
@@ -4571,7 +5246,7 @@ color: rgb(0, 0, 63);
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_11">
              <property name="spacing">
-              <number>6</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -4586,10 +5261,20 @@ color: rgb(0, 0, 63);
               <number>0</number>
              </property>
              <item>
-              <widget class="cnQPushButton" name="btnFloodM7">
-               <property name="enabled">
-                <bool>true</bool>
+              <spacer name="horizontalSpacer_33">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="cnQPushButton" name="btnFloodM7">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4625,9 +5310,6 @@ color: rgb(0, 0, 63);
              </item>
              <item>
               <widget class="cnQPushButton" name="btnFloodM8">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4663,9 +5345,6 @@ color: rgb(0, 0, 63);
              </item>
              <item>
               <widget class="cnQPushButton" name="btnFloodM9">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4709,8 +5388,8 @@ color: rgb(0, 0, 63);
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>24</width>
-              <height>20</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -4731,7 +5410,7 @@ color: rgb(0, 0, 63);
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
              <property name="spacing">
-              <number>6</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -4747,9 +5426,6 @@ color: rgb(0, 0, 63);
              </property>
              <item>
               <widget class="cnQPushButton" name="btnSpinM3">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4785,9 +5461,6 @@ color: rgb(0, 0, 63);
              </item>
              <item>
               <widget class="cnQPushButton" name="btnSpinM4">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4823,9 +5496,6 @@ color: rgb(0, 0, 63);
              </item>
              <item>
               <widget class="cnQPushButton" name="btnSpinM5">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4869,8 +5539,8 @@ color: rgb(0, 0, 63);
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>23</width>
-              <height>20</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -4891,7 +5561,7 @@ color: rgb(0, 0, 63);
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <property name="spacing">
-              <number>6</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -4907,9 +5577,6 @@ color: rgb(0, 0, 63);
              </property>
              <item>
               <widget class="cnQPushButton" name="btnStart">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4951,9 +5618,6 @@ color: rgb(0, 0, 63);
              </item>
              <item>
               <widget class="cnQPushButton" name="btnPause">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -4995,9 +5659,6 @@ color: rgb(0, 0, 63);
              </item>
              <item>
               <widget class="cnQPushButton" name="btnStop">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -5047,76 +5708,8 @@ color: rgb(0, 0, 63);
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>24</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QWidget" name="frmG28_G30" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="visible">
-             <bool>false</bool>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_28">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QPushButton" name="btnG28">
-               <property name="toolTip">
-                <string>Make a rapid move from current location to the machine position defined by the last G28.1
-If no positions are stored with G28.1 then all axes will go to the machine origin.</string>
-               </property>
-               <property name="text">
-                <string>G28</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnG30">
-               <property name="toolTip">
-                <string>Make a rapid move from current location to the machine position defined by the last G30.1
-If no positions are stored with G30.1 then all axes will go to the machine origin.</string>
-               </property>
-               <property name="text">
-                <string>G30</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_32">
-            <property name="visible">
-             <bool>false</bool>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>24</width>
-              <height>20</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -11136,7 +11729,7 @@ G43.1</string>
            <x>0</x>
            <y>0</y>
            <width>122</width>
-           <height>61</height>
+           <height>66</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_A">
@@ -11692,8 +12285,8 @@ G43.1</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>121</width>
-           <height>61</height>
+           <width>122</width>
+           <height>66</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_Z">
@@ -12615,7 +13208,6 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
  </customwidgets>
  <resources>
   <include location="cn5X.qrc"/>
-  <include location="../../../../../.designer/backup/cn5X.qrc"/>
  </resources>
  <connections/>
 </ui>
