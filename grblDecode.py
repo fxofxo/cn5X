@@ -46,7 +46,7 @@ class grblDecode(QObject):
     self.__grblCom   = grbl
     self.__nbAxis    = DEFAULT_NB_AXIS
     self.__axisNames = DEFAULT_AXIS_NAMES                #Dynamic axis name grbl ramps
-    self.ui_axis_dict = {'X': 'X', 'Y': 'Y', 'Z': 'Z', 'U': 'A', 'V': 'Z'}
+    self.ui_axis_dict = {'X': 'X', 'Y': 'Y', 'Z': 'Z', 'A':'A','B':'B','C':'C','U':'A', 'V': 'Z'}
     self.__validMachineState = [
       GRBL_STATUS_IDLE,
       GRBL_STATUS_RUN,
