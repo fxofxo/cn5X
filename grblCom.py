@@ -208,7 +208,7 @@ class grblCom(QObject):
 
 
   def gcodePush(self, buff: str, flag=COM_FLAG_NO_FLAG):
-    print(f"gcodePush: {buff}")
+
     ''' Ajout d'une commande GCode dans la pile en mode FiFo (fonctionnement normal de la pile d'un programe GCode) '''
     if self.__connectStatus and self.__grblInit:
       self.__Com.gcodePush(buff, flag)
