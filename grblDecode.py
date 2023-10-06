@@ -280,7 +280,8 @@ class grblDecode(QObject):
       '''
     if not flagPn:
       # ATurn off all LEDs. If the Pn: string is not found, all the LEDs are off.
-      self.disableAxisLeds()
+      #self.disableAxisLeds()
+      pass
 
 
     if self.__getNextStatusOutput:
