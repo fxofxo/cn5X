@@ -104,7 +104,7 @@ class winMain(QtWidgets.QMainWindow):
     self.logGrbl.document().setMaximumBlockCount(2000)  # Limite la taille des logs a 2000 lignes
     self.logCn5X.document().setMaximumBlockCount(2000)  # Limite la taille des logs a 2000 lignes
     self.logDebug.document().setMaximumBlockCount(2000) # Limite la taille des logs a 2000 lignes
-    self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)               # Active le tab de la log cn5X++
+    #self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)               # Active le tab de la log cn5X++
 
     self.__gcodeFile = gcodeFile(self.ui, self.ui.gcodeTable)
     self.__gcodeFile.sig_log.connect(self.on_sig_log)
@@ -128,13 +128,15 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblCom.sig_serialLock.connect(self.on_sig_serialLock)
 
     self.__beeper = cn5XBeeper();
-    
+
     self.__arretUrgence     = True
     def arretUrgence():
       return self.__arretUrgence
 
     self.__decode = grblDecode(self.ui, self.log, self.__grblCom, self.__beeper, arretUrgence)
     self.__grblCom.setDecodeur(self.__decode)
+
+    # self.__decode = grblDecode(self.ui, self.log, self.__grblCom, self.__beeper, arretUrgence)
 
     self.__jog = grblJog(self.__grblCom)
     self.ui.dsbJogSpeed.setValue(DEFAULT_JOG_SPEED)
@@ -152,7 +154,7 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblConfigLoaded = False
     self.__nbAxis           = DEFAULT_NB_AXIS
     self.__axisNames        = DEFAULT_AXIS_NAMES
-    #self.__decode.updateAxisDefinition()
+    self.__decode.updateAxisDefinition()
     self.__maxTravel        = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__firstGetSettings = False
     self.__jogModContinue   = False
@@ -299,23 +301,23 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogPlusZ.mousePress.connect(self.on_jog)
     self.ui.btnJogMinusU.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusU.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsB.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusB.mousePress.connect(self.on_jog)
-    self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusC.mousePress.connect(self.on_jog)
+  # self.ui.btnJogMoinsB.mousePress.connect(self.on_jog)
+  # self.ui.btnJogPlusB.mousePress.connect(self.on_jog)
+  # self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
+  # self.ui.btnJogPlusC.mousePress.connect(self.on_jog)
 
     self.ui.btnJogMinusX.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusX.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogMinusY.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusY.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsZ.mouseRelease.connect(self.stop_jog)
+  # self.ui.btnJogMoinsZ.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusZ.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsU.mouseRelease.connect(self.stop_jog)
+  # self.ui.btnJogMoinsU.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogPlusU.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsB.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusB.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMoinsC.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusC.mouseRelease.connect(self.stop_jog)
+  # self.ui.btnJogMoinsB.mouseRelease.connect(self.stop_jog)
+  # self.ui.btnJogPlusB.mouseRelease.connect(self.stop_jog)
+  # self.ui.btnJogMoinsC.mouseRelease.connect(self.stop_jog)
+  # self.ui.btnJogPlusC.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogStop.mousePress.connect(self.__jog.jogCancel)
 
     self.ui.rbRapid025.clicked.connect(lambda: self.__grblCom.realTimePush(REAL_TIME_RAPID_25_POURCENT))
@@ -562,11 +564,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
       self.ui.frmArretUrgence.setEnabled(False)
       self.ui.frmControleVitesse.setEnabled(False)
+      self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
-      self.ui.frameX.setEnabled(False)
-      self.ui.frameY.setEnabled(False)
-      self.ui.frameA.setEnabled(False)
-      self.ui.frameZ.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
@@ -578,11 +577,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
       self.ui.frmArretUrgence.setEnabled(True)
       self.ui.frmControleVitesse.setEnabled(False)
+      self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
-      self.ui.frameX.setEnabled(False)
-      self.ui.frameY.setEnabled(False)
-      self.ui.frameA.setEnabled(False)
-      self.ui.frameZ.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
@@ -594,12 +590,9 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Emergency stop"))
       self.ui.frmArretUrgence.setEnabled(True)
       self.ui.frmControleVitesse.setEnabled(True)
+      self.ui.frmWMPOS.setEnabled(True)
       self.ui.grpJog.setEnabled(True)
       self.ui.grpJog.setEnabled(True)
-      self.ui.frameX.setEnabled(True)
-      self.ui.frameY.setEnabled(True)
-      self.ui.frameA.setEnabled(True)
-      self.ui.frameZ.setEnabled(True)
       self.ui.frmGcodeInput.setEnabled(True)
       self.ui.tabMainPage.setEnabled(True)
       self.ui.tabProbeXY.setEnabled(True)
@@ -1864,7 +1857,8 @@ class winMain(QtWidgets.QMainWindow):
     if not self.__connectionStatus:
       # Force l'onglet "Grbl output" sauf en cas de debug
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_GRBL)
+        #self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_GRBL)
+        pass
       # Recupere les coordonnees et parametres du port a connecter
       serialDevice = self.ui.cmbPort.currentText()
       serialDevice = serialDevice.split("-")
@@ -1881,7 +1875,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnConnect.setText(self.tr("Connect")) # La prochaine action du bouton sera pour connecter
       # Force l'onglet "log" sauf en cas de debug
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
+        #self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
+        pass
 
 
   @pyqtSlot()
@@ -1914,7 +1909,7 @@ class winMain(QtWidgets.QMainWindow):
       self.setEnableDisableGroupes()
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
-      #self.__decode.disableAxisLeds()
+      self.__decode.disableAxisLeds()
 
 
   @pyqtSlot(int)
@@ -2407,6 +2402,11 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnPause.setButtonStatus(True)
       self.ui.btnStop.setButtonStatus(False)
 
+      print(f"PAUSE pressed :{self.__gcodeFile.getGCodeSelectedLine()}")
+
+
+
+
 
   def stopCycle(self):
     if self.ui.lblEtat.text() == GRBL_STATUS_HOLD0:
@@ -2732,10 +2732,10 @@ class winMain(QtWidgets.QMainWindow):
 
 
 if __name__ == '__main__':
-  
+
   # Suppress qt.qpa.xcb: QXcbConnection: XCB error: 3 (BadWindow)
   os.environ["QT_LOGGING_RULES"] = '*.debug=false;qt.qpa.*=false'
-  
+
   app = QtWidgets.QApplication(sys.argv)
 
   # Retrouve le répertoire de l'exécutable

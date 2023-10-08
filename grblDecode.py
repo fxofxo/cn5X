@@ -15,6 +15,7 @@
 ' WITHOUT ANY WARRANTY; without even the implied warranty of              '
 ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           '
 ' GNU General Public License for more details.                            '
+' You should have received a copy of the GNU General Public License       '
 '                                                                         '
 ' You should have received a copy of the GNU General Public License       '
 ' along with this program.  If not, see <http://www.gnu.org/licenses/>.   '
@@ -105,7 +106,7 @@ class grblDecode(QObject):
     self.beeper = beeper
     self.probeStatus = False
     self.arretUrgence = arretUrgence
-    
+
   def getG5actif(self):
     return "G{}".format(self.__G5actif)
 
@@ -457,14 +458,10 @@ class grblDecode(QObject):
 
     if not flagPn:
       # Eteint toute les leds. Si on a pas trouve la chaine Pn:, c'est que toute les leds sont eteintes.
-      for L in ['X', 'Y', 'Z', 'A', 'B', 'C', 'P', 'D', 'H', 'R', 'S']:
-        exec("self.ui.cnLed" + L + ".setLedStatus(False)")
+      # Turns off all LEDs. If we haven't found the Pn: string, it's because all the LEDs are off.
+      #self.disableAxisLeds()
       if self.probeStatus:
         self.probeStatus = False
-      # ATurn off all LEDs. If the Pn: string is not found, all the LEDs are off.
-      #self.disableAxisLeds()
-
-
 
     if self.__getNextStatusOutput:
       self.__getNextStatusOutput = False
@@ -478,10 +475,12 @@ class grblDecode(QObject):
       return grblOutput
 
     elif grblOutput[:6] == "error:":
+      print(f"ERROR:{grblOutput}")
       errNum = int(float(grblOutput[6:]))
       return self.tr("Grbl error number {}: {},\n{}").format(str(errNum), grblError[errNum][1], grblError[errNum][2])
 
     elif grblOutput[:6] == "ALARM:":
+      print(f"RESPONSE:{grblOutput}")
       alarmNum = int(float(grblOutput[6:]))
       return self.tr("Grbl Alarm number {}: {},\n{}").format(str(alarmNum), self.__grblAlarm[alarmNum][1], self.__grblAlarm[alarmNum][2])
 
@@ -498,7 +497,7 @@ class grblDecode(QObject):
 
 
   def decodeGrblData(self, grblOutput):
-
+    print(f"DECODE:{grblOutput}" )
     if grblOutput[:1] == "$": # Setting output
       if grblOutput[:2] == "$N": # startup blocks
         return grblOutput
@@ -706,19 +705,17 @@ class grblDecode(QObject):
         if self.__getNextGCodeState:
           self.__getNextGCodeState = False
           return grblOutput
-
       elif grblOutput[:5] == "[AXS:":
         # Recupère le nombre d'axes et leurs noms
         self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
         self.__axisNames        = list(grblOutput[1:-1].split(':')[2])
-
         if len(self.__axisNames) < self.__nbAxis:
           # Il est posible qu'il y ait moins de lettres que le nombre d'axes si Grbl
           # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
           self.__nbAxis = len(self.__axisNames);
         self.updateAxisDefinition()
         return grblOutput
-      
+
       elif grblOutput[:4] == "[D:":
         # Digital status
         return grblOutput
@@ -907,13 +904,31 @@ class grblDecode(QObject):
     return (champ_0 + " (" + champ_1 + ")" + " : " + champ_2)
 
 
+  def updateAxisLedStatus(self):
+    n = 0
+    for L in self.__axisNames:
+      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
+      exec("self.ui.lblLed{:02d}".format(n) + f".setText('{L}')")
+      if (n < 4):
+        exec("self.ui.lblLedLimit{:02d}".format(n) + f".setText('{L}')")
+      n+=1
+  def disableAxisLeds(self):
+    print("ledDisabled")
+    n = 0
+    for L in self.__axisNames:
+      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(False)")
+      n+=1
+
   def updateAxisDefinition(self):
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
-
+    n = 0
     for  ax in self.__axisNames:
-      exec(f"self.ui.cnLed{self.ui_axis_dict[ax]}.setLedStatus(True)")
-      exec(f"self.ui.lblLed{self.ui_axis_dict[ax]}.setText('{ax}')")
-      exec(f"self.ui.lblLblPos{self.ui_axis_dict[ax]}.setText('{ax}')")
+      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
+      #exec(f"self.ui.lblLed{self.ui_axis_dict[ax]}.setText('{ax}')")
+      #exec(f"self.ui.lblLblPos{self.ui_axis_dict[ax]}.setText('{ax}')")
+      n += 1
+
+
 
     self.ui.rbtDefineOriginXY_G54.setText("G{} offset".format(self.__G5actif))
     self.ui.rbtDefineOriginZ_G54.setText("G{} offset".format(self.__G5actif))
@@ -923,9 +938,9 @@ class grblDecode(QObject):
     self.ui.mnuG5X_origine_2.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[1]))
     self.ui.mnuG5X_origine_3.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[2]))
 
-
     if self.__nbAxis > 3:
-      self.ui.lblLblPosA.setEnabled(True)
+      self.ui.lblLblPosA.setText(self.__axisNames[3])
+      #self.ui.lblLblPosA.setEnabled(True)
       self.ui.lblLblPosA.setStyleSheet("")
       #self.ui.lblPosA.setEnabled(True)
       self.ui.lblPosA.setStyleSheet("")
@@ -946,6 +961,7 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_4.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_4.setEnabled(False)
     if self.__nbAxis > 4:
+      self.ui.lblLblPosB.setText(self.__axisNames[4])
       self.ui.lblLblPosB.setEnabled(True)
       self.ui.lblLblPosB.setStyleSheet("")
       self.ui.lblPosB.setEnabled(True)
@@ -967,6 +983,7 @@ class grblDecode(QObject):
       self.ui.mnuG5X_origine_5.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_5.setEnabled(False)
     if self.__nbAxis > 5:
+      self.ui.lblLblPosC.setText(self.__axisNames[5])
       self.ui.lblLblPosC.setEnabled(True)
       self.ui.lblLblPosC.setStyleSheet("")
       self.ui.lblPosC.setEnabled(True)
