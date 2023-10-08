@@ -152,7 +152,7 @@ class grblComSerial(QObject):
         self.sig_debug.emit(">>> " + buff)
     # Force l'etat "Home" car grbl bloque la commande ? pendant le Homing
     if buff[0:2] == CMD_GRBL_RUN_HOME_CYCLE:
-      self.__decode.setMachineStatus(GRBL_STATUS_HOME)
+      self.__decode.setMachineState(GRBL_STATUS_HOME)
       self.__grblStatus = GRBL_STATUS_HOME
     # Force l'etat RUN en cas de Probe pour éviter le téléscopage avec les réponses de $#
     if "G38" in buff:

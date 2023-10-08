@@ -106,6 +106,7 @@ class grblDecode(QObject):
     self.beeper = beeper
     self.probeStatus = False
     self.arretUrgence = arretUrgence
+    self.disableAxisLeds()
 
   def getG5actif(self):
     return "G{}".format(self.__G5actif)
@@ -497,7 +498,7 @@ class grblDecode(QObject):
 
 
   def decodeGrblData(self, grblOutput):
-    print(f"DECODE:{grblOutput}" )
+    #print(f"DECODE:{grblOutput}" )
     if grblOutput[:1] == "$": # Setting output
       if grblOutput[:2] == "$N": # startup blocks
         return grblOutput
@@ -707,6 +708,7 @@ class grblDecode(QObject):
           return grblOutput
       elif grblOutput[:5] == "[AXS:":
         # Recupère le nombre d'axes et leurs noms
+        print("AXS received")
         self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
         self.__axisNames        = list(grblOutput[1:-1].split(':')[2])
         if len(self.__axisNames) < self.__nbAxis:
@@ -742,13 +744,28 @@ class grblDecode(QObject):
   def get_etatArrosage(self):
     return self.__etatArrosage
 
+  def setMachineState(self, state):
+    print("setState "+ state)
+    if state in self.__validMachineState:
+      if state != self.__machineState:
+        self.ui.lblEtat.setText(state)
+        self.__machineState = state
+        if self.__machineState == GRBL_STATUS_ALARM:
+          self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                        "background-color: red;")
+        elif self.__machineState == GRBL_STATUS_RUN or self.__machineState == GRBL_STATUS_JOG:
+          self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                        "background-color: blue;")
+        elif self.__machineState == GRBL_STATUS_HOME:
+          self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                        "background-color: cyan;")
 
-  def setMachineStatus(self, state):
-
-      if state in self.__validMachineState:
-        if state != self.__machineState:
-          self.ui.lblEtat.setText(state)
-          self.__machineState = state
+        elif self.__machineState == GRBL_STATUS_IDLE:
+          self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                        "background-color: green;")
+        else:
+          self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
+                                        "background-color: black;")
 
   def get_MachineState(self):
     return self.__machineState
@@ -905,6 +922,7 @@ class grblDecode(QObject):
 
 
   def updateAxisLedStatus(self):
+    print("UpdateAxisLEdStatus")
     n = 0
     for L in self.__axisNames:
       exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
@@ -920,11 +938,12 @@ class grblDecode(QObject):
       n+=1
 
   def updateAxisDefinition(self):
+
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
     n = 0
     for  ax in self.__axisNames:
       exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
-      #exec(f"self.ui.lblLed{self.ui_axis_dict[ax]}.setText('{ax}')")
+      exec("self.ui.lblLed{:02d}.setText('{}')".format(n,ax))
       #exec(f"self.ui.lblLblPos{self.ui_axis_dict[ax]}.setText('{ax}')")
       n += 1
 

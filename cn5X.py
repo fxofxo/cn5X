@@ -154,7 +154,7 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblConfigLoaded = False
     self.__nbAxis           = DEFAULT_NB_AXIS
     self.__axisNames        = DEFAULT_AXIS_NAMES
-    self.__decode.updateAxisDefinition()
+    #self.__decode.updateAxisDefinition()
     self.__maxTravel        = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__firstGetSettings = False
     self.__jogModContinue   = False
@@ -1960,7 +1960,7 @@ class winMain(QtWidgets.QMainWindow):
       return
 
     # On anticipe l'état GRBL_STATUS_JOG
-    self.__decode.setMachineStatus(GRBL_STATUS_JOG)
+    self.__decode.setMachineState(GRBL_STATUS_JOG)
 
     jogDistance = 0
     for qrb in [self.ui.rbtJog0000, self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
