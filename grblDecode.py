@@ -61,7 +61,8 @@ class grblDecode(QObject):
       GRBL_STATUS_DOOR3,
       GRBL_STATUS_CHECK,
       GRBL_STATUS_HOME,
-      GRBL_STATUS_SLEEP
+      GRBL_STATUS_SLEEP,
+      GRBL_STATUS_NOCON
     ]
     self.__validG5x = ["G28", "G30", "G54","G55","G56","G57","G58","G59", "G92"]
     self.__G5actif = 54
@@ -107,6 +108,7 @@ class grblDecode(QObject):
     self.probeStatus = False
     self.arretUrgence = arretUrgence
     self.disableAxisLeds()
+    self.setMachineState(GRBL_STATUS_NOCON)
 
   def getG5actif(self):
     return "G{}".format(self.__G5actif)
@@ -149,8 +151,9 @@ class grblDecode(QObject):
     for D in tblDecode:
       if D in self.__validMachineState:
         if D != self.__machineState:
-          self.ui.lblEtat.setText(D)
-          self.__machineState = D
+          print(f"status change{D}")
+          self.setMachineState(D)
+
           if D == GRBL_STATUS_IDLE:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(False)
@@ -765,7 +768,7 @@ class grblDecode(QObject):
                                         "background-color: green;")
         else:
           self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
-                                        "background-color: black;")
+                                        "background-color: grey;")
 
   def get_MachineState(self):
     return self.__machineState

@@ -1893,6 +1893,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.lblSerialActivity.setStyleSheet(".QLabel{border-radius: 3px; background: green;}")
       # Beep
       self.__beeper.beep(1760, 0.25, 16000)
+      self.__decode.setMachineState(GRBL_STATUS_NOCON)
 
     else:
       # Mise a jour de l'interface machine non connectée
@@ -1910,6 +1911,7 @@ class winMain(QtWidgets.QMainWindow):
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
       self.__decode.disableAxisLeds()
+      self.__decode.setMachineState(GRBL_STATUS_NOCON)
 
 
   @pyqtSlot(int)
@@ -2159,6 +2161,7 @@ class winMain(QtWidgets.QMainWindow):
 
   @pyqtSlot(str)
   def on_sig_init(self, data: str):
+    print("sigInit")
     self.log(logSeverity.info.value, self.tr("cn5X++ : Grbl initialized."))
     self.logGrbl.append(data)
     self.__statusText = data.split("[")[0]
@@ -2169,6 +2172,7 @@ class winMain(QtWidgets.QMainWindow):
       self.__firstGetSettings = True
     # Relis les paramètres GCodes
     self.__grblCom.gcodeInsert(CMD_GRBL_GET_GCODE_PARAMATERS)
+
 
 
   @pyqtSlot()
