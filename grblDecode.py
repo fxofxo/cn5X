@@ -261,17 +261,23 @@ class grblDecode(QObject):
         if int(self.ui.lblBrochePourcent.text()[:-1]) != int(values[2]):
           adjustSpindleOverride(int(values[2]), int(self.ui.lblBrochePourcent.text()[:-1]), self.__grblCom)
 
-      elif D[:3] == "Pn:": # Input Pin State
+      elif D[:3] == "Pn:": # Input Pin State  including limit pins
         flagPn = True
         triggered = D[3:]
-        # Affichage voyants d'interface (except axis)
+        #limit led
+        for L in self.__axisNames:
+          if L in triggered:
+            print("Limit triggered")
+            self.switchONLimitLed(L)
+        # Affichage voyants d'interface (except limit led for axis)
         for L in [ 'P', 'D', 'H', 'R', 'S']:
           if L in triggered:
             exec("self.ui.cnLed" + L + ".setLedStatus(True)")
-            print(f"Trigered {L}")
+            print(f"Triggered {L}")
           else:
-            exec("self.ui.cnLed" + L + ".setLedStatus(False)")
-        # Beep lorsque le probe entre en contact
+            pass
+            #exec("self.ui.cnLed" + L + ".setLedStatus(False)")
+       # Beep lorsque le probe entre en contact
         if 'P' in triggered:
           if not self.probeStatus:
             self.beeper.beep(1760, 0.25, 16000)
@@ -616,7 +622,7 @@ class grblDecode(QObject):
                 font.setBold(False)
                 lbl.setFont(font)
             # Mise à jour des labels dépendant du système de coordonnées actif
-            self.updateAxisDefinition()
+            #self.updateAxisDefinition()
 
           elif S in ["G17", "G18", "G19"]:
             self.ui.lblPlan.setText(S)
@@ -933,6 +939,7 @@ class grblDecode(QObject):
       if (n < 4):
         exec("self.ui.lblLedLimit{:02d}".format(n) + f".setText('{L}')")
       n+=1
+
   def disableAxisLeds(self):
     print("ledDisabled")
     n = 0
@@ -941,14 +948,25 @@ class grblDecode(QObject):
       n+=1
 
   def updateAxisDefinition(self):
-
+    print("updateAxisDefinition")
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
     n = 0
     for  ax in self.__axisNames:
       exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
       exec("self.ui.lblLed{:02d}.setText('{}')".format(n,ax))
+      #limit led label
+      exec("self.ui.lblLedLimit{:02d}.setText('{}')".format(n,ax))
       #exec(f"self.ui.lblLblPos{self.ui_axis_dict[ax]}.setText('{ax}')")
       n += 1
+
+  def switchONLimitLed(self, L ):
+    if L in self.__axisNames:
+      ledn = self.__axisNames.index(L)
+      exec("self.ui.cnLedLimit{:02d}".format(ledn) + ".setLedStatus(True)")
+  def switchOFFLimitLeds(self):
+    for L in self.__axisNames:
+      ledn = self.__axisNames.index(L)
+      exec("self.ui.cnLedLimit{:02d}".format(ledn) + ".setLedStatus(False)")
 
 
 

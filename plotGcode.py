@@ -1,8 +1,10 @@
-import numpy as np
-from PyQt5 import QtCore, QtWidgets, uic, QtChart,QtGui
+from  config import *
 
+import numpy as np
 import time
-import random
+from PyQt5 import QtCore, QtWidgets, uic,QtGui
+if CONFIG_QTCHART_ENABLED:
+    from PyQt5 import QtChart
 
 XMAX = 500
 DMIN = 4
@@ -21,46 +23,46 @@ class plotGcode():
         self.zplot = np.array(0)
         self.xprv_p = 0
         self.uprv_p = 0
+        if CONFIG_QTCHART_ENABLED:
+            self.chart_xy = QtChart.QChart()
+            self.chart_uz = QtChart.QChart()
 
-        self.chart_xy = QtChart.QChart()
-        self.chart_uz = QtChart.QChart()
+            #self.xy_serie = QtChart.QScatterSeries()
+            #self.xy_serie.setMarkerSize(5.0)
+            self.xy_base_serie = QtChart.QLineSeries()
+            self.xy_serie = QtChart.QLineSeries()
+            self.xy_base_serie.setColor(QtGui.QColor("cyan"))
+            self.xy_serie.setColor(QtGui.QColor("red"))
 
-        #self.xy_serie = QtChart.QScatterSeries()
-        #self.xy_serie.setMarkerSize(5.0)
-        self.xy_base_serie = QtChart.QLineSeries()
-        self.xy_serie = QtChart.QLineSeries()
-        self.xy_base_serie.setColor(QtGui.QColor("cyan"))
-        self.xy_serie.setColor(QtGui.QColor("red"))
-
-        self.uz_base_serie = QtChart.QLineSeries()
-        self.uz_serie = QtChart.QLineSeries()
-        self.uz_base_serie.setColor(QtGui.QColor("cyan"))
-        self.uz_serie.setColor(QtGui.QColor("red"))
-
-
-        self.chart_xy.addSeries(self.xy_base_serie)
-        self.chart_xy.addSeries(self.xy_serie)
-        self.chart_uz.addSeries(self.uz_base_serie)
-        self.chart_uz.addSeries(self.uz_serie)
-
-        self.chart_xy.createDefaultAxes()
-        self.chart_uz.createDefaultAxes()
-        self.chart_xy.legend().hide()
-        self.chart_uz.legend().hide()
+            self.uz_base_serie = QtChart.QLineSeries()
+            self.uz_serie = QtChart.QLineSeries()
+            self.uz_base_serie.setColor(QtGui.QColor("cyan"))
+            self.uz_serie.setColor(QtGui.QColor("red"))
 
 
-        # self.chart.setAnimationOptions(QtChart.QChart.SeriesAnimations)
+            self.chart_xy.addSeries(self.xy_base_serie)
+            self.chart_xy.addSeries(self.xy_serie)
+            self.chart_uz.addSeries(self.uz_base_serie)
+            self.chart_uz.addSeries(self.uz_serie)
 
-        self.chartview_xy = QtChart.QChartView(self.chart_xy)
-        self.chartview_uz = QtChart.QChartView(self.chart_uz)
+            self.chart_xy.createDefaultAxes()
+            self.chart_uz.createDefaultAxes()
+            self.chart_xy.legend().hide()
+            self.chart_uz.legend().hide()
 
-        # self.chart_container.setContentsMargins(0, 0, 0, 0)
-        # lay = QtWidgets.QHBoxLayout(self.chart_container)
 
-        lay = QtWidgets.QVBoxLayout(widget)
-        lay.setContentsMargins(0, 0, 0, 0)
-        lay.addWidget(self.chartview_xy)
-        lay.addWidget(self.chartview_uz)
+            # self.chart.setAnimationOptions(QtChart.QChart.SeriesAnimations)
+
+            self.chartview_xy = QtChart.QChartView(self.chart_xy)
+            self.chartview_uz = QtChart.QChartView(self.chart_uz)
+
+            # self.chart_container.setContentsMargins(0, 0, 0, 0)
+            # lay = QtWidgets.QHBoxLayout(self.chart_container)
+
+            lay = QtWidgets.QVBoxLayout(widget)
+            lay.setContentsMargins(0, 0, 0, 0)
+            lay.addWidget(self.chartview_xy)
+            lay.addWidget(self.chartview_uz)
 
 
     def load_gcode_file(self, filename):
@@ -135,10 +137,10 @@ class plotGcode():
         t1 = time.time()
         print(t0-t1)
     def add_point(self,p): # (x,y, z, u)
-
-        self.xy_serie.append(QtCore.QPointF(p[0],p[1]))
-        if len(p) > 3:
-            self.uz_serie.append(QtCore.QPointF(p[3],p[2]))
+        if CONFIG_QTCHART_ENABLED:
+            self.xy_serie.append(QtCore.QPointF(p[0],p[1]))
+            if len(p) > 3:
+                self.uz_serie.append(QtCore.QPointF(p[3],p[2]))
     def set_limits(self):
         widget_w = self.widget.width()
         widget_h = self.widget.height() / 2 # Two chartview on widget

@@ -1893,7 +1893,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.lblSerialActivity.setStyleSheet(".QLabel{border-radius: 3px; background: green;}")
       # Beep
       self.__beeper.beep(1760, 0.25, 16000)
-      self.__decode.setMachineState(GRBL_STATUS_NOCON)
+      #self.__decode.setMachineState(GRBL_STATUS_NOCON)
+
 
     else:
       # Mise a jour de l'interface machine non connectée
@@ -1911,7 +1912,9 @@ class winMain(QtWidgets.QMainWindow):
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
       self.__decode.disableAxisLeds()
+      self.__decode.switchOFFLimitLeds()
       self.__decode.setMachineState(GRBL_STATUS_NOCON)
+
 
 
   @pyqtSlot(int)
@@ -2060,17 +2063,17 @@ class winMain(QtWidgets.QMainWindow):
   @pyqtSlot()
   def on_btnKillAlarm(self):
     self.__grblCom.gcodeInsert(CMD_GRBL_KILL_ALARM_LOCK)
-
+    self.__decode.switchOFFLimitLeds()
 
   @pyqtSlot()
   def on_btnHomeCycle(self):
     self.__grblCom.gcodeInsert(CMD_GRBL_RUN_HOME_CYCLE)
-
+    self.__decode.switchOFFLimitLeds()
 
   @pyqtSlot()
   def on_btnReset(self):
     self.__grblCom.realTimePush(REAL_TIME_SOFT_RESET)
-
+    self.__decode.switchOFFLimitLeds()
 
   @pyqtSlot()
   def sendCmd(self):
