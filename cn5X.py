@@ -558,11 +558,13 @@ class winMain(QtWidgets.QMainWindow):
     Determine l'etat Enable/Disable des differents groupes de controles
     en fonction de l'etat de connexion et de l'etat du bouton d'arret d'urgence.
     '''
-    if not self.__connectionStatus:
+
+    self.ui.frameRight.setEnabled(True)
+
+    if not self.__connectionStatus:  #No connected
       # Pas connecte, tout doit etre desactive et l'arret d'urgence enfonce
       self.ui.btnUrgence.setIcon(QtGui.QIcon(self.btnUrgenceOffPictureLocale))
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
-      self.ui.frmArretUrgence.setEnabled(False)
       self.ui.frmControleVitesse.setEnabled(False)
       self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
@@ -570,12 +572,15 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
+      self.ui.frameStatus.setEnabled(False)
       self.ui.frmHomeAlarm.setEnabled(False)
-    elif self.__arretUrgence:
+      self.ui.frameMainBtns.setEnabled(False)
+
+
+    elif self.__arretUrgence:   # Emergency Stop Activated
       # Connecte mais sous arret d'urgence : Tout est desactive sauf l'arret d'urgence
       self.ui.btnUrgence.setIcon(QtGui.QIcon(self.btnUrgenceOffPictureLocale))
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
-      self.ui.frmArretUrgence.setEnabled(True)
       self.ui.frmControleVitesse.setEnabled(False)
       self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
@@ -583,12 +588,13 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.tabMainPage.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
-      self.ui.frmHomeAlarm.setEnabled(False)
+      self.ui.frameStatus.setEnabled(True)
+      self.ui.frameMainBtns.setEnabled(False)
+      self.ui.frmHomeAlarm.setEnabled(True)
     else:
       # Tout est en ordre, on active tout
       self.ui.btnUrgence.setIcon(QtGui.QIcon(self.btnUrgencePictureLocale))
       self.ui.btnUrgence.setToolTip(self.tr("Emergency stop"))
-      self.ui.frmArretUrgence.setEnabled(True)
       self.ui.frmControleVitesse.setEnabled(True)
       self.ui.frmWMPOS.setEnabled(True)
       self.ui.grpJog.setEnabled(True)
@@ -597,6 +603,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.tabMainPage.setEnabled(True)
       self.ui.tabProbeXY.setEnabled(True)
       self.ui.tabProbeZ.setEnabled(True)
+      self.ui.frameStatus.setEnabled(True)
+      self.ui.frameMainBtns.setEnabled(True)
       self.ui.frmHomeAlarm.setEnabled(True)
       if self.__gcodeFile.isFileLoaded():
         self.ui.frmCycle.setEnabled(True)
