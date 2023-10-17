@@ -653,13 +653,13 @@ class winMain(QtWidgets.QMainWindow):
       if RC:
         # Selectionne l'onglet du fichier sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
-          self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_FILE)
+          self.ui.qtabMain.setCurrentIndex(CN5X_TAB_FILE)
         self.setWindowTitle(APP_NAME + " - " + self.__gcodeFile.fileName())
         self.__plotGcode.load_gcode_file(fileName[0])
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
-          self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
+          self.ui.qtabMain.setCurrentIndex(CN5X_TAB_LOG)
     # Active ou desactive les boutons de cycle
     self.setEnableDisableGroupes()
     # Restore le curseur de souris
@@ -2195,7 +2195,7 @@ class winMain(QtWidgets.QMainWindow):
   @pyqtSlot(int)
   def on_sig_alarm(self, alarmNum: int):
     self.logGrbl.append(self.__decode.alarmMessage(alarmNum))
-    self.__decode.setMachineStatus(GRBL_STATUS_ALARM)
+    self.__decode.setMachineState(GRBL_STATUS_ALARM)
     if self.__cycleRun:
       self.__grblCom.clearCom() # Vide la file d'attente de communication
       self.__cycleRun = False

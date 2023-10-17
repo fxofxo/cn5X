@@ -159,8 +159,8 @@ class grblDecode(QObject):
             if self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(False)
             if not self.ui.btnStop.getButtonStatus(): self.ui.btnStop.setButtonStatus(True)
             self.ui.lblEtat.setToolTip(self.tr("Grbl is waiting for work."))
-            if self.ui.btnG28.getButtonStatus():      self.ui.btnG28.setButtonStatus(False)
-            if self.ui.btnG30.getButtonStatus():      self.ui.btnG30.setButtonStatus(False)
+            #if self.ui.btnG28.getButtonStatus():      self.ui.btnG28.setButtonStatus(False)
+            #if self.ui.btnG30.getButtonStatus():      self.ui.btnG30.setButtonStatus(False)
           elif D ==GRBL_STATUS_HOLD0:
             if self.ui.btnStart.getButtonStatus():    self.ui.btnStart.setButtonStatus(False)
             if not self.ui.btnPause.getButtonStatus():    self.ui.btnPause.setButtonStatus(True)
