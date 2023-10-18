@@ -84,7 +84,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabMainPanel">
      <property name="enabled">
@@ -2264,12 +2264,12 @@ color: rgb(0, 0, 63);
      <attribute name="title">
       <string>GrblCom</string>
      </attribute>
-     <widget class="QTextEdit" name="txtConsoleOutput">
+     <widget class="QTextEdit" name="txtGrblOutput">
       <property name="geometry">
        <rect>
-        <x>362</x>
+        <x>0</x>
         <y>30</y>
-        <width>321</width>
+        <width>621</width>
         <height>261</height>
        </rect>
       </property>
@@ -2291,13 +2291,81 @@ color: rgb(0, 0, 63);
        <enum>QTextEdit::NoWrap</enum>
       </property>
      </widget>
-     <widget class="QTextEdit" name="txtGrblOutput">
+     <widget class="QWidget" name="frmGcodeInput" native="true">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>30</y>
-        <width>361</width>
-        <height>261</height>
+        <y>310</y>
+        <width>600</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string notr="true">GCode :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="gcodeQLineEdit" name="txtGCode">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnSend">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Send</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tabLog">
+     <attribute name="title">
+      <string>Page</string>
+     </attribute>
+     <widget class="QTextEdit" name="txtConsoleOutput">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>621</width>
+        <height>231</height>
        </rect>
       </property>
       <property name="minimumSize">
@@ -6967,7 +7035,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>64</height>
+               <height>65</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_X0">
@@ -7597,7 +7665,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>64</height>
+               <height>65</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_Y0">
@@ -8156,7 +8224,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>64</height>
+               <height>65</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_A0">
@@ -8819,7 +8887,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>64</height>
+               <height>65</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_Y0_2">
@@ -10971,69 +11039,6 @@ to unlock urgent stop</string>
      </layout>
     </widget>
    </widget>
-   <widget class="QWidget" name="frmGcodeInput" native="true">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>410</y>
-      <width>600</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_7">
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>2</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>2</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string notr="true">GCode :</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="gcodeQLineEdit" name="txtGCode">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::StrongFocus</enum>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnSend">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Send</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="frmOperationButtons" native="true">
     <property name="enabled">
      <bool>true</bool>
@@ -12246,7 +12251,7 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
      <x>0</x>
      <y>0</y>
      <width>1061</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="mnuApplication">
