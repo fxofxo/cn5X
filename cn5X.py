@@ -569,12 +569,14 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
-      self.ui.tabMainPage.setEnabled(False)
+      self.ui.tabMainPanel.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
       self.ui.frameStatus.setEnabled(False)
       self.ui.frmHomeAlarm.setEnabled(False)
       self.ui.frameMainBtns.setEnabled(False)
+      self.ui.frmOperationButtons.setEnabled(False)
+
 
 
     elif self.__arretUrgence:   # Emergency Stop Activated
@@ -585,12 +587,14 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
-      self.ui.tabMainPage.setEnabled(False)
+      self.ui.tabMainPanel.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
       self.ui.frameStatus.setEnabled(True)
       self.ui.frameMainBtns.setEnabled(False)
       self.ui.frmHomeAlarm.setEnabled(True)
+      self.ui.frmOperationButtons.setEnabled(False)
+
     else:
       # Tout est en ordre, on active tout
       self.ui.btnUrgence.setIcon(QtGui.QIcon(self.btnUrgencePictureLocale))
@@ -600,12 +604,13 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.grpJog.setEnabled(True)
       self.ui.grpJog.setEnabled(True)
       self.ui.frmGcodeInput.setEnabled(True)
-      self.ui.tabMainPage.setEnabled(True)
+      self.ui.tabMainPanel.setEnabled(True)
       self.ui.tabProbeXY.setEnabled(True)
       self.ui.tabProbeZ.setEnabled(True)
       self.ui.frameStatus.setEnabled(True)
       self.ui.frameMainBtns.setEnabled(True)
       self.ui.frmHomeAlarm.setEnabled(True)
+      self.ui.frmOperationButtons.setEnabled(True)
       if self.__gcodeFile.isFileLoaded():
         self.ui.frmCycle.setEnabled(True)
       else:
@@ -2160,12 +2165,12 @@ class winMain(QtWidgets.QMainWindow):
       self.logCn5X.setTextColor(TXT_COLOR_ORANGE)
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Warning : " + data)
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
+        self.ui.qtabMain.setCurrentIndex(CN5X_TAB_LOG)
     elif severity == logSeverity.error.value:
       self.logCn5X.setTextColor(TXT_COLOR_RED)
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Error   : " + data)
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
+        self.ui.qtabMain.setCurrentIndex(CN5X_TAB_LOG)
 
   def log(self, severity: int, data: str):
     self.on_sig_log(severity, data)

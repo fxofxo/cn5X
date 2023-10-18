@@ -29,8 +29,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1124</width>
-    <height>643</height>
+    <width>1061</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -84,9 +84,9 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
-    <widget class="QWidget" name="tabMainPage">
+    <widget class="QWidget" name="tabMainPanel">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -2321,7 +2321,7 @@ color: rgb(0, 0, 63);
     </widget>
     <widget class="QWidget" name="tabJog">
      <attribute name="title">
-      <string>Control</string>
+      <string>Jog</string>
      </attribute>
      <widget class="QFrame" name="frmControleVitesse">
       <property name="geometry">
@@ -3380,7 +3380,7 @@ color: rgb(0, 0, 63);
     </widget>
     <widget class="QWidget" name="tabGcode">
      <attribute name="title">
-      <string>Page</string>
+      <string>Gcode</string>
      </attribute>
      <widget class="QWidget" name="frmStatus" native="true">
       <property name="enabled">
@@ -6730,7 +6730,7 @@ G43.1</string>
     </widget>
     <widget class="QWidget" name="taLog">
      <attribute name="title">
-      <string>LOG</string>
+      <string>Debug</string>
      </attribute>
      <widget class="QWidget" name="debugbtns" native="true">
       <property name="geometry">
@@ -6868,8 +6868,7 @@ G43.1</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 191, 255);
-</string>
+         <string notr="true"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -6903,6 +6902,10 @@ G43.1</string>
               <width>155</width>
               <height>60</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(0,191,255)</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -6986,6 +6989,9 @@ G43.1</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">color:rgb(255,255,255)</string>
+                </property>
                 <property name="text">
                  <string>X</string>
                 </property>
@@ -7015,8 +7021,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7024,8 +7030,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7069,8 +7075,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7087,8 +7093,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7096,8 +7102,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7105,8 +7111,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7148,10 +7154,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7161,8 +7167,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7170,8 +7176,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7215,8 +7221,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7233,8 +7239,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7242,8 +7248,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7251,8 +7257,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7294,10 +7300,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7306,9 +7312,9 @@ G43.1</string>
                    <colorrole role="WindowText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7316,8 +7322,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7360,9 +7366,9 @@ G43.1</string>
                    <colorrole role="Text">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7378,9 +7384,9 @@ G43.1</string>
                    <colorrole role="ButtonText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7388,8 +7394,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7397,8 +7403,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7440,10 +7446,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7514,6 +7520,10 @@ G43.1</string>
               <width>155</width>
               <height>60</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(0,191,255)</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -7609,6 +7619,9 @@ G43.1</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">color:rgb(255,255,255)</string>
+                </property>
                 <property name="text">
                  <string>Y</string>
                 </property>
@@ -7638,8 +7651,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7647,8 +7660,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7692,8 +7705,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7710,8 +7723,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7719,8 +7732,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7728,8 +7741,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7771,10 +7784,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7784,8 +7797,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7793,8 +7806,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7838,8 +7851,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7856,8 +7869,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7865,8 +7878,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7874,8 +7887,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7917,10 +7930,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7929,9 +7942,9 @@ G43.1</string>
                    <colorrole role="WindowText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7939,8 +7952,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -7983,9 +7996,9 @@ G43.1</string>
                    <colorrole role="Text">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8001,9 +8014,9 @@ G43.1</string>
                    <colorrole role="ButtonText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8011,8 +8024,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8020,8 +8033,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8063,10 +8076,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8124,6 +8137,10 @@ G43.1</string>
               <height>60</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(0,191,255)</string>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -8161,8 +8178,11 @@ G43.1</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">color:rgb(255,255,255)</string>
+                </property>
                 <property name="text">
-                 <string>U</string>
+                 <string>A</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -8190,8 +8210,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8199,8 +8219,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8244,8 +8264,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8262,8 +8282,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8271,8 +8291,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8280,8 +8300,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8323,10 +8343,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8336,8 +8356,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8345,8 +8365,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8390,8 +8410,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8408,8 +8428,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8417,8 +8437,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8426,8 +8446,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8469,10 +8489,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8481,9 +8501,9 @@ G43.1</string>
                    <colorrole role="WindowText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8491,8 +8511,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8535,9 +8555,9 @@ G43.1</string>
                    <colorrole role="Text">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8553,9 +8573,9 @@ G43.1</string>
                    <colorrole role="ButtonText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8563,8 +8583,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8572,8 +8592,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8615,10 +8635,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8735,6 +8755,10 @@ G43.1</string>
               <height>60</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(0,191,255)</string>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -8817,6 +8841,9 @@ G43.1</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">color:rgb(255,255,255)</string>
+                </property>
                 <property name="text">
                  <string>Z</string>
                 </property>
@@ -8846,8 +8873,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8855,8 +8882,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8900,8 +8927,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8918,8 +8945,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8927,8 +8954,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8936,8 +8963,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8979,10 +9006,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -8992,8 +9019,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9001,8 +9028,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9046,8 +9073,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9064,8 +9091,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9073,8 +9100,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9082,8 +9109,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9125,10 +9152,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9137,9 +9164,9 @@ G43.1</string>
                    <colorrole role="WindowText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9147,8 +9174,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9191,9 +9218,9 @@ G43.1</string>
                    <colorrole role="Text">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9209,9 +9236,9 @@ G43.1</string>
                    <colorrole role="ButtonText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>2</red>
-                      <green>67</green>
-                      <blue>127</blue>
+                      <red>0</red>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9219,8 +9246,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9228,8 +9255,8 @@ G43.1</string>
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
                       <red>0</red>
-                      <green>191</green>
-                      <blue>255</blue>
+                      <green>0</green>
+                      <blue>0</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9271,10 +9298,10 @@ G43.1</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="128">
+                     <color alpha="255">
                       <red>0</red>
-                      <green>0</green>
-                      <blue>0</blue>
+                      <green>191</green>
+                      <blue>255</blue>
                      </color>
                     </brush>
                    </colorrole>
@@ -9306,7 +9333,7 @@ G43.1</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(248, 255, 192);</string>
+         <string notr="true"/>
         </property>
         <widget class="QWidget" name="verticalLayoutWidget_2">
          <property name="geometry">
@@ -9344,8 +9371,7 @@ G43.1</string>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 0, 63);
-color: rgb(248, 255, 192);</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::Box</enum>
@@ -10379,7 +10405,7 @@ color: rgb(248, 255, 192);</string>
       <item>
        <widget class="QFrame" name="frameMainBtns">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(248, 255, 192);</string>
+         <string notr="true"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -10474,7 +10500,7 @@ color: rgb(248, 255, 192);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(248, 255, 192);</string>
+         <string notr="true"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -10595,7 +10621,7 @@ to unlock urgent stop</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(248, 255, 192);</string>
+          <string notr="true"/>
          </property>
          <property name="title">
           <string>Connection</string>
@@ -11008,7 +11034,7 @@ to unlock urgent stop</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="frmBoutons" native="true">
+   <widget class="QWidget" name="frmOperationButtons" native="true">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -12219,7 +12245,7 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1124</width>
+     <width>1061</width>
      <height>22</height>
     </rect>
    </property>

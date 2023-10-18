@@ -1,4 +1,4 @@
-from  config import *
+from  cn5X_config import CONFIG_QTCHART_ENABLED
 
 import numpy as np
 import time
@@ -111,8 +111,9 @@ class plotGcode():
         return np.sqrt(np.sum( d * d))
 
     def filter_by_dist(self):
-         self.filter_axe_dist(self.axis_values[:, [0, 1]], self.xy_base_serie)
-         self.filter_axe_dist(self.axis_values[:, [2, 3]], self.uz_base_serie)
+        if CONFIG_QTCHART_ENABLED:
+            self.filter_axe_dist(self.axis_values[:, [0, 1]], self.xy_base_serie)
+            self.filter_axe_dist(self.axis_values[:, [2, 3]], self.uz_base_serie)
 
 
     def filter_axe_dist(self, xy_values, serie):
@@ -149,16 +150,16 @@ class plotGcode():
         x_max = max(self.xmax,self.umax)
         y_min = -5
         y_max = self.xmax *(  widget_h / widget_w)
+        if CONFIG_QTCHART_ENABLED:
+            self.chart_xy.axisX(self.xy_serie).setMin(x_min)
+            self.chart_xy.axisX(self.xy_serie).setMax(x_max)
+            self.chart_xy.axisY(self.xy_serie).setMin(y_min)
+            self.chart_xy.axisY(self.xy_serie).setMax(y_max)
 
-        self.chart_xy.axisX(self.xy_serie).setMin(x_min)
-        self.chart_xy.axisX(self.xy_serie).setMax(x_max)
-        self.chart_xy.axisY(self.xy_serie).setMin(y_min)
-        self.chart_xy.axisY(self.xy_serie).setMax(y_max)
-
-        self.chart_uz.axisX(self.uz_serie).setMin(x_min)
-        self.chart_uz.axisX(self.uz_serie).setMax(x_max)
-        self.chart_uz.axisY(self.uz_serie).setMin(y_min)
-        self.chart_uz.axisY(self.uz_serie).setMax(y_max)
+            self.chart_uz.axisX(self.uz_serie).setMin(x_min)
+            self.chart_uz.axisX(self.uz_serie).setMax(x_max)
+            self.chart_uz.axisY(self.uz_serie).setMin(y_min)
+            self.chart_uz.axisY(self.uz_serie).setMax(y_max)
 
 
 
