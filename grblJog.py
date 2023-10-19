@@ -22,6 +22,7 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 import sys, os, time #, datetime
+from tracelog import *
 from PyQt5 import QtGui # QtCore, , QtWidgets
 from PyQt5.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
 from cn5X_config import *
@@ -48,6 +49,17 @@ class grblJog():
     la course maxi.
     '''
     axis = cnButton.name()[-1]  # L'axe est definit par le dernier caractere du nom du Bouton
+    print(f"JOG: axis:{axis} distance{jogDistance} maxtravel {maxTravel}")
+    movement =  cnButton.name()[-5:-1]
+    self.on_jog_move(axis,movement,jogDistance,maxTravel)
+
+  def on_jog_old(self, cnButton, e, jogDistance, maxTravel=0):
+    '''
+    Deplacement relatif (G91) de "jogDistance" mm (G21) sur axe defini par le nom du bouton
+    si jogDistance != 0, si jogDistance = 0, déplacement en coordonnées machine jusqu'à
+    la course maxi.
+    '''
+    axis = cnButton.name()[-1]  # L'axe est definit par le dernier caractere du nom du Bouton
     #print(f"JOG: axis:{axis} distance{jogDistance} maxtravel {maxTravel}")
     if jogDistance != 0:
       if cnButton.name()[-5:-1] == "Plus":
@@ -68,6 +80,33 @@ class grblJog():
         cmdJog = CMD_GRBL_JOG + "G53F{}{}{}".format(self.__jogSpeed, axis, value)
         print(cmdJog)
         self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
+
+  def on_jog_move(self, axis, movement, jogDistance,  maxTravel=0):
+    '''
+    Deplacement relatif (G91) de "jogDistance" mm (G21) sur axe defini par le nom du bouton
+    si jogDistance != 0, si jogDistance = 0, déplacement en coordonnées machine jusqu'à
+    la course maxi.
+    '''
+    LOG(DEBUG,f"JOG: ax:{axis} {movement} Dist:{jogDistance} Max:{maxTravel}")
+    if jogDistance != 0:
+      if movement == "Plus":
+        value = jogDistance
+      else:
+        value = -jogDistance
+
+      if self.__grblCom.grblStatus() in ['Idle', 'Jog']:
+        cmdJog = CMD_GRBL_JOG + "G91G21F{}{}{}".format(self.__jogSpeed, axis, value)
+        self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
+    elif maxTravel != 0:  # jogDistance == 0 & maxTravel !=0
+      if movement == "Plus":
+        value = maxTravel
+      else:
+        value = 0
+      if self.__grblCom.grblStatus() in ['Idle', 'Jog']:
+        cmdJog = CMD_GRBL_JOG + "G53F{}{}{}".format(self.__jogSpeed, axis, value)
+        print(cmdJog)
+        self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
+
 
 
   def jogCancel(self):

@@ -22,6 +22,8 @@
 '                                                                         '
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+from tracelog import *
+
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets, QtCore #, QtGui,
 from PyQt5.QtCore import QCoreApplication, QObject, QEventLoop, pyqtSignal, pyqtSlot
@@ -107,7 +109,7 @@ class grblDecode(QObject):
     self.beeper = beeper
     self.probeStatus = False
     self.arretUrgence = arretUrgence
-    self.disableAxisLeds()
+    self.disableAxis()
     self.setMachineState(GRBL_STATUS_NOCON)
 
   def getG5actif(self):
@@ -485,7 +487,7 @@ class grblDecode(QObject):
       return grblOutput
 
     elif grblOutput[:6] == "error:":
-      print(f"ERROR:{grblOutput}")
+      LOG(ERROR,"GRBL ERROR:{grblOutput}")
       errNum = int(float(grblOutput[6:]))
       return self.tr("Grbl error number {}: {},\n{}").format(str(errNum), grblError[errNum][1], grblError[errNum][2])
 
@@ -499,11 +501,11 @@ class grblDecode(QObject):
 
 
   def errorMessage(self, errNum: int):
-    return "error:{}: {},\n{}".format(str(errNum), grblError[errNum][1], grblError[errNum][2])
+    return "ERROR:{}: {},\n{}".format(str(errNum), grblError[errNum][1], grblError[errNum][2])
 
 
   def alarmMessage(self, alarmNum: int):
-    return "ALARM:{}: {},\n{}".format(str(alarmNum), self.__grblAlarm[alarmNum][1], self.__grblAlarm[alarmNum][2])
+    return "ALARm:{}: {},\n{}".format(str(alarmNum), self.__grblAlarm[alarmNum][1], self.__grblAlarm[alarmNum][2])
 
 
   def decodeGrblData(self, grblOutput):
@@ -931,43 +933,47 @@ class grblDecode(QObject):
 
 
   def updateAxisLedStatus(self):
-    print("UpdateAxisLEdStatus")
+    LOG(DEGUG,"UpdateAxisLEdStatus")
     n = 0
     for L in self.__axisNames:
+      #Axis led
       exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
-      exec("self.ui.lblLed{:02d}".format(n) + f".setText('{L}')")
-      if (n < 4):
-        exec("self.ui.lblLedLimit{:02d}".format(n) + f".setText('{L}')")
+      exec("self.ui.lblLed{:02d}.setText('{}')".format(n,L))
       n+=1
 
-  def disableAxisLeds(self):
-    print("ledDisabled")
+  def disableAxis(self):
+    LOG(DEBUG,"fn DisabledAxis")
     n = 0
-    for L in self.__axisNames:
+    for  idx , ax in enumerate(self.__axisNames):
       exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(False)")
-      n+=1
+      exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
+
+
 
   def updateAxisDefinition(self):
-    print("updateAxisDefinition")
+    LOG(DEBUG,"fn updateAxisDefinition")
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
-    n = 0
-    for  ax in self.__axisNames:
-      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
-      exec("self.ui.lblLed{:02d}.setText('{}')".format(n,ax))
+
+    for idx, ax in enumerate(self.__axisNames):
+      #axis leds
+      exec("self.ui.cnLed{:02d}".format(idx) + ".setLedStatus(True)")
+      exec("self.ui.lblLed{:02d}.setText('{}')".format(idx,ax))
+
       #limit led label
-      exec("self.ui.lblLedLimit{:02d}.setText('{}')".format(n,ax))
-      #exec(f"self.ui.lblLblPos{self.ui_axis_dict[ax]}.setText('{ax}')")
-      n += 1
+      exec("self.ui.lblLedLimit{:02d}.setText('{}')".format(idx,ax))
 
-  def switchONLimitLed(self, L ):
-    if L in self.__axisNames:
-      ledn = self.__axisNames.index(L)
+      #JogAxisSelector
+      exec("self.ui.btnJogSelectAxis{:02d}.setText('{}')".format(idx,ax))
+
+
+  def switchONLimitLed(self, ax ):
+    if ax in self.__axisNames:
+      ledn = self.__axisNames.index(ax)
       exec("self.ui.cnLedLimit{:02d}".format(ledn) + ".setLedStatus(True)")
-  def switchOFFLimitLeds(self):
-    for L in self.__axisNames:
-      ledn = self.__axisNames.index(L)
-      exec("self.ui.cnLedLimit{:02d}".format(ledn) + ".setLedStatus(False)")
 
+  def switchOFFLimitLeds(self):
+    for idx, ax in enumerate(self.__axisNames):
+      exec("self.ui.cnLedLimit{:02d}".format(idx) + ".setLedStatus(False)")
 
 
     self.ui.rbtDefineOriginXY_G54.setText("G{} offset".format(self.__G5actif))

@@ -66,7 +66,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>691</width>
       <height>401</height>
      </rect>
@@ -83,8 +83,11 @@
       <height>100</height>
      </size>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabMainPanel">
      <property name="enabled">
@@ -2855,7 +2858,7 @@ color: rgb(0, 0, 63);
         <x>350</x>
         <y>0</y>
         <width>320</width>
-        <height>266</height>
+        <height>371</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="jogging_ly">
@@ -3010,30 +3013,6 @@ color: rgb(0, 0, 63);
               </widget>
              </item>
             </layout>
-           </item>
-           <item>
-            <widget class="cnQPushButton" name="btnJogStop">
-             <property name="maximumSize">
-              <size>
-               <width>30</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset>
-               <selectedoff>:/cn5X/images/btnJogStop.svg</selectedoff>
-              </iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>30</width>
-               <height>30</height>
-              </size>
-             </property>
-            </widget>
            </item>
            <item>
             <layout class="QGridLayout" name="gridLayout_UZ" columnstretch="0,0">
@@ -3440,6 +3419,179 @@ color: rgb(0, 0, 63);
             </widget>
            </item>
           </layout>
+         </widget>
+         <widget class="QFrame" name="JogAxis">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>210</y>
+            <width>201</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QPushButton" name="btnJogSelectAxis01">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>0</y>
+             <width>31</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgb(153, 193, 241);
+color:rgb(119, 118, 123)</string>
+           </property>
+           <property name="text">
+            <string>Y</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnJogSelectAxis03">
+           <property name="geometry">
+            <rect>
+             <x>130</x>
+             <y>0</y>
+             <width>31</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgb(153, 193, 241);
+color:rgb(119, 118, 123)</string>
+           </property>
+           <property name="text">
+            <string>A</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnJogSelectAxis00">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>0</y>
+             <width>31</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgb(153, 193, 241);
+color:rgb(119, 118, 123)</string>
+           </property>
+           <property name="text">
+            <string>X</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnJogSelectAxis02">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>0</y>
+             <width>31</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgb(153, 193, 241);
+color:rgb(119, 118, 123)</string>
+           </property>
+           <property name="text">
+            <string>Z</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnJogSelectAxis04">
+           <property name="geometry">
+            <rect>
+             <x>170</x>
+             <y>0</y>
+             <width>31</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgb(153, 193, 241);
+color:rgb(119, 118, 123)</string>
+           </property>
+           <property name="text">
+            <string>B</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QFrame" name="jogMovement">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>240</y>
+            <width>211</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QPushButton" name="btnJogPlus">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>10</y>
+             <width>91</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>-</string>
+           </property>
+          </widget>
+          <widget class="cnQPushButton" name="btnJogStop">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>10</y>
+             <width>30</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <selectedoff>:/cn5X/images/btnJogStop.svg</selectedoff>
+            </iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btnJogMinus">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>10</y>
+             <width>91</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>-</string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </item>
@@ -6906,7 +7058,7 @@ G43.1</string>
     <property name="geometry">
      <rect>
       <x>700</x>
-      <y>0</y>
+      <y>20</y>
       <width>360</width>
       <height>581</height>
      </rect>
@@ -8729,7 +8881,7 @@ color: rgb(0,191,255)</string>
                <height>59</height>
               </rect>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayoutA">
+             <layout class="QVBoxLayout" name="verticalLayout_A">
               <item>
                <widget class="QLabel" name="lblWPosA">
                 <property name="minimumSize">
@@ -8768,7 +8920,7 @@ color: rgb(0,191,255)</string>
            </widget>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_WMPos">
+           <layout class="QVBoxLayout" name="verticalLayout_WMPos_AZ">
             <property name="sizeConstraint">
              <enum>QLayout::SetMaximumSize</enum>
             </property>
@@ -8890,7 +9042,7 @@ color: rgb(0,191,255)</string>
                <height>65</height>
               </rect>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_Y0_2">
+             <layout class="QVBoxLayout" name="verticalLayout_Z0">
               <property name="sizeConstraint">
                <enum>QLayout::SetMaximumSize</enum>
               </property>
@@ -11046,7 +11198,7 @@ to unlock urgent stop</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>460</y>
+      <y>480</y>
       <width>687</width>
       <height>70</height>
      </rect>
@@ -11591,7 +11743,7 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>540</y>
+      <y>560</y>
       <width>50</width>
       <height>50</height>
      </rect>
@@ -12094,7 +12246,7 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>540</y>
+      <y>560</y>
       <width>36</width>
       <height>52</height>
      </rect>
@@ -12217,7 +12369,7 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
     <property name="geometry">
      <rect>
       <x>600</x>
-      <y>430</y>
+      <y>450</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -12240,6 +12392,9 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
       <pointsize>18</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>status </string>
     </property>
@@ -12251,7 +12406,7 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
      <x>0</x>
      <y>0</y>
      <width>1061</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="mnuApplication">

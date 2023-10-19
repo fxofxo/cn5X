@@ -37,9 +37,14 @@ SERIAL_READ_TIMEOUT   = 250      # ms
 GRBL_QUERY_DELAY      =  75      # ms
 
 DEFAULT_JOG_SPEED     = 300
+CONFIG_QTCHART_ENABLED = False
 
-CONFIG_QTCHART_ENABLED = True
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+UI Styles
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+UI_STYLE_BTN_OFF= 'background:rgb(153, 193, 241); color:rgb(119, 118, 123)'
+UI_STYLE_BTN_ON = 'background:rgb(26, 0, 180) ;color:rgb(249,240, 107);'
 
 class logSeverity(Enum):
   info    = 0

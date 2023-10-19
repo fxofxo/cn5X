@@ -28,6 +28,8 @@ from xml.dom.minidom import parse, Node, Element
 import locale
 import argparse
 import serial, serial.tools.list_ports
+from tracelog import *
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QCoreApplication, QObject, QThread, pyqtSignal, pyqtSlot, QModelIndex,  QItemSelectionModel, QFileInfo, QTranslator, QLocale, QSettings
 from PyQt5.QtGui import QKeySequence, QStandardItemModel, QStandardItem, QValidator, QPalette, QFontDatabase
@@ -128,8 +130,8 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblCom.sig_serialLock.connect(self.on_sig_serialLock)
 
     self.__beeper = cn5XBeeper();
-
     self.__arretUrgence     = True
+    self.__jogAxisSelected = None
     def arretUrgence():
       return self.__arretUrgence
 
@@ -292,7 +294,7 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.lblG58.clicked.connect(self.on_lblG5xClick)
     self.ui.lblG59.clicked.connect(self.on_lblG5xClick)
 
-    # Jogging buttons
+    # Jogging buttons legacy --> Deprecated
     self.ui.btnJogMinusX.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusX.mousePress.connect(self.on_jog)
     self.ui.btnJogMinusY.mousePress.connect(self.on_jog)
@@ -301,6 +303,7 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogPlusZ.mousePress.connect(self.on_jog)
     self.ui.btnJogMinusU.mousePress.connect(self.on_jog)
     self.ui.btnJogPlusU.mousePress.connect(self.on_jog)
+
   # self.ui.btnJogMoinsB.mousePress.connect(self.on_jog)
   # self.ui.btnJogPlusB.mousePress.connect(self.on_jog)
   # self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
@@ -319,6 +322,20 @@ class winMain(QtWidgets.QMainWindow):
   # self.ui.btnJogMoinsC.mouseRelease.connect(self.stop_jog)
   # self.ui.btnJogPlusC.mouseRelease.connect(self.stop_jog)
     self.ui.btnJogStop.mousePress.connect(self.__jog.jogCancel)
+
+    # Jogging buttons NG
+    self.ui.btnJogSelectAxis00.clicked.connect(lambda: self.on_jog_axis_selection(0))
+    self.ui.btnJogSelectAxis01.clicked.connect(lambda: self.on_jog_axis_selection(1))
+    self.ui.btnJogSelectAxis02.clicked.connect(lambda: self.on_jog_axis_selection(2))
+    self.ui.btnJogSelectAxis03.clicked.connect(lambda: self.on_jog_axis_selection(3))
+    self.ui.btnJogSelectAxis04.clicked.connect(lambda: self.on_jog_axis_selection(4))
+
+    self.ui.btnJogPlus.clicked.connect(lambda: self.on_jog_move("Plus"))
+    self.ui.btnJogMinus.clicked.connect(lambda: self.on_jog_move("Minus"))
+
+  #  self.ui.btnJogSelectAxis02.mouseReleaseEvent.connect(self.on_jog_ng)
+  #  self.ui.btnJogSelectAxis03.mouseReleaseEvent.connect(self.on_jog_ng)
+  #  self.ui.btnJogSelectAxis04.mouseReleaseEvent.connect(self.on_jog_ng)
 
     self.ui.rbRapid025.clicked.connect(lambda: self.__grblCom.realTimePush(REAL_TIME_RAPID_25_POURCENT))
     self.ui.rbRapid050.clicked.connect(lambda: self.__grblCom.realTimePush(REAL_TIME_RAPID_50_POURCENT))
@@ -1924,7 +1941,7 @@ class winMain(QtWidgets.QMainWindow):
       self.setEnableDisableGroupes()
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
-      self.__decode.disableAxisLeds()
+      self.__decode.disableAxis()
       self.__decode.switchOFFLimitLeds()
       self.__decode.setMachineState(GRBL_STATUS_NOCON)
 
@@ -1969,9 +1986,46 @@ class winMain(QtWidgets.QMainWindow):
     self.setEnableDisableConnectControls()
 
 
+  @pyqtSlot(int)
+  def on_jog_axis_selection(self, axis):
+    LOG(INFO, f"<on_jog_ng> Jog {axis}")
+    LOG(DEBUG,self.__axisNames)
+    if self.__jogAxisSelected ==  axis:
+      self.__jogAxisSelected = None
+    else:
+      self.__jogAxisSelected = axis
+    for idx, ax in enumerate(self.__axisNames):
+        if idx == self.__jogAxisSelected:
+          exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(idx))
+        else:
+          exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
+
+  def on_jog_move(self, move):
+    LOG(DEBUG,move)
+    state = self.__decode.get_MachineState()
+    if state != GRBL_STATUS_IDLE:
+      self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
+      return
+
+    self.__decode.setMachineState(GRBL_STATUS_JOG)
+    jogDistance = 0
+    for qrb in [self.ui.rbtJog0000, self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
+      if qrb.isChecked():
+        jogDistance = float(qrb.text().replace(' ', ''))
+    LOG(DEBUG,jogDistance)
+    if self.__jogAxisSelected != None:
+      ax = self.__axisNames[self.__jogAxisSelected]
+      self.__jog.on_jog_move(ax,move,jogDistance)
+    else:
+      LOG(INFO,"JOG Axis not selected")
+
+
+
+  ###DEPRECATED...
   @pyqtSlot(cnQPushButton, QtGui.QMouseEvent)
   def on_jog(self, cnButton, e):
     # Jogging seulement si Idle
+
     state = self.__decode.get_MachineState()
     if state != GRBL_STATUS_IDLE:
       self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
@@ -1984,7 +2038,7 @@ class winMain(QtWidgets.QMainWindow):
     for qrb in [self.ui.rbtJog0000, self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
       if qrb.isChecked():
         jogDistance = float(qrb.text().replace(' ', ''))
-
+    LOG(DEBUG,jogDistance)
     if jogDistance != 0:
       self.__jogModContinue = False
       while cnButton.isMouseDown():  # on envoi qu'après avoir relâché le bouton
