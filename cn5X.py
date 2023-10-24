@@ -2009,7 +2009,7 @@ class winMain(QtWidgets.QMainWindow):
 
     self.__decode.setMachineState(GRBL_STATUS_JOG)
     jogDistance = 0
-    for qrb in [self.ui.rbtJog0000, self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
+    for qrb in [ self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
       if qrb.isChecked():
         jogDistance = float(qrb.text().replace(' ', ''))
     LOG(DEBUG,jogDistance)
@@ -2021,7 +2021,7 @@ class winMain(QtWidgets.QMainWindow):
 
 
 
-  ###DEPRECATED...
+  ### to deptatesDEPRECATED...
   @pyqtSlot(cnQPushButton, QtGui.QMouseEvent)
   def on_jog(self, cnButton, e):
     # Jogging seulement si Idle
@@ -2035,7 +2035,7 @@ class winMain(QtWidgets.QMainWindow):
     self.__decode.setMachineState(GRBL_STATUS_JOG)
 
     jogDistance = 0
-    for qrb in [self.ui.rbtJog0000, self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
+    for qrb in [ self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
       if qrb.isChecked():
         jogDistance = float(qrb.text().replace(' ', ''))
     LOG(DEBUG,jogDistance)
@@ -2358,7 +2358,7 @@ class winMain(QtWidgets.QMainWindow):
 
 
   @pyqtSlot(str)
-  def on_sig_debug(self, data: str):
+  def on_sig_debug(self, data: str):  # GRBL debugig
     if self.ui.mnuDebug_mode.isChecked():
       self.logDebug.append(data)
 

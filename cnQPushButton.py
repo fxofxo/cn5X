@@ -23,6 +23,7 @@
 
 import sys, os
 from PyQt5 import QtCore, QtGui, QtWidgets
+from tracelog import *
 
 class cnQPushButton(QtWidgets.QPushButton):
   '''
@@ -70,7 +71,7 @@ class cnQPushButton(QtWidgets.QPushButton):
         else:
           self.iconLight.addPixmap (QtGui.QPixmap(pictureBaseName + ".svg"),  QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.__imagesOk = True
-
+    LOG(DEBUG, f"{self.__myName} Event images OK: {self.__imagesOk}")
     if event.type() == QtCore.QEvent.EnabledChange:
       if self.__imagesOk:
         if self.isEnabled():

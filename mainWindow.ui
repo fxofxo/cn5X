@@ -30,7 +30,7 @@
     <x>0</x>
     <y>0</y>
     <width>1061</width>
-    <height>664</height>
+    <height>648</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -2545,29 +2545,6 @@ color:rgb(119, 118, 123)</string>
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
-              <widget class="QPushButton" name="btnJogPlus">
-               <property name="geometry">
-                <rect>
-                 <x>140</x>
-                 <y>0</y>
-                 <width>61</width>
-                 <height>61</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>images/btnPlus.svg</normaloff>images/btnPlus.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>50</width>
-                 <height>50</height>
-                </size>
-               </property>
-              </widget>
               <widget class="cnQPushButton" name="btnJogStop">
                <property name="geometry">
                 <rect>
@@ -2598,21 +2575,98 @@ color:rgb(119, 118, 123)</string>
                 </size>
                </property>
               </widget>
-              <widget class="QPushButton" name="btnJogMinus">
+              <widget class="cnQPushButton" name="btnJogPlus">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="geometry">
                 <rect>
-                 <x>0</x>
+                 <x>140</x>
                  <y>0</y>
-                 <width>61</width>
-                 <height>61</height>
+                 <width>60</width>
+                 <height>60</height>
                 </rect>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 25;</string>
                </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>images/btnMinus.svg</normaloff>images/btnMinus.svg</iconset>
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnJogPlus.svg</normaloff>:/cn5X/images/btnJogPlus.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>50</height>
+                </size>
+               </property>
+              </widget>
+              <widget class="cnQPushButton" name="btnJogMinus">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>60</width>
+                 <height>60</height>
+                </rect>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 25;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="cn5X.qrc">
+                 <normaloff>:/cn5X/images/btnJogMinus.svg</normaloff>:/cn5X/images/btnJogMinus.svg</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -3821,6 +3875,56 @@ color:rgb(119, 118, 123)</string>
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="cnQPushButton" name="btnPlus_1">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>200</y>
+         <width>53</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius: 25;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/cn5X/images/btnPlus.svg</normaloff>:/cn5X/images/btnPlus.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
       </widget>
      </widget>
      <widget class="QWidget" name="frmDigitalIntput" native="true">
@@ -12775,7 +12879,6 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="cn5X.qrc"/>
   <include location="cn5X.qrc"/>
  </resources>
  <connections/>

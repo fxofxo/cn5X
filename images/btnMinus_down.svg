@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   data-name="Layer 1"
+   viewBox="0 0 50 50"
+   x="0px"
+   y="0px"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="btnMinus_down.svg"
+   width="50"
+   height="50"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs14">
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Solarize"
+       id="filter1178"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 1 "
+         id="feColorMatrix1166" />
+      <feColorMatrix
+         type="hueRotate"
+         values="246"
+         result="colormatrix2"
+         id="feColorMatrix1168" />
+      <feColorMatrix
+         in="colormatrix2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         result="colormatrix3"
+         id="feColorMatrix1170" />
+      <feBlend
+         in="colormatrix3"
+         in2="colormatrix2"
+         mode="darken"
+         result="blend1"
+         id="feBlend1172" />
+      <feBlend
+         in2="blend1"
+         mode="screen"
+         result="blend2"
+         id="feBlend1174" />
+      <feComposite
+         in2="SourceGraphic"
+         operator="in"
+         id="feComposite1176" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="9.3125"
+     inkscape:cx="25.288591"
+     inkscape:cy="23.463087"
+     inkscape:window-width="1384"
+     inkscape:window-height="969"
+     inkscape:window-x="710"
+     inkscape:window-y="44"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg10" />
+  <title
+     id="title2">icon-01</title>
+  <path
+     fill="#000000"
+     d="m 38.125,26.875 h -26.25 a 1.875,1.875 0 0 1 0,-3.75 h 26.25 a 1.875,1.875 0 0 1 0,3.75 M 45,0 H 5 C 2.25,0 0,2.25 0,4.9999998 V 45 c 0,2.750001 2.25,5 5,5 h 40 c 2.75,0 5,-2.249999 5,-5 V 4.9999998 C 50,2.25 47.75,0 45,0"
+     id="path4"
+     style="stroke-width:0.0537109;fill:#008000;filter:url(#filter1178)" />
+  <metadata
+     id="metadata16">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>icon-01</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

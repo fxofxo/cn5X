@@ -18,10 +18,11 @@
     <file>images/btnM64P0.svg</file>
     <file>images/btnM64P0_light.svg</file>
     <file>images/btnM64P0_down.svg</file>
-    <file>images/btnJogMinus.svg</file>
     <file>images/btnJogMinusVert.svg</file>
     <file>images/btnJogPlusVert.svg</file>
     <file>images/btnJogPlus.svg</file>
+    <file>images/btnJogPlus_down.svg</file>
+    <file>images/btnJogPlus_light.svg</file>
     <file>images/btnJogNone.svg</file>
     <file>images/btnJogA.svg</file>
     <file>images/btnJogB.svg</file>
@@ -106,6 +107,9 @@
     <file>images/btnUrgence.svg</file>
     <file>images/btnUrgenceOff.svg</file>
     <file>images/XYZAB.svg</file>
+    <file>images/btnJogMinus_down.svg</file>
+    <file>images/btnJogMinus.svg</file>
+    <file>images/btnJogMinus_light.svg</file>
     <file>fonts/LEDCalculator.ttf</file>
   </qresource>
   <qresource prefix="doc">

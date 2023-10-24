@@ -948,13 +948,21 @@ class grblDecode(QObject):
       exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(False)")
       exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
 
+  def switchONLimitLed(self, ax ):
+    if ax in self.__axisNames:
+      ledn = self.__axisNames.index(ax)
+      exec("self.ui.cnLedLimit{:02d}".format(ledn) + ".setLedStatus(True)")
 
+  def switchOFFLimitLeds(self):
+    for idx, ax in enumerate(self.__axisNames):
+      exec("self.ui.cnLedLimit{:02d}".format(idx) + ".setLedStatus(False)")
 
   def updateAxisDefinition(self):
     LOG(DEBUG,"fn updateAxisDefinition")
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
 
     for idx, ax in enumerate(self.__axisNames):
+      # POSITION FORMS
       #axis leds
       exec("self.ui.cnLed{:02d}".format(idx) + ".setLedStatus(True)")
       exec("self.ui.lblLed{:02d}.setText('{}')".format(idx,ax))
@@ -965,15 +973,6 @@ class grblDecode(QObject):
       #JogAxisSelector
       exec("self.ui.btnJogSelectAxis{:02d}.setText('{}')".format(idx,ax))
 
-
-  def switchONLimitLed(self, ax ):
-    if ax in self.__axisNames:
-      ledn = self.__axisNames.index(ax)
-      exec("self.ui.cnLedLimit{:02d}".format(ledn) + ".setLedStatus(True)")
-
-  def switchOFFLimitLeds(self):
-    for idx, ax in enumerate(self.__axisNames):
-      exec("self.ui.cnLedLimit{:02d}".format(idx) + ".setLedStatus(False)")
 
 
     self.ui.rbtDefineOriginXY_G54.setText("G{} offset".format(self.__G5actif))
