@@ -71,7 +71,7 @@ class cnQPushButton(QtWidgets.QPushButton):
         else:
           self.iconLight.addPixmap (QtGui.QPixmap(pictureBaseName + ".svg"),  QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.__imagesOk = True
-    LOG(DEBUG, f"{self.__myName} Event images OK: {self.__imagesOk}")
+    #LOG(DEBUG, f"{self.__myName} Event images OK: {self.__imagesOk}")
     if event.type() == QtCore.QEvent.EnabledChange:
       if self.__imagesOk:
         if self.isEnabled():

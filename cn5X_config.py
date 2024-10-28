@@ -29,15 +29,15 @@ APP_NAME           = "cn5X++"
 APP_VERSION_STRING = "0.8.9"
 APP_VERSION_DATE   = "20231018"
 
-DEFAULT_NB_AXIS    = 3 # Laisser 3 permet de gerer un Grbl original a 3 axes
-DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z']
+DEFAULT_NB_AXIS    = 5 # Laisser 3 permet de gerer un Grbl original a 3 axes
+DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z','A','B']
 
 COM_DEFAULT_BAUD_RATE = 115200
 SERIAL_READ_TIMEOUT   = 250      # ms
 GRBL_QUERY_DELAY      =  75      # ms
 
 DEFAULT_JOG_SPEED     = 300
-CONFIG_QTCHART_ENABLED = False
+CONFIG_QTCHART_ENABLED = True
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -45,7 +45,7 @@ UI Styles
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 UI_STYLE_BTN_OFF= 'background:rgb(153, 193, 241); color:rgb(119, 118, 123)'
 UI_STYLE_BTN_ON = 'background:rgb(26, 0, 180) ;color:rgb(249,240, 107);'
-
+UI_STYLE_BTN_DISABLE = 'background:rgb(153, 153, 153) ;color:rgb(249,240, 107);'
 class logSeverity(Enum):
   info    = 0
   warning = 1

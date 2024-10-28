@@ -934,20 +934,32 @@ class grblDecode(QObject):
 
   def updateAxisLedStatus(self):
     LOG(DEGUG,"UpdateAxisLEdStatus")
-    n = 0
-    for L in self.__axisNames:
+
+    for  idx , ax in enumerate(self.__axisNames):
       #Axis led
-      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(True)")
-      exec("self.ui.lblLed{:02d}.setText('{}')".format(n,L))
-      n+=1
+      exec("self.ui.cnLed{:02d}.setLedStatus(True)".format(idx))
+      exec("self.ui.lblLed{:02d}.setText('{}')".format(idx,ax))
+      print(idx)
+
 
   def disableAxis(self):
-    LOG(DEBUG,"fn DisabledAxis")
-    n = 0
-    for  idx , ax in enumerate(self.__axisNames):
-      exec("self.ui.cnLed{:02d}".format(n) + ".setLedStatus(False)")
-      exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
+    LOG(DEBUG,"fn DisabledAxis ")
 
+    for  idx , ax in enumerate(self.__axisNames):
+      exec("self.ui.cnLed{:02d}.setLedStatus(False)".format(idx))
+      exec("self.ui.btnJogSelectAxis{:02d}.setText('--')".format(idx))
+      exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_DISABLE)".format(idx))
+
+    self.ui.lblLblPosX.setStyleSheet("color: rgb(0, 0, 0);")
+    self.ui.lblLblPosY.setStyleSheet("color: rgb(0, 0, 0);")
+    self.ui.lblLblPosZ.setStyleSheet("color: rgb(0, 0, 0);")
+
+    if self.__nbAxis > 3:
+        self.ui.lblLblPosA.setStyleSheet("color: rgb(0, 0, 0);")
+    if self.__nbAxis > 4:
+        self.ui.lblLblPosB.setStyleSheet("color: rgb(0, 0, 0);")
+    if self.__nbAxis > 5:
+        self.ui.lblLblPosC.setStyleSheet("color: rgb(0, 0, 0);")
   def switchONLimitLed(self, ax ):
     if ax in self.__axisNames:
       ledn = self.__axisNames.index(ax)
@@ -972,7 +984,7 @@ class grblDecode(QObject):
 
       #JogAxisSelector
       exec("self.ui.btnJogSelectAxis{:02d}.setText('{}')".format(idx,ax))
-
+      exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
 
 
     self.ui.rbtDefineOriginXY_G54.setText("G{} offset".format(self.__G5actif))
@@ -983,10 +995,14 @@ class grblDecode(QObject):
     self.ui.mnuG5X_origine_2.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[1]))
     self.ui.mnuG5X_origine_3.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[2]))
 
+    self.ui.lblLblPosX.setStyleSheet("color: rgb(224, 224, 230);")
+    self.ui.lblLblPosY.setStyleSheet("color: rgb(224, 224, 230);")
+    self.ui.lblLblPosZ.setStyleSheet("color: rgb(224, 224, 230);")
     if self.__nbAxis > 3:
       self.ui.lblLblPosA.setText(self.__axisNames[3])
+      self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
       #self.ui.lblLblPosA.setEnabled(True)
-      self.ui.lblLblPosA.setStyleSheet("")
+      #self.ui.lblLblPosA.setStyleSheet("")
       #self.ui.lblPosA.setEnabled(True)
       self.ui.lblPosA.setStyleSheet("")
       self.ui.lblG5xA.setStyleSheet("")

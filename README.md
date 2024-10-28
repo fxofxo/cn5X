@@ -45,10 +45,10 @@ adduser <username> dialout
 *To install the prerequisites on a Linux system such as Debian:*  
 ```
 apt-get install python3 python3-pyqt5 python3-serial python3-pyqt5.qtmultimedia libqt5multimedia5-plugins
-=======
-apt-get install python3-serial
-apt-get install python3 python3-pyqt5
 
+
+
+Not allwais working
 or  
 python3 -m pip install serial
 python3 -m pip install pyserial

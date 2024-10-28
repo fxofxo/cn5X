@@ -29,7 +29,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1061</width>
+    <width>1223</width>
     <height>648</height>
    </rect>
   </property>
@@ -650,7 +650,6 @@ color: rgb(0, 0, 63);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -710,7 +709,6 @@ QToolType {
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -763,7 +761,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -819,7 +816,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -872,7 +868,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -928,7 +923,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -981,7 +975,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1034,7 +1027,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1087,7 +1079,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1140,7 +1131,6 @@ color: rgb(248, 255, 192);</string>
                   <font>
                    <family>LED Calculator</family>
                    <pointsize>16</pointsize>
-                   <weight>75</weight>
                    <bold>true</bold>
                   </font>
                  </property>
@@ -1402,7 +1392,6 @@ color: rgb(0, 0, 63);</string>
                      <font>
                       <family>LED Calculator</family>
                       <pointsize>16</pointsize>
-                      <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
@@ -2386,7 +2375,6 @@ color: rgb(0, 0, 63);
          <property name="font">
           <font>
            <pointsize>12</pointsize>
-           <weight>50</weight>
            <bold>false</bold>
           </font>
          </property>
@@ -8364,7 +8352,6 @@ color: rgb(0,191,255)</string>
                  <font>
                   <family>Lohit Assamese</family>
                   <pointsize>20</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -8411,7 +8398,6 @@ color: rgb(0,191,255)</string>
                 <property name="font">
                  <font>
                   <pointsize>18</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -8580,7 +8566,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -8726,7 +8712,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -8872,7 +8858,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -8901,7 +8887,6 @@ color: rgb(0,191,255)</string>
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -8985,7 +8970,6 @@ color: rgb(0,191,255)</string>
                  <font>
                   <family>Lohit Assamese</family>
                   <pointsize>20</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -9041,7 +9025,6 @@ color: rgb(0,191,255)</string>
                 <property name="font">
                  <font>
                   <pointsize>18</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -9210,7 +9193,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -9356,7 +9339,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -9502,7 +9485,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -9600,7 +9583,6 @@ color: rgb(0,191,255)</string>
                 <property name="font">
                  <font>
                   <pointsize>18</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -9769,7 +9751,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -9915,7 +9897,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -10061,7 +10043,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -10100,7 +10082,6 @@ color: rgb(0,191,255)</string>
                  <font>
                   <family>Lohit Assamese</family>
                   <pointsize>20</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -10135,7 +10116,6 @@ color: rgb(0,191,255)</string>
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -10216,7 +10196,6 @@ color: rgb(0,191,255)</string>
                  <font>
                   <family>Lohit Assamese</family>
                   <pointsize>20</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -10263,7 +10242,6 @@ color: rgb(0,191,255)</string>
                 <property name="font">
                  <font>
                   <pointsize>18</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -10432,7 +10410,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -10578,7 +10556,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -10724,7 +10702,7 @@ color: rgb(0,191,255)</string>
                    </colorrole>
                    <colorrole role="PlaceholderText">
                     <brush brushstyle="SolidPattern">
-                     <color alpha="255">
+                     <color alpha="128">
                       <red>0</red>
                       <green>191</green>
                       <blue>255</blue>
@@ -10792,7 +10770,6 @@ color: rgb(0,191,255)</string>
              <font>
               <family>LED Calculator</family>
               <pointsize>16</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -11081,6 +11058,60 @@ color: rgb(0,191,255)</string>
                </property>
                <property name="ledStatus" stdset="0">
                 <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_39">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>13</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblLedLimit04_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string notr="true">_</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="cnLed" name="cnLedLimit00_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>X Limit</string>
+               </property>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -12511,7 +12542,7 @@ to unlock urgent stop</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1061</width>
+     <width>1223</width>
      <height>22</height>
     </rect>
    </property>
@@ -12879,6 +12910,7 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="cn5X.qrc"/>
   <include location="cn5X.qrc"/>
  </resources>
  <connections/>
