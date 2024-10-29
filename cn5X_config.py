@@ -126,15 +126,18 @@ COM_FLAG_NO_OK    = 1
 COM_FLAG_NO_ERROR = 2
 
 ''' qtabMain indexes '''
-CN5X_TAB_MAIN     = 0
-CN5X_TAB_PLOT     = 1
-CN5X_TAB_GRBL     = 2
-CN5X_TAB_LOG      = 3
-CN5X_TAB_JOG      = 4
-CN5X_TAB_FILE     = 5
-CN5X_TAB_PROBE_XY = 6
-CN5X_TAB_PROBE_Z  = 7
-CN5X_TAB_DEBUG    = 8
+CN5X_TAB_JOG      = 0
+CN5X_TAB_MAIN     = 1
+CN5X_TAB_PLOT     = 2
+CN5X_TAB_FILE     = 3
+CN5X_TAB_PROBE_XY = 4
+CN5X_TAB_PROBE_Z  = 5
+CN5X_TAB_DEBUG    = 6
+
+CN5X_TAB_GRBL     = 0
+CN5X_TAB_LOG      = 1
+
+
 
 ''' Probe defaults parameters '''
 DEFAULT_TOOL_DIAMATER                   = 3

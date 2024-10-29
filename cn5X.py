@@ -586,7 +586,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
-      self.ui.tabMainPanel.setEnabled(False)
+      #self.ui.tabMainPanel.setEnabled(False)
+      self.ui.tabJog.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
       self.ui.frameStatus.setEnabled(False)
@@ -604,7 +605,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmWMPOS.setEnabled(False)
       self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
-      self.ui.tabMainPanel.setEnabled(False)
+      #self.ui.tabMainPanel.setEnabled(False)
+      self.ui.tabJog.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
       self.ui.frameStatus.setEnabled(True)
@@ -621,7 +623,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.grpJog.setEnabled(True)
       self.ui.grpJog.setEnabled(True)
       self.ui.frmGcodeInput.setEnabled(True)
-      self.ui.tabMainPanel.setEnabled(True)
+      #self.ui.tabMainPanel.setEnabled(True)
+      self.ui.tabJog.setEnabled(True)
       self.ui.tabProbeXY.setEnabled(True)
       self.ui.tabProbeZ.setEnabled(True)
       self.ui.frameStatus.setEnabled(True)
@@ -689,7 +692,7 @@ class winMain(QtWidgets.QMainWindow):
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
-          self.ui.qtabMain.setCurrentIndex(CN5X_TAB_LOG)
+          self.ui.qtabMsgs.setCurrentIndex(CN5X_TAB_LOG)
     # Active ou desactive les boutons de cycle
     self.setEnableDisableGroupes()
     # Restore le curseur de souris
@@ -2219,12 +2222,12 @@ class winMain(QtWidgets.QMainWindow):
       self.logCn5X.setTextColor(TXT_COLOR_ORANGE)
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Warning : " + data)
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabMain.setCurrentIndex(CN5X_TAB_LOG)
+        self.ui.qtabMsgs.setCurrentIndex(CN5X_TAB_LOG)
     elif severity == logSeverity.error.value:
       self.logCn5X.setTextColor(TXT_COLOR_RED)
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Error   : " + data)
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabMain.setCurrentIndex(CN5X_TAB_LOG)
+        self.ui.qtabMsgs.setCurrentIndex(CN5X_TAB_LOG)
 
   def log(self, severity: int, data: str):
     self.on_sig_log(severity, data)
