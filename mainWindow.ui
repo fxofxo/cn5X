@@ -2440,7 +2440,7 @@ color: rgb(0, 0, 63);
 color:rgb(119, 118, 123)</string>
                </property>
                <property name="text">
-                <string>Y</string>
+                <string>--</string>
                </property>
               </widget>
               <widget class="QPushButton" name="btnJogSelectAxis03">
@@ -2457,7 +2457,7 @@ color:rgb(119, 118, 123)</string>
 color:rgb(119, 118, 123)</string>
                </property>
                <property name="text">
-                <string>A</string>
+                <string>--</string>
                </property>
               </widget>
               <widget class="QPushButton" name="btnJogSelectAxis00">
@@ -2474,7 +2474,7 @@ color:rgb(119, 118, 123)</string>
 color:rgb(119, 118, 123)</string>
                </property>
                <property name="text">
-                <string>X</string>
+                <string>--</string>
                </property>
               </widget>
               <widget class="QPushButton" name="btnJogSelectAxis02">
@@ -2491,7 +2491,7 @@ color:rgb(119, 118, 123)</string>
 color:rgb(119, 118, 123)</string>
                </property>
                <property name="text">
-                <string>Z</string>
+                <string>--</string>
                </property>
               </widget>
               <widget class="QPushButton" name="btnJogSelectAxis04">
@@ -2508,7 +2508,7 @@ color:rgb(119, 118, 123)</string>
 color:rgb(119, 118, 123)</string>
                </property>
                <property name="text">
-                <string>B</string>
+                <string>--</string>
                </property>
               </widget>
              </widget>
