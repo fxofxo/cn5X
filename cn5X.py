@@ -287,44 +287,16 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnFloodM7.clicked.connect(self.on_btnFloodM7)
     self.ui.btnFloodM8.clicked.connect(self.on_btnFloodM8)
     self.ui.btnFloodM9.clicked.connect(self.on_btnFloodM9)
-    self.ui.lblG54.clicked.connect(self.on_lblG5xClick)
-    self.ui.lblG55.clicked.connect(self.on_lblG5xClick)
-    self.ui.lblG56.clicked.connect(self.on_lblG5xClick)
-    self.ui.lblG57.clicked.connect(self.on_lblG5xClick)
-    self.ui.lblG58.clicked.connect(self.on_lblG5xClick)
-    self.ui.lblG59.clicked.connect(self.on_lblG5xClick)
 
-    # Jogging buttons legacy --> Deprecated
-    self.ui.btnJogMinusX.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusX.mousePress.connect(self.on_jog)
-    self.ui.btnJogMinusY.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusY.mousePress.connect(self.on_jog)
-    self.ui.btnJogMinusZ.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusZ.mousePress.connect(self.on_jog)
-    self.ui.btnJogMinusU.mousePress.connect(self.on_jog)
-    self.ui.btnJogPlusU.mousePress.connect(self.on_jog)
+    self.ui.btnG54.clicked.connect(lambda: self.on_btnG5xClick("G54"))
+    self.ui.btnG55.clicked.connect(lambda: self.on_btnG5xClick("G55"))
+    self.ui.btnG56.clicked.connect(lambda: self.on_btnG5xClick("G56"))
+    self.ui.btnG57.clicked.connect(lambda: self.on_btnG5xClick("G57"))
+    self.ui.btnG58.clicked.connect(lambda: self.on_btnG5xClick("G58"))
+    self.ui.btnG59.clicked.connect(lambda: self.on_btnG5xClick("G59"))
 
-  # self.ui.btnJogMoinsB.mousePress.connect(self.on_jog)
-  # self.ui.btnJogPlusB.mousePress.connect(self.on_jog)
-  # self.ui.btnJogMoinsC.mousePress.connect(self.on_jog)
-  # self.ui.btnJogPlusC.mousePress.connect(self.on_jog)
-
-    self.ui.btnJogMinusX.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusX.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogMinusY.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusY.mouseRelease.connect(self.stop_jog)
-  # self.ui.btnJogMoinsZ.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusZ.mouseRelease.connect(self.stop_jog)
-  # self.ui.btnJogMoinsU.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogPlusU.mouseRelease.connect(self.stop_jog)
-  # self.ui.btnJogMoinsB.mouseRelease.connect(self.stop_jog)
-  # self.ui.btnJogPlusB.mouseRelease.connect(self.stop_jog)
-  # self.ui.btnJogMoinsC.mouseRelease.connect(self.stop_jog)
-  # self.ui.btnJogPlusC.mouseRelease.connect(self.stop_jog)
-    self.ui.btnJogStop.mousePress.connect(self.__jog.jogCancel)
-
-    # Jogging buttons NG
-    self.ui.btnJogSelectAxis00.clicked.connect(lambda: self.on_jog_axis_selection(0))
+  # Jogging buttons NG
+    self.ui.btnJogSelectAxis00.clicked.connect(lambda: self.on_jog_axis_selection(0)) 
     self.ui.btnJogSelectAxis01.clicked.connect(lambda: self.on_jog_axis_selection(1))
     self.ui.btnJogSelectAxis02.clicked.connect(lambda: self.on_jog_axis_selection(2))
     self.ui.btnJogSelectAxis03.clicked.connect(lambda: self.on_jog_axis_selection(3))
@@ -358,6 +330,7 @@ class winMain(QtWidgets.QMainWindow):
     QtWidgets.QShortcut(QtCore.Qt.Key_F8, self.ui.gcodeTable, activated=self.on_GCodeTable_key_F8_Pressed)
     self.ui.dialAvance.customContextMenuRequested.connect(self.on_dialAvanceContextMenu)
     self.ui.dialBroche.customContextMenuRequested.connect(self.on_dialBrocheContextMenu)
+    ''''
     self.ui.lblLblPosX.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(0))
     self.ui.lblLblPosY.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(1))
     self.ui.lblLblPosZ.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(2))
@@ -370,6 +343,7 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.lblPosA.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(3))
     self.ui.lblPosB.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(4))
     self.ui.lblPosC.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(5))
+    '''
     self.ui.lblPlan.customContextMenuRequested.connect(self.on_lblPlanContextMenu)
     self.ui.lblUnites.customContextMenuRequested.connect(self.on_lblUnitesContextMenu)
     self.ui.lblCoord.customContextMenuRequested.connect(self.on_lblCoordContextMenu)
@@ -576,7 +550,7 @@ class winMain(QtWidgets.QMainWindow):
     en fonction de l'etat de connexion et de l'etat du bouton d'arret d'urgence.
     '''
 
-    self.ui.frameRight.setEnabled(True)
+    #self.ui.frameRight.setEnabled(True)
 
     if not self.__connectionStatus:  #No connected
       # Pas connecte, tout doit etre desactive et l'arret d'urgence enfonce
@@ -594,6 +568,9 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmHomeAlarm.setEnabled(False)
       self.ui.frameMainBtns.setEnabled(False)
       self.ui.frmOperationButtons.setEnabled(False)
+      self.ui.frmRelG.setEnabled(False)
+      self.__decode.disableAxis(False)
+      self.__decode.switchOFFLimitLeds()
 
 
 
@@ -613,6 +590,9 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frameMainBtns.setEnabled(False)
       self.ui.frmHomeAlarm.setEnabled(True)
       self.ui.frmOperationButtons.setEnabled(False)
+      #self.ui.frmRelG.setEnabled(False)
+      self.__decode.disableAxis(False)
+      self.__decode.switchOFFLimitLeds()
 
     else:
       # Tout est en ordre, on active tout
@@ -631,10 +611,13 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frameMainBtns.setEnabled(True)
       self.ui.frmHomeAlarm.setEnabled(True)
       self.ui.frmOperationButtons.setEnabled(True)
+      self.ui.frmRelG.setEnabled(True)
+      self.__decode.disableAxis(True)
       if self.__gcodeFile.isFileLoaded():
         self.ui.frmCycle.setEnabled(True)
       else:
         self.ui.frmCycle.setEnabled(False)
+          
 
 
   @pyqtSlot()
@@ -692,7 +675,7 @@ class winMain(QtWidgets.QMainWindow):
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
-          self.ui.qtabMsgs.setCurrentIndex(CN5X_TAB_LOG)
+          self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
     # Active ou desactive les boutons de cycle
     self.setEnableDisableGroupes()
     # Restore le curseur de souris
@@ -949,8 +932,9 @@ class winMain(QtWidgets.QMainWindow):
     while time.time() < jusqua:
       QCoreApplication.processEvents()
     if self.__decode.get_MachineState() == GRBL_STATUS_IDLE:
-      # La boite de dialogue à ete annulée ou le trajet est déja fini
+      # La boite de dialogue à ete annulée ou le trajet est déja fin
       self.ui.btnG28.setButtonStatus(False)
+
 
 
   @pyqtSlot()
@@ -1944,8 +1928,7 @@ class winMain(QtWidgets.QMainWindow):
       self.setEnableDisableGroupes()
       # On redemandera les paramètres à la prochaine connection
       self.__firstGetSettings = False
-      self.__decode.disableAxis()
-      self.__decode.switchOFFLimitLeds()
+     
       self.__decode.setMachineState(GRBL_STATUS_NOCON)
 
 
@@ -2014,7 +1997,7 @@ class winMain(QtWidgets.QMainWindow):
 
     self.__decode.setMachineState(GRBL_STATUS_JOG)
     jogDistance = 0
-    for qrb in [ self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
+    for qrb in [ self.ui.rbtJog0005, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000,self.ui.rbtJog5000]:
       if qrb.isChecked():
         jogDistance = float(qrb.text().replace(' ', ''))
     LOG(DEBUG,jogDistance)
@@ -2128,7 +2111,8 @@ class winMain(QtWidgets.QMainWindow):
 
 
   @pyqtSlot(str, QtGui.QMouseEvent)
-  def on_lblG5xClick(self, lblText, e):
+  def on_btnG5xClick(self, lblText):
+    print("on_btnG5xClick")
     self.__grblCom.gcodePush(lblText)
 
 
@@ -2224,12 +2208,12 @@ class winMain(QtWidgets.QMainWindow):
       self.logCn5X.setTextColor(TXT_COLOR_ORANGE)
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Warning : " + data)
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabMsgs.setCurrentIndex(CN5X_TAB_LOG)
+        self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
     elif severity == logSeverity.error.value:
       self.logCn5X.setTextColor(TXT_COLOR_RED)
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Error   : " + data)
       if not self.ui.btnDebug.isChecked():
-        self.ui.qtabMsgs.setCurrentIndex(CN5X_TAB_LOG)
+        self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)
 
   def log(self, severity: int, data: str):
     self.on_sig_log(severity, data)

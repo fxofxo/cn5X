@@ -109,7 +109,7 @@ class grblDecode(QObject):
     self.beeper = beeper
     self.probeStatus = False
     self.arretUrgence = arretUrgence
-    self.disableAxis()
+    #self.disableAxis()
     self.setMachineState(GRBL_STATUS_NOCON)
 
   def getG5actif(self):
@@ -606,7 +606,9 @@ class grblDecode(QObject):
             self.ui.lblOffsetActif.setText("Offset {}".format(S))
             num=int(S[1:])
             if num != self.__G5actif:
+              eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(self.__G5actif))
               self.__G5actif = num
+              eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(num))
             for N, lbl in [
               [54, self.ui.lblG54],
               [55, self.ui.lblG55],
@@ -614,7 +616,7 @@ class grblDecode(QObject):
               [57, self.ui.lblG57],
               [58, self.ui.lblG58],
               [59, self.ui.lblG59]
-            ]:
+                             ]:
               if N == num:
                 lbl.setStyleSheet("background-color:  rgb(0, 0, 63); color:rgb(248, 255, 192);")
                 font.setBold(True)
@@ -740,7 +742,7 @@ class grblDecode(QObject):
           self.ui.frmDigitalIntput.setEnabled(True)
         else:
           # Digital input non actives
-          self.ui.frmDigitalIntput.setEnabled(False)
+          self.ui.frmDigitalInput.setEnabled(False)
 
       else:
         # Autre reponse [] ?
@@ -774,6 +776,8 @@ class grblDecode(QObject):
         elif self.__machineState == GRBL_STATUS_IDLE:
           self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
                                         "background-color: green;")
+          self.ui.btnG28.setButtonStatus(False)
+          self.ui.btnG30.setButtonStatus(False)
         else:
           self.ui.lblEtat.setStyleSheet("color:  rgb(248, 255, 192);"
                                         "background-color: grey;")
@@ -942,24 +946,50 @@ class grblDecode(QObject):
       print(idx)
 
 
-  def disableAxis(self):
-    LOG(DEBUG,"fn DisabledAxis ")
+  def disableAxis(self, active):
+    LOG(DEBUG,f"fn DisabledAxis on {active}")
+    if active:
+      
+      for Gx in G5x_LIST:
+        eval( f"self.ui.btn{Gx}.setStyleSheet(UI_STYLE_BTN_OFF)"   )
 
-    for  idx , ax in enumerate(self.__axisNames):
-      exec("self.ui.cnLed{:02d}.setLedStatus(False)".format(idx))
-      exec("self.ui.btnJogSelectAxis{:02d}.setText('--')".format(idx))
-      exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_DISABLE)".format(idx))
+      eval( f"self.ui.btnG{ self.__G5actif}.setStyleSheet(UI_STYLE_BTN_ON)"   )
+     
 
-    self.ui.lblLblPosX.setStyleSheet("color: rgb(0, 0, 0);")
-    self.ui.lblLblPosY.setStyleSheet("color: rgb(0, 0, 0);")
-    self.ui.lblLblPosZ.setStyleSheet("color: rgb(0, 0, 0);")
+      for  idx , ax in enumerate(self.__axisNames):
+        exec("self.ui.cnLed{:02d}.setLedStatus(False)".format(idx))
+        #exec("self.ui.btnJogSelectAxis{:02d}.setText('--')".format(idx))
+        exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
 
-    if self.__nbAxis > 3:
-        self.ui.lblLblPosA.setStyleSheet("color: rgb(0, 0, 0);")
-    if self.__nbAxis > 4:
-        self.ui.lblLblPosB.setStyleSheet("color: rgb(0, 0, 0);")
-    if self.__nbAxis > 5:
-        self.ui.lblLblPosC.setStyleSheet("color: rgb(0, 0, 0);")
+      self.ui.lblLblPosX.setStyleSheet("color: rgb(224, 224, 230);")
+      self.ui.lblLblPosY.setStyleSheet("color: rgb(224, 224, 230);")
+      self.ui.lblLblPosZ.setStyleSheet("color: rgb(224, 224, 230);")
+
+      if self.__nbAxis > 3:
+          self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
+      if self.__nbAxis > 4:
+          self.ui.lblLblPosB.setStyleSheet("color: rgb(224, 224, 230);")
+      if self.__nbAxis > 5:
+          self.ui.lblLblPosC.setStyleSheet("color: rgb(224, 224, 230);")
+    else:
+      for Gx in G5x_LIST:
+        eval( f"self.ui.btn{Gx}.setStyleSheet(UI_STYLE_BTN_DISABLE)"   )
+      for  idx , ax in enumerate(self.__axisNames):
+        exec("self.ui.cnLed{:02d}.setLedStatus(False)".format(idx))
+        #exec("self.ui.btnJogSelectAxis{:02d}.setText('--')".format(idx))
+        exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_DISABLE)".format(idx))
+
+      self.ui.lblLblPosX.setStyleSheet("color: rgb(0, 0, 0);")
+      self.ui.lblLblPosY.setStyleSheet("color: rgb(0, 0, 0);")
+      self.ui.lblLblPosZ.setStyleSheet("color: rgb(0, 0, 0);")
+
+      if self.__nbAxis > 3:
+          self.ui.lblLblPosA.setStyleSheet("color: rgb(0, 0, 0);")
+      if self.__nbAxis > 4:
+          self.ui.lblLblPosB.setStyleSheet("color: rgb(0, 0, 0);")
+      if self.__nbAxis > 5:
+          self.ui.lblLblPosC.setStyleSheet("color: rgb(0, 0, 0);")
+
   def switchONLimitLed(self, ax ):
     if ax in self.__axisNames:
       ledn = self.__axisNames.index(ax)
@@ -984,7 +1014,7 @@ class grblDecode(QObject):
 
       #JogAxisSelector
       exec("self.ui.btnJogSelectAxis{:02d}.setText('{}')".format(idx,ax))
-      exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
+      #exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
 
 
     self.ui.rbtDefineOriginXY_G54.setText("G{} offset".format(self.__G5actif))

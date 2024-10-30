@@ -31,6 +31,7 @@ APP_VERSION_DATE   = "20231018"
 
 DEFAULT_NB_AXIS    = 5 # Laisser 3 permet de gerer un Grbl original a 3 axes
 DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z','A','B']
+G5x_LIST = ["G54","G55","G56","G57","G58","G59"]
 
 COM_DEFAULT_BAUD_RATE = 115200
 SERIAL_READ_TIMEOUT   = 250      # ms
@@ -43,8 +44,9 @@ CONFIG_QTCHART_ENABLED = True
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 UI Styles
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-UI_STYLE_BTN_OFF= 'background:rgb(153, 193, 241); color:rgb(119, 118, 123)'
-UI_STYLE_BTN_ON = 'background:rgb(26, 0, 180) ;color:rgb(249,240, 107);'
+#UI_STYLE_BTN_OFF= 'background:rgb(153, 193, 241); color:rgb(119, 118, 123)'
+UI_STYLE_BTN_ON= 'background:rgb(15, 193, 24); color:rgb(11, 11, 123)'
+UI_STYLE_BTN_OFF = 'background:rgb(0, 0, 139) ;color:rgb(249,240, 107);'
 UI_STYLE_BTN_DISABLE = 'background:rgb(153, 153, 153) ;color:rgb(249,240, 107);'
 class logSeverity(Enum):
   info    = 0
@@ -132,10 +134,11 @@ CN5X_TAB_PLOT     = 2
 CN5X_TAB_FILE     = 3
 CN5X_TAB_PROBE_XY = 4
 CN5X_TAB_PROBE_Z  = 5
-CN5X_TAB_DEBUG    = 6
+
 
 CN5X_TAB_GRBL     = 0
 CN5X_TAB_LOG      = 1
+CN5X_TAB_DEBUG    = 3
 
 
 
