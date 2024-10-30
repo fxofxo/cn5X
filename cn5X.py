@@ -621,7 +621,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmControleVitesse.setEnabled(True)
       self.ui.frmWMPOS.setEnabled(True)
       self.ui.grpJog.setEnabled(True)
-      self.ui.grpJog.setEnabled(True)
+      self.ui.jogMovement.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(True)
       #self.ui.tabMainPanel.setEnabled(True)
       self.ui.tabJog.setEnabled(True)
@@ -1995,8 +1995,10 @@ class winMain(QtWidgets.QMainWindow):
     LOG(DEBUG,self.__axisNames)
     if self.__jogAxisSelected ==  axis:
       self.__jogAxisSelected = None
+      self.ui.jogMovement.setEnabled(False)
     else:
       self.__jogAxisSelected = axis
+      self.ui.jogMovement.setEnabled(True)
     for idx, ax in enumerate(self.__axisNames):
         if idx == self.__jogAxisSelected:
           exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(idx))
