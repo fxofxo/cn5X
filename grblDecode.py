@@ -151,6 +151,7 @@ class grblDecode(QObject):
     flagDigital = False
     tblDecode = grblOutput[1:-1].split("|")
     for D in tblDecode:
+
       if D in self.__validMachineState:
         if D != self.__machineState:
           print(f"status change{D}")
@@ -269,8 +270,9 @@ class grblDecode(QObject):
         #limit led
         for L in self.__axisNames:
           if L in triggered:
-            print("Limit triggered")
-            self.switchONLimitLed(L)
+            self.switchONLimitLed(L,True)
+          else:
+            self.switchONLimitLed(L,False)
         # Affichage voyants d'interface (except limit led for axis)
         for L in [ 'P', 'D', 'H', 'R', 'S']:
           if L in triggered:
@@ -472,6 +474,7 @@ class grblDecode(QObject):
       # Eteint toute les leds. Si on a pas trouve la chaine Pn:, c'est que toute les leds sont eteintes.
       # Turns off all LEDs. If we haven't found the Pn: string, it's because all the LEDs are off.
       #self.disableAxisLeds()
+      self.switchOFFLimitLeds()
       if self.probeStatus:
         self.probeStatus = False
 
@@ -990,10 +993,10 @@ class grblDecode(QObject):
       if self.__nbAxis > 5:
           self.ui.lblLblPosC.setStyleSheet("color: rgb(0, 0, 0);")
 
-  def switchONLimitLed(self, ax ):
+  def switchONLimitLed(self, ax, setON ):
     if ax in self.__axisNames:
       ledn = self.__axisNames.index(ax)
-      exec("self.ui.cnLedLimit{:02d}".format(ledn) + ".setLedStatus(True)")
+      exec("self.ui.cnLedLimit{:02d}.setLedStatus({})".format(ledn,setON) )
 
   def switchOFFLimitLeds(self):
     for idx, ax in enumerate(self.__axisNames):
