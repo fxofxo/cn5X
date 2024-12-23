@@ -612,6 +612,9 @@ class grblDecode(QObject):
               eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(self.__G5actif))
               self.__G5actif = num
               eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(num))
+              # Mise à jour des labels dépendant du système de coordonnées actif
+              self.updateAxisDefinition()
+
             for N, lbl in [
               [54, self.ui.lblG54],
               [55, self.ui.lblG55],
@@ -628,8 +631,7 @@ class grblDecode(QObject):
                 lbl.setStyleSheet("background-color: rgb(248, 255, 192); color: rgb(0, 0, 63);")
                 font.setBold(False)
                 lbl.setFont(font)
-            # Mise à jour des labels dépendant du système de coordonnées actif
-            #self.updateAxisDefinition()
+            
 
           elif S in ["G17", "G18", "G19"]:
             self.ui.lblPlan.setText(S)
@@ -1003,7 +1005,7 @@ class grblDecode(QObject):
       exec("self.ui.cnLedLimit{:02d}".format(idx) + ".setLedStatus(False)")
 
   def updateAxisDefinition(self):
-    LOG(DEBUG,"fn updateAxisDefinition")
+    LOG(DEBUG,f"fn updateAxisDefinition --G{self.__G5actif}")
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
 
     for idx, ax in enumerate(self.__axisNames):
