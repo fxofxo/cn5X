@@ -7,14 +7,14 @@ if CONFIG_QTCHART_ENABLED:
     from PyQt5 import QtChart
 
 XMAX = 500
-DMIN = 4
+DMIN = 1
 class plotGcode():
 
     def __init__(self, widget):
         self.widget = widget
-        self.n_axis = 0
+        self.n_axis = 4
         self.axis_values = np.empty(0)
-        self.axis_names = []
+        self.axis_names = ['X','Y','U','Z']
         self.pos = 0
         self.xplot = np.array(0)
         self.yplot = np.array(0)
@@ -74,28 +74,36 @@ class plotGcode():
     def read_file(self,filename):
         with open(filename,"r") as f:
             for line in f:
+                line = line[: -1]  # get rid of \n char
                 fields = line.split(' ')
 
-                if fields[0] != "G1":
+                if fields[0] != "G1" and fields[0] != "G0":
                     continue
-                fields = fields[: -1]  # get rid of \n char
-
-
-                if (len(fields) - 1 ) /2 > self.n_axis:
-                    self.n_axis = int ( (len(fields) - 1 ) /2 )
+                #
+                print(fields)
+                n_fields = len(fields)
+               # if (len(fields) - 1 ) /2 > self.n_axis:
+               #     self.n_axis = int ( (len(fields) - 1 ) /2 )
 
                 if np.size(self.axis_values) == 0:
                     self.axis_values = np.empty((0,self.n_axis),float)
-                row = []
-                names = []
+                row = [0,0,0,0]
                 for ax in range(1,self.n_axis+1):
-                    pos = ax * 2
+                    print(f"ax·{ax}")
+                    data = fields[ax]
+                    if not (data[0] in self.axis_names):
+                        continue
+                    elif len(data)>1:
+                        axis = data[0]
+                        value = float(data[1:])
+                        row_pos = self.axis_names.index(axis)
+                        row[row_pos] = value
 
-                    names.append(fields[pos - 1])
-                    row.append( float(fields[pos ] ))
 
-                self.axis_names = names
+
+
                 self.axis_values = np.append(self.axis_values,[row],axis=0)
+
             print(self.axis_values)
             print(self.axis_values.shape)
             max_value_axis = np.max(self.axis_values,axis=0)
@@ -143,13 +151,27 @@ class plotGcode():
             if len(p) > 3:
                 self.uz_serie.append(QtCore.QPointF(p[3],p[2]))
     def set_limits(self):
+        print("setLimits")
         widget_w = self.widget.width()
         widget_h = self.widget.height() / 2 # Two chartview on widget
         print(f"{widget_w} x {widget_h}")
-        x_min = -5
+        offset = 3
+        print(f"{self.xmax} - {self.ymax}")
+        print(f"{self.umax} - {self.zmax}")
+        x_min = -offset
+        y_min = -offset
         x_max = max(self.xmax,self.umax)
-        y_min = -5
-        y_max = self.xmax *(  widget_h / widget_w)
+        y_max = max(self.ymax,self.zmax)
+        gcode_ratio = y_max/x_max
+        plot_ratio = widget_h / widget_w
+        if gcode_ratio <= plot_ratio:
+            y_max = (x_max + offset ) *(  widget_h / widget_w)
+        else:
+            x_max = (y_max + offset) * ( widget_w / widget_h)
+        print(f" {x_max}-{y_max}")
+        print(f" fileratio: {y_max/x_max}")
+        print(f" widgetration: {(  widget_h / widget_w)}")
+
         if CONFIG_QTCHART_ENABLED:
             self.chart_xy.axisX(self.xy_serie).setMin(x_min)
             self.chart_xy.axisX(self.xy_serie).setMax(x_max)
