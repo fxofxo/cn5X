@@ -206,7 +206,7 @@ class dlgJog(QObject):
     self.setInitialCheckState()
 
 
-  def on_btnJog(self, axisNum: int = None, spinBox: QDoubleSpinBox = None):
+  def on_btnJog(self, axisNum: int = None,axisArray=None, spinBox: QDoubleSpinBox = None):
     gcode = "$J="
     if self.di.rbtMPos.isChecked():
       gcode += "G53"
@@ -217,7 +217,7 @@ class dlgJog(QObject):
     if axisNum is not None:
       # Jog d'un seul axe
       gcode += "{}{:0.3f}".format(self.__axisNames[axisNum], spinBox.value())
-    else:
+    elif axisArray is None:
       # Jog de tous les axes cochés
       axesTraites = []
       i = 0
@@ -241,6 +241,7 @@ class dlgJog(QObject):
 
 
   def jogCancel(self):
+    print("jogCancel")
     self.__grblCom.clearCom()
     self.__grblCom.realTimePush(REAL_TIME_JOG_CANCEL) # Commande realtime Jog Cancel
 

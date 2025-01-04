@@ -304,6 +304,7 @@ class winMain(QtWidgets.QMainWindow):
 
     self.ui.btnJogPlus.clicked.connect(lambda: self.on_jog_move("Plus"))
     self.ui.btnJogMinus.clicked.connect(lambda: self.on_jog_move("Minus"))
+    self.ui.btnJogStop.clicked.connect(lambda:self.on_jog_move( "Stop"))
 
   #  self.ui.btnJogSelectAxis02.mouseReleaseEvent.connect(self.on_jog_ng)
   #  self.ui.btnJogSelectAxis03.mouseReleaseEvent.connect(self.on_jog_ng)
@@ -1991,27 +1992,29 @@ class winMain(QtWidgets.QMainWindow):
   def on_jog_move(self, move):
     LOG(DEBUG,move)
     state = self.__decode.get_MachineState()
-    if state != GRBL_STATUS_IDLE:
-      self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
-      return
-
-    self.__decode.setMachineState(GRBL_STATUS_JOG)
-    jogDistance = 0
-    for qrb in [ self.ui.rbtJog0005, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000,self.ui.rbtJog5000]:
-      if qrb.isChecked():
-        jogDistance = float(qrb.text().replace(' ', ''))
-    LOG(DEBUG,jogDistance)
-    if self.__jogAxisSelected != None:
-      ax = self.__axisNames[self.__jogAxisSelected]
-      self.__jog.on_jog_move(ax,move,jogDistance)
+    if move == "Stop" and state == "Jog":
+      #if self.__jogModContinue:  # ?¿
+      self.__jog.jogCancel()
+    elif state == GRBL_STATUS_IDLE:
+        self.__decode.setMachineState(GRBL_STATUS_JOG)
+        jogDistance = 0
+        for qrb in [ self.ui.rbtJog0005, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000,self.ui.rbtJog5000]:
+          if qrb.isChecked():
+            jogDistance = float(qrb.text().replace(' ', ''))
+        LOG(DEBUG,jogDistance)
+        if self.__jogAxisSelected != None:
+          ax = self.__axisNames[self.__jogAxisSelected]
+          self.__jog.on_jog_move(ax,move,jogDistance)
+        else:
+          LOG(INFO,"JOG Axis not selected")
     else:
-      LOG(INFO,"JOG Axis not selected")
-
+        self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
+        return
 
 
   ### to deptatesDEPRECATED...
   @pyqtSlot(cnQPushButton, QtGui.QMouseEvent)
-  def on_jog(self, cnButton, e):
+  def on_jog_old(self, cnButton, e):
     # Jogging seulement si Idle
 
     state = self.__decode.get_MachineState()
@@ -2049,7 +2052,8 @@ class winMain(QtWidgets.QMainWindow):
 
 
   @pyqtSlot(cnQPushButton, QtGui.QMouseEvent)
-  def stop_jog(self, cnButton, e):
+  def stop_jog_old(self, cnButton, e):
+    print("stop_jog")
     if self.__jogModContinue:
       self.__jog.jogCancel()
 
