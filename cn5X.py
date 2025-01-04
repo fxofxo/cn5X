@@ -24,16 +24,18 @@
 
 import sys, os, time
 from datetime import datetime
-from xml.dom.minidom import parse, Node, Element
+from xml.dom.minidom import parse, parseString, Node, Element
 import locale
 import argparse
 import serial, serial.tools.list_ports
-from tracelog import *
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QCoreApplication, QObject, QThread, pyqtSignal, pyqtSlot, QModelIndex,  QItemSelectionModel, QFileInfo, QTranslator, QLocale, QSettings
-from PyQt5.QtGui import QKeySequence, QStandardItemModel, QStandardItem, QValidator, QPalette, QFontDatabase
-from PyQt5.QtWidgets import QDialog, QAbstractItemView, QMessageBox
+from tracelog import LOG
+from PyQt6 import QtCore, QtGui, QtWidgets, uic
+from PyQt6.QtCore import Qt, QCoreApplication, QObject, QThread, \
+                         pyqtSignal, pyqtSlot, QModelIndex, \
+                         QItemSelectionModel, QFileInfo, QTranslator, \
+                         QLocale, QSettings, QFile, QIODevice, QEvent, \
+                         QTimer
+from PyQt6.QtGui import QKeySequence, QStandardItemModel, QStandardItem, QValidator, QPalette, QFontDatabase, QAction, QShortcut
 from cn5X_config import *
 from msgbox import *
 from speedOverrides import *
@@ -45,6 +47,7 @@ from grblJog import grblJog
 from grblProbe import *
 from cn5X_gcodeFile import gcodeFile
 from qwprogressbox import *
+from qwblackscreen import *
 from grblConfig import grblConfig
 from cn5X_apropos import cn5XAPropos
 from cn5X_helpProbe import cn5XHelpProbe
@@ -52,21 +55,97 @@ from grblG92 import dlgG92
 from grblG28_30_1 import dlgG28_30_1
 from cn5X_jog import dlgJog
 from cn5X_beep import cn5XBeeper
+from cn5X_toolChange import dlgToolChange
 from plotGcode import plotGcode
 
-class upperCaseValidator(QValidator):
-  def validate(self, string, pos):
-    return QValidator.Acceptable, string.upper(), pos
 
 import mainWindow
 
+class upperCaseValidator(QValidator):
+  def validate(self, string, pos):
+    return QValidator.State.Acceptable, string.upper(), pos
+
+
+class longClickEventFilter(QObject):
+  def __init__(self, win, parent=None):
+    super().__init__()
+    self.__win = win
+    self.__Timer = QTimer()
+
+  def eventFilter(self, obj: QObject, event: QEvent) -> bool:
+    ''' Lance le signal d'appel du menu contextuel après un click gauche de plus de 1.5 secondes '''
+    if event.type() == QEvent.Type.MouseButtonPress and event.button() == Qt.MouseButton.LeftButton:
+      if self.__win.ui.tabMainPage.isEnabled():
+        if not self.__Timer.isActive():
+          try:
+            self.__Timer.timeout.disconnect()
+          except TypeError:
+            pass
+          self.__Timer.timeout.connect(lambda: obj.customContextMenuRequested.emit(event.position().toPoint()))
+          self.__Timer.setSingleShot(True)
+          self.__Timer.start(1500)
+      
+    elif event.type() == QEvent.Type.MouseButtonRelease:
+      self.__Timer.stop()
+
+    return super().eventFilter(obj, event)
+
+
+class appEventFilter(QObject):
+  def __init__(self, win, parent=None):
+    super().__init__()
+    self.__win = win
+
+  def eventFilter(self, obj: QObject, event: QEvent) -> bool:
+    # mémorise le moment du dernier évennement clavier ou souris
+    if event.type() in [QEvent.Type.KeyPress, QEvent.Type.KeyRelease, QEvent.Type.MouseMove, QEvent.Type.MouseButtonPress, QEvent.Type.MouseButtonRelease]:
+      maintenant = time.time()
+      self.__win.lastActivity = maintenant
+      # Masque l'écran de veille si affiché
+      if self.__win.blackScreen.isVisible():
+        self.__win.blackScreen.blackScreen_hide()
+        return True # Bloque la suite du traitement de l'évennement
+    return super().eventFilter(obj, event)
+
+
+class focusEventFilter(QObject):
+  
+  def __init__(self, keyNum, parent=None):
+    self.__keyNum = keyNum
+    self.parent = parent
+    super().__init__()
+
+  def eventFilter(self, widget, event):
+    # FocusIn event
+    if event.type() == QEvent.Type.FocusIn:
+      if self.__keyNum.parent.showKeynum:
+        if self.__keyNum.parent.qwKeyboard.isKeyboardVisible():
+          self.__keyNum.parent.qwKeyboard.keyboard_hide()
+          self.__keyNum.parent.ui.btnKeyboard.setText("⇧⌨⇧")
+        # Affiche le pavé numérique
+        self.__keyNum.setLinkedTxt(widget)
+        self.__keyNum.keynum_show()
+
+    # FocusOut event
+    if event.type() == QEvent.Type.FocusOut:
+      if self.__keyNum.isVisible():
+        # Masque le pavé numérique
+        self.__keyNum.setLinkedTxt(None)
+        self.__keyNum.keynum_hide()
+
+    # Return False pour l'execution standard de l'event
+    return False
+
+
+
+
+
 class winMain(QtWidgets.QMainWindow):
   sig_log = pyqtSignal(int,  str)  # Message de fonctionnement du composant grblComSerial, renvoie : logSeverity, message string
-
   def __init__(self, parent=None):
 
     # Force le curseur souris sablier
-    QtWidgets.QApplication.setOverrideCursor(Qt.WaitCursor)
+    QtWidgets.QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
     QtWidgets.QMainWindow.__init__(self, parent)
 
@@ -76,7 +155,7 @@ class winMain(QtWidgets.QMainWindow):
     self.__gcode_recall_flag = False
     self.__gcode_current_txt = ""
 
-    self.__settings = QSettings(QSettings.NativeFormat, QSettings.UserScope, ORG_NAME, APP_NAME)
+    self.__settings = QSettings(QSettings.Format.NativeFormat, QSettings.Scope.UserScope, ORG_NAME, APP_NAME)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--connect", action="store_true", help=self.tr("Connect the serial port"))
@@ -93,6 +172,10 @@ class winMain(QtWidgets.QMainWindow):
     self.ui = mainWindow.Ui_mainWindow()
     self.ui.setupUi(self)
 
+
+
+    self.blackScreen = qwBlackScreen(self)
+
     self.btnUrgencePictureLocale = ":/cn5X/images/btnUrgence.svg"
     self.btnUrgenceOffPictureLocale = ":/cn5X/images/btnUrgenceOff.svg"
 
@@ -107,9 +190,6 @@ class winMain(QtWidgets.QMainWindow):
     self.logCn5X.document().setMaximumBlockCount(2000)  # Limite la taille des logs a 2000 lignes
     self.logDebug.document().setMaximumBlockCount(2000) # Limite la taille des logs a 2000 lignes
     #self.ui.qtabConsole.setCurrentIndex(CN5X_TAB_LOG)               # Active le tab de la log cn5X++
-
-    self.__gcodeFile = gcodeFile(self.ui, self.ui.gcodeTable)
-    self.__gcodeFile.sig_log.connect(self.on_sig_log)
 
     self.timerDblClic = QtCore.QTimer()
 
@@ -130,15 +210,27 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblCom.sig_serialLock.connect(self.on_sig_serialLock)
 
     self.__beeper = cn5XBeeper();
-    self.__arretUrgence     = True
+
     self.__jogAxisSelected = None
+    
+    self.__arretUrgence     = True
+   
+    
     def arretUrgence():
       return self.__arretUrgence
-
+    
     self.__decode = grblDecode(self.ui, self.log, self.__grblCom, self.__beeper, arretUrgence)
-    self.__grblCom.setDecodeur(self.__decode)
+    # fxoQT self.__decode.sig_log.connect(self.on_sig_log)
+    # # fxoQT self.__pBox.setDecoder(self.__decode)    
+    #  # fxoQT self.__grblCom.setDecodeur(self.__decode)
 
-    # self.__decode = grblDecode(self.ui, self.log, self.__grblCom, self.__beeper, arretUrgence)
+    # Boite de dialogue de changement d'outils
+    self.__dlgToolChange = dlgToolChange(self, self.__grblCom, self.__decode, DEFAULT_NB_AXIS, DEFAULT_AXIS_NAMES)
+    #self.__dlgToolChange.setParent(self)
+
+    self.__gcodeFile = gcodeFile(self.ui, self.ui.gcodeTable, self.__dlgToolChange)
+    self.__gcodeFile.sig_log.connect(self.on_sig_log)
+
 
     self.__jog = grblJog(self.__grblCom)
     self.ui.dsbJogSpeed.setValue(DEFAULT_JOG_SPEED)
@@ -327,8 +419,8 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnG28.clicked.connect(self.on_gotoG28)
     self.ui.btnG30.clicked.connect(self.on_gotoG30)
     self.ui.gcodeTable.customContextMenuRequested.connect(self.on_gcodeTableContextMenu)
-    QtWidgets.QShortcut(QtCore.Qt.Key_F7, self.ui.gcodeTable, activated=self.on_GCodeTable_key_F7_Pressed)
-    QtWidgets.QShortcut(QtCore.Qt.Key_F8, self.ui.gcodeTable, activated=self.on_GCodeTable_key_F8_Pressed)
+    QShortcut(Qt.Key.Key_F7, self.ui.gcodeTable, activated=self.on_GCodeTable_key_F7_Pressed)
+    QShortcut(Qt.Key.Key_F8, self.ui.gcodeTable, activated=self.on_GCodeTable_key_F8_Pressed)
     self.ui.dialAvance.customContextMenuRequested.connect(self.on_dialAvanceContextMenu)
     self.ui.dialBroche.customContextMenuRequested.connect(self.on_dialBrocheContextMenu)
     ''''
@@ -665,14 +757,14 @@ class winMain(QtWidgets.QMainWindow):
     if fileName[0] != "":
       # Lecture du fichier
       # Curseur sablier
-      QtWidgets.QApplication.setOverrideCursor(Qt.WaitCursor)
+      QtWidgets.QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
       RC = self.__gcodeFile.readFile(fileName[0])
       if RC:
         # Selectionne l'onglet du fichier sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
           self.ui.qtabMain.setCurrentIndex(CN5X_TAB_FILE)
         self.setWindowTitle(APP_NAME + " - " + self.__gcodeFile.fileName())
-        self.__plotGcode.load_gcode_file(fileName[0])
+        #self.__plotGcode.load_gcode_file(fileName[0])
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
@@ -2675,47 +2767,58 @@ class winMain(QtWidgets.QMainWindow):
     self.cMenu.addAction(uniteMM)
     self.cMenu.popup(QtGui.QCursor.pos())
 
-
   def createLangMenu(self):
-    ''' Creation du menu de choix de la langue du programme
-    en fonction du contenu du fichier i18n/cn5X_locales.xml '''
-    document = parse("{}/i18n/cn5X_locales.xml".format(app_path))
-    root = document.documentElement
-    translations = root.getElementsByTagName("translation")
+      ''' Creation du menu de choix de la langue du programme
+      en fonction du contenu du fichier i18n/cn5X_locales.xml '''
+      fichierXML = QFile(os.path.join(os.path.dirname(__file__), "i18n/cn5X_locales.xml"))
+      if fichierXML.open(QIODevice.OpenModeFlag.ReadOnly):
+        XMLbuff = str(fichierXML.readAll(), 'utf-8')
+      else:
+        print("Error reading cn5X_locales.xml from resources !")
 
-    l = 0
-    self.langues = []
-    self.ui.actionLang = []
-    self.ui.iconLang = []
-    for translation in translations:
+      document = parseString(XMLbuff)
+      root = document.documentElement
+      translations = root.getElementsByTagName("translation")
 
-      self.langues.append(translation.getElementsByTagName("locale")[0].childNodes[0].nodeValue)
-      label = translation.getElementsByTagName("label")[0].childNodes[0].nodeValue
-      qm_file = translation.getElementsByTagName("qm_file")[0].childNodes[0].nodeValue
-      flag_file = translation.getElementsByTagName("flag_file")[0].childNodes[0].nodeValue
+      l = 0
+      self.langues = []
+      self.ui.actionLang = []
+      self.ui.iconLang = []
+      for translation in translations:
 
-      self.ui.actionLang.append(QtWidgets.QAction(self))
-      self.ui.iconLang.append(QtGui.QIcon())
-      self.ui.iconLang[l].addPixmap(QtGui.QPixmap(flag_file), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-      self.ui.actionLang[l].setIcon(self.ui.iconLang[l])
-      self.ui.actionLang[l].setText(label)
-      self.ui.actionLang[l].setCheckable(True)
-      self.ui.actionLang[l].setObjectName(self.langues[l])
-      self.ui.menuLangue.addAction(self.ui.actionLang[l])
+        self.langues.append(translation.getElementsByTagName("locale")[0].childNodes[0].nodeValue)
+        label = translation.getElementsByTagName("label")[0].childNodes[0].nodeValue
+        qm_file = translation.getElementsByTagName("qm_file")[0].childNodes[0].nodeValue
+        flag_file = os.path.join(os.path.dirname(__file__), translation.getElementsByTagName("flag_file")[0].childNodes[0].nodeValue)
 
-      l += 1
+        self.ui.actionLang.append(QAction(self))
+        self.ui.iconLang.append(QtGui.QIcon())
+        self.ui.iconLang[l].addPixmap(QtGui.QPixmap(flag_file), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.On)
+        self.ui.actionLang[l].setIcon(self.ui.iconLang[l])
+        self.ui.actionLang[l].setText(label)
+        self.ui.actionLang[l].setCheckable(True)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.ui.actionLang[l].setFont(font)
+        self.ui.actionLang[l].setObjectName(self.langues[l])
+        self.ui.menuLangue.addAction(self.ui.actionLang[l])
 
-    self.ui.menuLangue.addSeparator()
-    self.actionLangSystem = QtWidgets.QAction()
-    self.actionLangSystem.setCheckable(True)
-    self.actionLangSystem.setObjectName("actionLangSystem")
-    self.ui.menuLangue.addAction(self.actionLangSystem)
-    self.actionLangSystem.setText(self.tr("Use system language"))
+        l += 1
 
-    self.ui.menuLangue.triggered.connect(self.on_menuLangue)
+      self.ui.menuLangue.addSeparator()
+      self.actionLangSystem = QAction()
+      self.actionLangSystem.setCheckable(True)
+      font = QtGui.QFont()
+      font.setPointSize(12)
+      self.actionLangSystem.setFont(font)
+      self.actionLangSystem.setObjectName("actionLangSystem")
+      self.ui.menuLangue.addAction(self.actionLangSystem)
+      self.actionLangSystem.setText(self.tr("Use system language"))
 
+      self.ui.menuLangue.triggered.connect(self.on_menuLangue)
 
   def on_menuLangue(self, action):
+    print("on_menuLangue")
     if action.objectName() == "actionLangSystem":
       langue = QLocale()
       self.__settings.remove("lang")
@@ -2761,8 +2864,8 @@ class winMain(QtWidgets.QMainWindow):
       translator.load(langue, "{}/i18n/cn5X".format(app_path), ".")
 
     # Install le traducteur et l'exécute sur les éléments déjà chargés
-    QtCore.QCoreApplication.installTranslator(translator)
-    self.ui.retranslateUi(self)
+    QCoreApplication.installTranslator(translator)
+    #self.ui.retranslateUi(self)
     self.actionLangSystem.setText(self.tr("Use system language"))
 
     # Coche le bon item dans le menu langue
@@ -2785,7 +2888,7 @@ class winMain(QtWidgets.QMainWindow):
           a.setChecked(False)
 
     # Sélectionne l'image du bouton d'urgence
-    if langue.language() == QLocale(QLocale.French, QLocale.France).language():
+    if langue.language() ==   QLocale(QLocale.Language.French, QLocale.Country.France):
       self.btnUrgencePictureLocale = ":/cn5X/images/btnUrgence.svg"
       self.btnUrgenceOffPictureLocale = ":/cn5X/images/btnUrgenceOff.svg"
     else:
@@ -2804,6 +2907,7 @@ if __name__ == '__main__':
   os.environ["QT_LOGGING_RULES"] = '*.debug=false;qt.qpa.*=false'
 
   app = QtWidgets.QApplication(sys.argv)
+  print(type(app))
 
   # Retrouve le répertoire de l'exécutable
   if getattr(sys, 'frozen', False):
@@ -2826,8 +2930,11 @@ if __name__ == '__main__':
   print("")
 
   translator = QTranslator()
-  langue = QLocale(QLocale.French, QLocale.France)
-  translator.load(langue, "{}/i18n/cn5X".format(app_path), ".")
+
+  langue = QLocale(QLocale.Language.French, QLocale.Country.France)
+  translator.load(langue, os.path.join(os.path.dirname(__file__), "i18n/cn5X"), ".")
+  print(type(translator))
+  print(type(app))
   app.installTranslator(translator)
 
   # Chargement police LED Calculator depuis le fichier de ressources
@@ -2838,7 +2945,14 @@ if __name__ == '__main__':
     locale.setlocale(locale.LC_TIME, '')
   except Exception as err:
     print("Warning: {}".format(err))
-
+  
   window = winMain()
+
+  # Traque tous les évennements de l'appli pour gestion de la veille en
+  # mode plein écran
+  appEvents = appEventFilter(win=window)
+  app.installEventFilter(appEvents)
+  derniereActivite = time.time()
+  
   window.show()
-  sys.exit(app.exec_())
+  sys.exit(app.exec())

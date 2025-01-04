@@ -21,9 +21,9 @@
 '                                      cn5X_dlgG92                                   '
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt5.QtCore import Qt, QObject, pyqtSignal, pyqtSlot, QSettings
-from PyQt5.QtWidgets import QDialog, QAbstractButton, QDialogButtonBox, QCheckBox, QSpinBox, QDoubleSpinBox, QLineEdit
-from PyQt5.QtGui import QStandardItemModel, QStandardItem, QValidator, QPalette
+from PyQt6.QtCore import Qt, QObject, pyqtSignal, pyqtSlot, QSettings
+from PyQt6.QtWidgets import QDialog, QAbstractButton, QDialogButtonBox, QCheckBox, QSpinBox, QDoubleSpinBox, QLineEdit
+from PyQt6.QtGui import QStandardItemModel, QStandardItem, QValidator, QPalette
 from cn5X_config import *
 from grblCom import grblCom
 from dlgG28_30_1 import *

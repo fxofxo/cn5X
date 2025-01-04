@@ -2,9 +2,9 @@ from  cn5X_config import CONFIG_QTCHART_ENABLED
 
 import numpy as np
 import time
-from PyQt5 import QtCore, QtWidgets, uic,QtGui
+from PyQt6 import QtCore, QtWidgets, uic,QtGui
 if CONFIG_QTCHART_ENABLED:
-    from PyQt5 import QtChart
+    from PyQt6 import QtChart
 
 XMAX = 500
 DMIN = 1

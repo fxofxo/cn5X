@@ -22,8 +22,8 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 import sys, os
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import pyqtSignal, pyqtSlot
+from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import pyqtSignal, pyqtSlot
 import cn5X_rc
 
 class cnLed(QtWidgets.QLabel):

@@ -22,7 +22,7 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 from enum import Enum
-from PyQt5 import QtGui
+from PyQt6 import QtGui
 
 ORG_NAME           = "fxo"
 APP_NAME           = "cn5X++"
@@ -38,7 +38,7 @@ SERIAL_READ_TIMEOUT   = 250      # ms
 GRBL_QUERY_DELAY      =  75      # ms
 
 DEFAULT_JOG_SPEED     = 300
-CONFIG_QTCHART_ENABLED = True
+CONFIG_QTCHART_ENABLED = False
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''

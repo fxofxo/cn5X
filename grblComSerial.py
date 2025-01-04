@@ -25,7 +25,7 @@ import sys, time
 import serial
 from enum import Enum
 from math import *
-from PyQt5.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
+from PyQt6.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
 from cn5X_config import *
 from grblComStack import grblStack
 

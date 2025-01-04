@@ -23,8 +23,8 @@
 
 import sys, time
 from math import *
-from PyQt5 import QtCore
-from PyQt5.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
+from PyQt6 import QtCore
+from PyQt6.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
 from cn5X_config import *
 from grblComSerial import grblComSerial
 

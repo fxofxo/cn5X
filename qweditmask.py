@@ -22,9 +22,9 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 import sys
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
-from PyQt5.QtGui import QIntValidator
+from PyQt6 import QtCore, QtWidgets
+from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot
+from PyQt6.QtGui import QIntValidator
 
 class qwEditMask(QtWidgets.QWidget):
   ''' Widget personalise construisant un masque binaire (pour 6 axes) avec 6 cases a cocher

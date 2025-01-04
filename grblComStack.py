@@ -21,7 +21,7 @@
 '                                                                         '
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt5.QtCore import QObject, QThread, QEventLoop, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, QThread, QEventLoop, pyqtSignal, pyqtSlot
 from cn5X_config import *
 
 class grblStack():

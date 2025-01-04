@@ -23,8 +23,8 @@
 
 import sys, os, time #, datetime
 from tracelog import *
-from PyQt5 import QtGui # QtCore, , QtWidgets
-from PyQt5.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
+from PyQt6 import QtGui # QtCore, , QtWidgets
+from PyQt6.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
 from cn5X_config import *
 from cnQPushButton import cnQPushButton
 from grblCom import grblCom

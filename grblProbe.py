@@ -21,8 +21,8 @@
 '                                                                         '
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt5 import QtCore
-from PyQt5.QtCore import QCoreApplication, QObject, pyqtSignal, pyqtSlot
+from PyQt6 import QtCore
+from PyQt6.QtCore import QCoreApplication, QObject, pyqtSignal, pyqtSlot
 from cn5X_config import *
 from grblCom import grblCom
 

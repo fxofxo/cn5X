@@ -24,9 +24,9 @@
 
 from tracelog import *
 
-from PyQt5 import QtGui
-from PyQt5 import QtWidgets, QtCore #, QtGui,
-from PyQt5.QtCore import QCoreApplication, QObject, QEventLoop, pyqtSignal, pyqtSlot
+from PyQt6 import QtGui
+from PyQt6 import QtWidgets, QtCore #, QtGui,
+from PyQt6.QtCore import QCoreApplication, QObject, QEventLoop, pyqtSignal, pyqtSlot
 
 from grblError import grblError
 from speedOverrides import *

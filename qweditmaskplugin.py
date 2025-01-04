@@ -23,7 +23,7 @@
 '                                                                         '
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt5 import QtGui, QtDesigner
+from PyQt6 import QtGui, QtDesigner
 
 # ===== adapter selon le widget! ==========================================
 # nom (str) du fichier du widget sans extension
