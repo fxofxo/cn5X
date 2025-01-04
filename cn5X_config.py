@@ -38,7 +38,7 @@ SERIAL_READ_TIMEOUT   = 250      # ms
 GRBL_QUERY_DELAY      =  75      # ms
 
 DEFAULT_JOG_SPEED     = 300
-CONFIG_QTCHART_ENABLED = False
+CONFIG_QTCHART_ENABLED = True
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''

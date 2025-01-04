@@ -4,7 +4,7 @@ import numpy as np
 import time
 from PyQt6 import QtCore, QtWidgets, uic,QtGui
 if CONFIG_QTCHART_ENABLED:
-    from PyQt6 import QtChart
+    from PyQt6 import QtCharts
 
 XMAX = 500
 DMIN = 1
@@ -24,18 +24,18 @@ class plotGcode():
         self.xprv_p = 0
         self.uprv_p = 0
         if CONFIG_QTCHART_ENABLED:
-            self.chart_xy = QtChart.QChart()
-            self.chart_uz = QtChart.QChart()
+            self.chart_xy = QtCharts.QChart()
+            self.chart_uz = QtCharts.QChart()
 
             #self.xy_serie = QtChart.QScatterSeries()
             #self.xy_serie.setMarkerSize(5.0)
-            self.xy_base_serie = QtChart.QLineSeries()
-            self.xy_serie = QtChart.QLineSeries()
+            self.xy_base_serie = QtCharts.QLineSeries()
+            self.xy_serie = QtCharts.QLineSeries()
             self.xy_base_serie.setColor(QtGui.QColor("cyan"))
             self.xy_serie.setColor(QtGui.QColor("red"))
 
-            self.uz_base_serie = QtChart.QLineSeries()
-            self.uz_serie = QtChart.QLineSeries()
+            self.uz_base_serie = QtCharts.QLineSeries()
+            self.uz_serie = QtCharts.QLineSeries()
             self.uz_base_serie.setColor(QtGui.QColor("cyan"))
             self.uz_serie.setColor(QtGui.QColor("red"))
 
@@ -53,8 +53,8 @@ class plotGcode():
 
             # self.chart.setAnimationOptions(QtChart.QChart.SeriesAnimations)
 
-            self.chartview_xy = QtChart.QChartView(self.chart_xy)
-            self.chartview_uz = QtChart.QChartView(self.chart_uz)
+            self.chartview_xy = QtCharts.QChartView(self.chart_xy)
+            self.chartview_uz = QtCharts.QChartView(self.chart_uz)
 
             # self.chart_container.setContentsMargins(0, 0, 0, 0)
             # lay = QtWidgets.QHBoxLayout(self.chart_container)
@@ -172,16 +172,12 @@ class plotGcode():
         print(f" fileratio: {y_max/x_max}")
         print(f" widgetration: {(  widget_h / widget_w)}")
 
-        if CONFIG_QTCHART_ENABLED:
-            self.chart_xy.axisX(self.xy_serie).setMin(x_min)
-            self.chart_xy.axisX(self.xy_serie).setMax(x_max)
-            self.chart_xy.axisY(self.xy_serie).setMin(y_min)
-            self.chart_xy.axisY(self.xy_serie).setMax(y_max)
 
-            self.chart_uz.axisX(self.uz_serie).setMin(x_min)
-            self.chart_uz.axisX(self.uz_serie).setMax(x_max)
-            self.chart_uz.axisY(self.uz_serie).setMin(y_min)
-            self.chart_uz.axisY(self.uz_serie).setMax(y_max)
+        if CONFIG_QTCHART_ENABLED:
+            self.chart_xy.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(x_min, x_max)
+            self.chart_xy.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(y_min, y_max)
+            self.chart_uz.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(x_min, x_max)
+            self.chart_uz.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(y_min, y_max)
 
 
 

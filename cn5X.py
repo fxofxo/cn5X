@@ -764,7 +764,7 @@ class winMain(QtWidgets.QMainWindow):
         if not self.ui.btnDebug.isChecked():
           self.ui.qtabMain.setCurrentIndex(CN5X_TAB_FILE)
         self.setWindowTitle(APP_NAME + " - " + self.__gcodeFile.fileName())
-        #self.__plotGcode.load_gcode_file(fileName[0])
+        self.__plotGcode.load_gcode_file(fileName[0])
       else:
         # Selectionne l'onglet de la console pour que le message d'erreur s'affiche sauf en cas de debug
         if not self.ui.btnDebug.isChecked():
