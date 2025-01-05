@@ -24,7 +24,7 @@
 import sys, os
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import pyqtSignal, pyqtSlot
-import cn5X_rc
+#import cn5X_rc
 
 class cnLed(QtWidgets.QLabel):
   ''' QLabel affichant une image de Led eteinte ou allumee '''

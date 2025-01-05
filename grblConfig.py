@@ -26,9 +26,10 @@ from PyQt6.QtWidgets import QDialog, QAbstractButton, QDialogButtonBox, QCheckBo
 from PyQt6.QtGui import QStandardItemModel, QStandardItem, QValidator
 from cn5X_config import *
 from grblCom import grblCom
-from dlgConfig import *
+#from dlgConfig import *
 from msgbox import *
 from compilOptions import grblCompilOptions
+from qweditmask import qwEditMask
 
 class upperCaseValidator(QValidator):
   def validate(self, string, pos):

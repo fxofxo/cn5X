@@ -27,7 +27,7 @@ from PyQt6.QtWidgets import QDialog, QAbstractButton, QDialogButtonBox, QCheckBo
 from PyQt6.QtGui import QPalette
 from cn5X_config import *
 from grblCom import grblCom
-from dlgJog import *
+#from dlgJog import *
 
 class dlgJog(QObject):
   ''' Classe assurant la gestion de la boite de dialogue G92 '''

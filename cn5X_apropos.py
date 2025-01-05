@@ -26,7 +26,7 @@ from PyQt6.QtWidgets import QDialog, QAbstractButton, QDialogButtonBox, QCheckBo
 from PyQt6.QtGui import QStandardItemModel, QStandardItem, QValidator
 from cn5X_config import *
 from grblCom import grblCom
-from dlgAPropos import *
+#from dlgAPropos import *
 from msgbox import *
 
 class cn5XAPropos(QObject):

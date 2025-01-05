@@ -657,7 +657,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.tabJog.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
-      self.ui.frameStatus.setEnabled(False)
+      self.ui.frameLedsStatus.setEnabled(False)
       self.ui.frmHomeAlarm.setEnabled(False)
       self.ui.frameMainBtns.setEnabled(False)
       self.ui.frmOperationButtons.setEnabled(False)
@@ -679,7 +679,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.tabJog.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
-      self.ui.frameStatus.setEnabled(True)
+      self.ui.frameLedsStatus.setEnabled(True)
       self.ui.frameMainBtns.setEnabled(False)
       self.ui.frmHomeAlarm.setEnabled(True)
       self.ui.frmOperationButtons.setEnabled(False)
@@ -700,16 +700,16 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.tabJog.setEnabled(True)
       self.ui.tabProbeXY.setEnabled(True)
       self.ui.tabProbeZ.setEnabled(True)
-      self.ui.frameStatus.setEnabled(True)
+      self.ui.frameLedsStatus.setEnabled(True)
       self.ui.frameMainBtns.setEnabled(True)
       self.ui.frmHomeAlarm.setEnabled(True)
       self.ui.frmOperationButtons.setEnabled(True)
       self.ui.frmRelG.setEnabled(True)
       self.__decode.disableAxis(True)
       if self.__gcodeFile.isFileLoaded():
-        self.ui.frmCycle.setEnabled(True)
+        self.ui.frmRun.setEnabled(True)
       else:
-        self.ui.frmCycle.setEnabled(False)
+        self.ui.frmRun.setEnabled(False)
           
 
 
