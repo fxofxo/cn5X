@@ -55,7 +55,7 @@
    <string notr="true">cn5X++</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="cn5X.qrc">
+   <iconset>
     <normaloff>:/cn5X/images/XYZAB.svg</normaloff>:/cn5X/images/XYZAB.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -179,9 +179,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="cn5X.qrc">
-              <normaloff>:/cn5X/images/btnLinkOff.svg</normaloff>
-              <normalon>:/cn5X/images/btnLink.svg</normalon>:/cn5X/images/btnLinkOff.svg</iconset>
+             <iconset>
+              <normaloff>images/btnLink.svg</normaloff>images/btnLink.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -414,7 +413,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="cn5X.qrc">
+             <iconset>
               <normaloff>:/cn5X/images/btnResetSpeed.svg</normaloff>:/cn5X/images/btnResetSpeed.svg</iconset>
             </property>
             <property name="iconSize">
@@ -465,7 +464,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="cn5X.qrc">
+             <iconset>
               <normaloff>:/cn5X/images/btnResetSpeed.svg</normaloff>:/cn5X/images/btnResetSpeed.svg</iconset>
             </property>
             <property name="iconSize">
@@ -633,8 +632,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnFloodM7.svg</normaloff>:/cn5X/images/btnFloodM7.svg</iconset>
+           <iconset>
+            <normaloff>images/btnFloodM7.svg</normaloff>images/btnFloodM7.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -671,8 +670,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnFloodM8.svg</normaloff>:/cn5X/images/btnFloodM8.svg</iconset>
+           <iconset>
+            <normaloff>images/btnFloodM8.svg</normaloff>images/btnFloodM8.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -709,8 +708,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnFloodM9.svg</normaloff>:/cn5X/images/btnFloodM9.svg</iconset>
+           <iconset>
+            <normaloff>images/btnFloodM9.svg</normaloff>images/btnFloodM9.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -786,8 +785,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnSpinM3.svg</normaloff>:/cn5X/images/btnSpinM3.svg</iconset>
+           <iconset>
+            <normaloff>images/btnSpinM3.svg</normaloff>images/btnSpinM3.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -824,8 +823,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnSpinM4.svg</normaloff>:/cn5X/images/btnSpinM4.svg</iconset>
+           <iconset>
+            <normaloff>images/btnSpinM4.svg</normaloff>images/btnSpinM4.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -862,8 +861,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnSpinM5.svg</normaloff>:/cn5X/images/btnSpinM5.svg</iconset>
+           <iconset>
+            <normaloff>images/btnSpinM5.svg</normaloff>images/btnSpinM5.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -945,8 +944,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnStart.svg</normaloff>:/cn5X/images/btnStart.svg</iconset>
+           <iconset>
+            <normaloff>images/btnStart.svg</normaloff>images/btnStart.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -989,8 +988,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnPause.svg</normaloff>:/cn5X/images/btnPause.svg</iconset>
+           <iconset>
+            <normaloff>images/btnPause.svg</normaloff>images/btnPause.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1033,8 +1032,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnStop.svg</normaloff>:/cn5X/images/btnStop.svg</iconset>
+           <iconset>
+            <normaloff>images/btnStop.svg</normaloff>images/btnStop.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1045,56 +1044,6 @@
          </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="cnQPushButton" name="btnPlus_1">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>200</y>
-         <width>53</width>
-         <height>50</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="cursor">
-        <cursorShape>PointingHandCursor</cursorShape>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border-radius: 25;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/cn5X/images/btnPlus.svg</normaloff>:/cn5X/images/btnPlus.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>50</width>
-         <height>50</height>
-        </size>
-       </property>
       </widget>
      </widget>
      <widget class="QFrame" name="frmJog">
@@ -1302,8 +1251,7 @@ color:rgb(119, 118, 123)</string>
           </property>
           <property name="icon">
            <iconset>
-            <selectedoff>:/cn5X/images/btnJogStop.svg</selectedoff>
-           </iconset>
+            <normaloff>images/btnJogStop.svg</normaloff>images/btnJogStop.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1352,8 +1300,8 @@ color:rgb(119, 118, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnJogPlus.svg</normaloff>:/cn5X/images/btnJogPlus.svg</iconset>
+           <iconset>
+            <normaloff>images/btnJogPlus.svg</normaloff>images/btnJogPlus.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1402,8 +1350,8 @@ color:rgb(119, 118, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnJogMinus.svg</normaloff>:/cn5X/images/btnJogMinus.svg</iconset>
+           <iconset>
+            <normaloff>images/btnJogMinus.svg</normaloff>images/btnJogMinus.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1768,8 +1716,8 @@ color:rgb(19, 11, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnG28.svg</normaloff>:/cn5X/images/btnG28.svg</iconset>
+           <iconset>
+            <normaloff>images/btnG28.svg</normaloff>images/btnG28.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1814,8 +1762,8 @@ color:rgb(1, 118, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnG30.svg</normaloff>:/cn5X/images/btnG30.svg</iconset>
+           <iconset>
+            <normaloff>images/btnG30.svg</normaloff>images/btnG30.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -2079,7 +2027,7 @@ color:rgb(119, 118, 123)</string>
            <string notr="true"/>
           </property>
           <property name="pixmap">
-           <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+           <pixmap>images/ledVerteEteinte.svg</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -2159,7 +2107,7 @@ color:rgb(119, 118, 123)</string>
            <string notr="true"/>
           </property>
           <property name="pixmap">
-           <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+           <pixmap>images/ledVerteEteinte.svg</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -2220,7 +2168,7 @@ color:rgb(119, 118, 123)</string>
            <string notr="true"/>
           </property>
           <property name="pixmap">
-           <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+           <pixmap>images/ledVerteEteinte.svg</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -2262,7 +2210,7 @@ color:rgb(119, 118, 123)</string>
            <string notr="true"/>
           </property>
           <property name="pixmap">
-           <pixmap>:/cn5X/images/ledVerteEteinte.svg</pixmap>
+           <pixmap>images/ledVerteEteinte.svg</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -2342,8 +2290,8 @@ color:rgb(119, 118, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnM64P0.svg</normaloff>:/cn5X/images/btnM64P0.svg</iconset>
+           <iconset>
+            <normaloff>images/btnM64P0.svg</normaloff>images/btnM64P0.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -2383,8 +2331,8 @@ color:rgb(119, 118, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnM64P1.svg</normaloff>:/cn5X/images/btnM64P1.svg</iconset>
+           <iconset>
+            <normaloff>images/btnM64P1.svg</normaloff>images/btnM64P1.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -2424,8 +2372,8 @@ color:rgb(119, 118, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnM64P2.svg</normaloff>:/cn5X/images/btnM64P2.svg</iconset>
+           <iconset>
+            <normaloff>images/btnM64P2.svg</normaloff>images/btnM64P2.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -2465,8 +2413,8 @@ color:rgb(119, 118, 123)</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnM64P3.svg</normaloff>:/cn5X/images/btnM64P3.svg</iconset>
+           <iconset>
+            <normaloff>images/btnM64P3.svg</normaloff>images/btnM64P3.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -5994,7 +5942,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutX+Y-.svg</normaloff>:/cn5X/images/btnProbeOutX+Y-.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6029,7 +5977,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutY-.svg</normaloff>:/cn5X/images/btnProbeOutY-.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6064,7 +6012,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutX-Y-.svg</normaloff>:/cn5X/images/btnProbeOutX-Y-.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6099,7 +6047,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutX+.svg</normaloff>:/cn5X/images/btnProbeOutX+.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6137,7 +6085,7 @@ Need to define non nul probe pull-off distance.</string>
             <string notr="true"/>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeInCercle.svg</normaloff>:/cn5X/images/btnProbeInCercle.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6172,7 +6120,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutX-.svg</normaloff>:/cn5X/images/btnProbeOutX-.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6207,7 +6155,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutX+Y+.svg</normaloff>:/cn5X/images/btnProbeOutX+Y+.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6242,7 +6190,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutY+.svg</normaloff>:/cn5X/images/btnProbeOutY+.svg</iconset>
            </property>
            <property name="iconSize">
@@ -6277,7 +6225,7 @@ Need to define non nul probe pull-off distance.</string>
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="icon">
-            <iconset resource="cn5X.qrc">
+            <iconset>
              <normaloff>:/cn5X/images/btnProbeOutX-Y+.svg</normaloff>:/cn5X/images/btnProbeOutX-Y+.svg</iconset>
            </property>
            <property name="iconSize">
@@ -7270,7 +7218,7 @@ origin</string>
                <string>Run probe in Z- direction.</string>
               </property>
               <property name="icon">
-               <iconset resource="cn5X.qrc">
+               <iconset>
                 <normaloff>:/cn5X/images/btnProbeZ-.svg</normaloff>:/cn5X/images/btnProbeZ-.svg</iconset>
               </property>
               <property name="iconSize">
@@ -10613,7 +10561,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -10667,7 +10615,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -10721,7 +10669,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -10775,7 +10723,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -10832,7 +10780,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -10935,7 +10883,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -10992,7 +10940,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11049,7 +10997,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11112,7 +11060,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11169,7 +11117,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11281,7 +11229,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11338,7 +11286,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11395,7 +11343,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11452,7 +11400,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11512,7 +11460,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11569,7 +11517,7 @@ color: rgb(0,191,255)</string>
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="cn5X.qrc">:/cn5X/images/ledRougeEteinte.svg</pixmap>
+                <pixmap>images/ledRougeEteinte.svg</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -11616,14 +11564,17 @@ color: rgb(0,191,255)</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="cn5X.qrc">
-           <normaloff>:/cn5X/images/btnKillAlarm.svg</normaloff>:/cn5X/images/btnKillAlarm.svg</iconset>
+          <iconset>
+           <normaloff>images/btnKillAlarm.svg</normaloff>images/btnKillAlarm.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>50</width>
+           <height>49</height>
           </size>
+         </property>
+         <property name="shortcut">
+          <string notr="true"/>
          </property>
         </widget>
         <widget class="QPushButton" name="btnHomeCycle">
@@ -11645,7 +11596,17 @@ color: rgb(0,191,255)</string>
           <string>Run homing cycle</string>
          </property>
          <property name="text">
-          <string>Home</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>images/origine.svg</normaloff>images/origine.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
          </property>
         </widget>
         <widget class="QPushButton" name="btnReset">
@@ -11667,7 +11628,17 @@ color: rgb(0,191,255)</string>
           <string>Soft Reset</string>
          </property>
          <property name="text">
-          <string>Reset </string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>images/btnResetSpeed.svg</normaloff>images/btnResetSpeed.svg</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>80</width>
+           <height>80</height>
+          </size>
          </property>
         </widget>
        </widget>
@@ -11766,8 +11737,8 @@ to unlock urgent stop</string>
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="cn5X.qrc">
-            <normaloff>:/cn5X/images/btnUrgenceOff.svg</normaloff>:/cn5X/images/btnUrgenceOff.svg</iconset>
+           <iconset>
+            <normaloff>images/btnEmergencyOff.svg</normaloff>images/btnEmergencyOff.svg</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -12063,8 +12034,8 @@ to unlock urgent stop</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="cn5X.qrc">
-                 <normaloff>:/cn5X/images/btnRefresh.svg</normaloff>:/cn5X/images/btnRefresh.svg</iconset>
+                <iconset>
+                 <normaloff>images/btnRefresh.svg</normaloff>images/btnRefresh.svg</iconset>
                </property>
               </widget>
              </item>
@@ -12599,7 +12570,7 @@ to unlock urgent stop</string>
      <string/>
     </property>
     <property name="icon">
-     <iconset resource="cn5X.qrc">
+     <iconset>
       <normaloff>:/i18n/i18n/flags/flag_fr.svg</normaloff>:/i18n/i18n/flags/flag_fr.svg</iconset>
     </property>
    </widget>
@@ -12851,14 +12822,14 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
  <layoutdefault spacing="0" margin="0"/>
  <customwidgets>
   <customwidget>
-   <class>cnQPushButton</class>
-   <extends>QPushButton</extends>
-   <header>cnQPushButton</header>
-  </customwidget>
-  <customwidget>
    <class>cnLed</class>
    <extends>QLabel</extends>
    <header>cnled</header>
+  </customwidget>
+  <customwidget>
+   <class>cnQPushButton</class>
+   <extends>QPushButton</extends>
+   <header>cnQPushButton</header>
   </customwidget>
   <customwidget>
    <class>gcodeQLineEdit</class>
@@ -12871,9 +12842,6 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
    <header>cnQLabel</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="cn5X.qrc"/>
-  <include location="cn5X.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

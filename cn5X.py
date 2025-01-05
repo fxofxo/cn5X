@@ -51,8 +51,8 @@ from qwblackscreen import *
 from grblConfig import grblConfig
 from cn5X_apropos import cn5XAPropos
 from cn5X_helpProbe import cn5XHelpProbe
-from grblG92 import dlgG92
-from grblG28_30_1 import dlgG28_30_1
+#from grblG92 import dlgG92
+#from grblG28_30_1 import dlgG28_30_1
 from cn5X_jog import dlgJog
 from cn5X_beep import cn5XBeeper
 from cn5X_toolChange import dlgToolChange
@@ -2856,6 +2856,7 @@ class winMain(QtWidgets.QMainWindow):
 
 
   def setTranslator(self, langue: QLocale):
+    print("SetTranslator")
     ''' Active la langue de l'interface '''
     global translator # Reutilise le translateur de l'objet app
     if not translator.load(langue, "{}/i18n/cn5X".format(app_path), "."):
@@ -2890,11 +2891,11 @@ class winMain(QtWidgets.QMainWindow):
 
     # Sélectionne l'image du bouton d'urgence
     if langue.language() ==   QLocale(QLocale.Language.French, QLocale.Country.France):
-      self.btnUrgencePictureLocale = ":/cn5X/images/btnUrgence.svg"
-      self.btnUrgenceOffPictureLocale = ":/cn5X/images/btnUrgenceOff.svg"
+      self.btnUrgencePictureLocale = "images/btnUrgence.svg"
+      self.btnUrgenceOffPictureLocale = "images/btnUrgenceOff.svg"
     else:
-      self.btnUrgencePictureLocale = ":/cn5X/images/btnEmergency.svg"
-      self.btnUrgenceOffPictureLocale = ":/cn5X/images/btnEmergencyOff.svg"
+      self.btnUrgencePictureLocale = "images/btnEmergency.svg"
+      self.btnUrgenceOffPictureLocale = "images/btnEmergencyOff.svg"
     # et relance l'affichage avec la nouvelle image
     self.setEnableDisableGroupes()
 
