@@ -87,7 +87,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tabJog">
      <attribute name="title">
@@ -10512,7 +10512,7 @@ color: rgb(0,191,255)</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>351</width>
+           <width>360</width>
            <height>40</height>
           </rect>
          </property>
@@ -11352,7 +11352,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledRougeEteinte.svg</pixmap>
+                 <pixmap>images/ledBleuAlumee.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11409,7 +11409,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledRougeEteinte.svg</pixmap>
+                 <pixmap>images/ledBleuEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11466,7 +11466,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledRougeEteinte.svg</pixmap>
+                 <pixmap>images/ledBleuEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11523,7 +11523,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledRougeEteinte.svg</pixmap>
+                 <pixmap>images/ledBleuEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11583,7 +11583,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledRougeEteinte.svg</pixmap>
+                 <pixmap>images/ledBleuEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -12526,7 +12526,7 @@ to unlock urgent stop</string>
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>:/i18n/i18n/flags/flag_fr.svg</normaloff>:/i18n/i18n/flags/flag_fr.svg</iconset>
+      <normaloff>i18n/flags/flag_fr.svg</normaloff>i18n/flags/flag_fr.svg</iconset>
     </property>
    </widget>
    <addaction name="mnuApplication"/>
