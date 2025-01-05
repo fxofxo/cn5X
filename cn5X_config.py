@@ -27,7 +27,7 @@ from PyQt6 import QtGui
 ORG_NAME           = "fxo"
 APP_NAME           = "cn5X++"
 APP_VERSION_STRING = "0.8.9"
-APP_VERSION_DATE   = "20231018"
+APP_VERSION_DATE   = "20250101"
 
 DEFAULT_NB_AXIS    = 5 # Laisser 3 permet de gerer un Grbl original a 3 axes
 DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z','A','B']
@@ -39,6 +39,12 @@ GRBL_QUERY_DELAY      =  75      # ms
 
 DEFAULT_JOG_SPEED     = 300
 CONFIG_QTCHART_ENABLED = True
+
+
+
+''' Mots GCode valides (cf. http://linuxcnc.org/docs/html/gcode/overview_fr.html) '''
+VALIDES_GCODE_WORDS = "ABCDFGHIJKMNPQRSTUVWXYZ"
+
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''

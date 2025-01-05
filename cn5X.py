@@ -28,7 +28,7 @@ from xml.dom.minidom import parse, parseString, Node, Element
 import locale
 import argparse
 import serial, serial.tools.list_ports
-from tracelog import LOG
+from tracelog import *
 from PyQt6 import QtCore, QtGui, QtWidgets, uic
 from PyQt6.QtCore import Qt, QCoreApplication, QObject, QThread, \
                          pyqtSignal, pyqtSlot, QModelIndex, \
@@ -221,8 +221,8 @@ class winMain(QtWidgets.QMainWindow):
     
     self.__decode = grblDecode(self.ui, self.log, self.__grblCom, self.__beeper, arretUrgence)
     # fxoQT self.__decode.sig_log.connect(self.on_sig_log)
-    # # fxoQT self.__pBox.setDecoder(self.__decode)    
-    #  # fxoQT self.__grblCom.setDecodeur(self.__decode)
+    #self.__pBox.setDecoder(self.__decode)    
+    self.__grblCom.setDecodeur(self.__decode)
 
     # Boite de dialogue de changement d'outils
     self.__dlgToolChange = dlgToolChange(self, self.__grblCom, self.__decode, DEFAULT_NB_AXIS, DEFAULT_AXIS_NAMES)
@@ -2002,7 +2002,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.lblSerialLock.setStyleSheet(".QLabel{border-radius: 3px; background: green;}")
       self.ui.lblSerialActivity.setStyleSheet(".QLabel{border-radius: 3px; background: green;}")
       # Beep
-      self.__beeper.beep(1760, 0.25, 16000)
+      self.__beeper.beep(0.5) #(1760, 0.25, 16000)
       #self.__decode.setMachineState(GRBL_STATUS_NOCON)
 
 
@@ -2790,7 +2790,8 @@ class winMain(QtWidgets.QMainWindow):
         label = translation.getElementsByTagName("label")[0].childNodes[0].nodeValue
         qm_file = translation.getElementsByTagName("qm_file")[0].childNodes[0].nodeValue
         flag_file = os.path.join(os.path.dirname(__file__), translation.getElementsByTagName("flag_file")[0].childNodes[0].nodeValue)
-
+        
+        print(flag_file)
         self.ui.actionLang.append(QAction(self))
         self.ui.iconLang.append(QtGui.QIcon())
         self.ui.iconLang[l].addPixmap(QtGui.QPixmap(flag_file), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.On)
@@ -2935,7 +2936,7 @@ if __name__ == '__main__':
   translator.load(langue, os.path.join(os.path.dirname(__file__), "i18n/cn5X"), ".")
   print(type(translator))
   print(type(app))
-  app.installTranslator(translator)
+  #app.installTranslator(translator)  #tranlations seem inconplete
 
   # Chargement police LED Calculator depuis le fichier de ressources
   QFontDatabase.addApplicationFont(":/cn5X/fonts/LEDCalculator.ttf")

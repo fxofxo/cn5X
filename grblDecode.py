@@ -41,6 +41,9 @@ class grblDecode(QObject):
   - Met a jour l'interface graphique.
   - Stocke des valeurs des parametres decodes.
   '''
+
+  sig_log     = pyqtSignal(int, str) # Message de fonctionnement du composant
+
   def __init__(self, ui, log, grbl: grblCom, beeper: cn5XBeeper, arretUrgence):
     super().__init__()
     self.__mwpos_callback = None

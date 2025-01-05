@@ -46,6 +46,9 @@ adduser <username> dialout
 ```
 apt-get install python3 python3-pyqt5 python3-serial python3-pyqt5.qtmultimedia libqt5multimedia5-plugins
 
+qt6:
+designer-qt6
+
 
 
 Not allwais working

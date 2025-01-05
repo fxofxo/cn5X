@@ -8104,7 +8104,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>65</height>
+               <height>66</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_X0">
@@ -8731,7 +8731,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>65</height>
+               <height>66</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_Y0">
@@ -9289,7 +9289,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>65</height>
+               <height>66</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_A0">
@@ -9948,7 +9948,7 @@ color: rgb(0,191,255)</string>
                <x>120</x>
                <y>0</y>
                <width>32</width>
-               <height>65</height>
+               <height>66</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_Z0">
@@ -12851,14 +12851,14 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
  <layoutdefault spacing="0" margin="0"/>
  <customwidgets>
   <customwidget>
-   <class>cnLed</class>
-   <extends>QLabel</extends>
-   <header>cnled</header>
-  </customwidget>
-  <customwidget>
    <class>cnQPushButton</class>
    <extends>QPushButton</extends>
    <header>cnQPushButton</header>
+  </customwidget>
+  <customwidget>
+   <class>cnLed</class>
+   <extends>QLabel</extends>
+   <header>cnled</header>
   </customwidget>
   <customwidget>
    <class>gcodeQLineEdit</class>
