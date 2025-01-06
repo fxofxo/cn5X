@@ -10411,8 +10411,8 @@ color: rgb(0,191,255)</string>
         <widget class="QPushButton" name="btnKillAlarm">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>40</y>
+           <x>90</x>
+           <y>0</y>
            <width>40</width>
            <height>40</height>
           </rect>
@@ -10446,8 +10446,8 @@ color: rgb(0,191,255)</string>
         <widget class="QPushButton" name="btnHomeCycle">
          <property name="geometry">
           <rect>
-           <x>70</x>
-           <y>40</y>
+           <x>130</x>
+           <y>0</y>
            <width>40</width>
            <height>40</height>
           </rect>
@@ -10478,8 +10478,8 @@ color: rgb(0,191,255)</string>
         <widget class="QPushButton" name="btnReset">
          <property name="geometry">
           <rect>
-           <x>130</x>
-           <y>40</y>
+           <x>170</x>
+           <y>0</y>
            <width>40</width>
            <height>40</height>
           </rect>
@@ -10510,9 +10510,9 @@ color: rgb(0,191,255)</string>
         <widget class="QLabel" name="lblEtat">
          <property name="geometry">
           <rect>
-           <x>0</x>
+           <x>5</x>
            <y>0</y>
-           <width>360</width>
+           <width>80</width>
            <height>40</height>
           </rect>
          </property>
@@ -10524,8 +10524,14 @@ color: rgb(0,191,255)</string>
          </property>
          <property name="minimumSize">
           <size>
-           <width>350</width>
+           <width>80</width>
            <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -10634,7 +10640,7 @@ color: rgb(0,191,255)</string>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>37</width>
+                  <width>45</width>
                   <height>20</height>
                  </size>
                 </property>
