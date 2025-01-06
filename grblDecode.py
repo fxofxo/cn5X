@@ -965,7 +965,7 @@ class grblDecode(QObject):
      
 
       for  idx , ax in enumerate(self.__axisNames):
-        exec("self.ui.cnLed{:02d}.setLedStatus(False)".format(idx))
+        exec("self.ui.cnLed{:02d}.setLedStatus(True)".format(idx))
         #exec("self.ui.btnJogSelectAxis{:02d}.setText('--')".format(idx))
         exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
 

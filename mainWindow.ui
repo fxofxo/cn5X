@@ -87,7 +87,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabJog">
      <attribute name="title">
@@ -10649,6 +10649,12 @@ color: rgb(0,191,255)</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
                 </property>
@@ -10712,6 +10718,12 @@ color: rgb(0,191,255)</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string notr="true">_</string>
                 </property>
@@ -10766,6 +10778,12 @@ color: rgb(0,191,255)</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string notr="true">_</string>
                 </property>
@@ -10819,6 +10837,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string notr="true">_</string>
@@ -10876,6 +10900,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string notr="true">_</string>
@@ -10977,6 +11007,12 @@ color: rgb(0,191,255)</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string notr="true">_</string>
                 </property>
@@ -11033,6 +11069,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string notr="true">_</string>
@@ -11091,6 +11133,12 @@ color: rgb(0,191,255)</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string notr="true">_</string>
                 </property>
@@ -11147,6 +11195,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="maximumSize">
                  <size>
@@ -11210,6 +11264,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string notr="true">_</string>
@@ -11300,7 +11360,7 @@ color: rgb(0,191,255)</string>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>54</width>
+                  <width>43</width>
                   <height>20</height>
                  </size>
                 </property>
@@ -11313,6 +11373,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -11352,7 +11418,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledBleuAlumee.svg</pixmap>
+                 <pixmap>images/ledBleuEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11379,6 +11445,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string notr="true">_</string>
@@ -11409,7 +11481,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledBleuEteinte.svg</pixmap>
+                 <pixmap>images/ledVerteEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11436,6 +11508,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string notr="true">_</string>
@@ -11466,7 +11544,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledBleuEteinte.svg</pixmap>
+                 <pixmap>images/ledRougeEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11493,6 +11571,12 @@ color: rgb(0,191,255)</string>
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="text">
                  <string notr="true">_</string>
@@ -11523,7 +11607,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledBleuEteinte.svg</pixmap>
+                 <pixmap>images/ledRougeEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>
@@ -11554,6 +11638,12 @@ color: rgb(0,191,255)</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string notr="true">_</string>
                 </property>
@@ -11583,7 +11673,7 @@ color: rgb(0,191,255)</string>
                  <string notr="true"/>
                 </property>
                 <property name="pixmap">
-                 <pixmap>images/ledBleuEteinte.svg</pixmap>
+                 <pixmap>images/ledRougeEteinte.svg</pixmap>
                 </property>
                 <property name="scaledContents">
                  <bool>true</bool>

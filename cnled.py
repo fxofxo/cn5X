@@ -37,7 +37,7 @@ class cnLed(QtWidgets.QLabel):
     self.__couleur = "Rouge" # Rouge ou Verte
     
     # Chemin des images dans le fichier de resources
-    self.__imagePath = ":/cn5X/images/"
+    self.__imagePath = "images/"
     self.iconOff = QtGui.QPixmap(self.__imagePath + "led" + self.__couleur + "Eteinte.svg")
     self.iconOn  = QtGui.QPixmap(self.__imagePath + "led" + self.__couleur + "Alumee.svg")
 
