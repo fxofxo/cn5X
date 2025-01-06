@@ -25,7 +25,7 @@ from PyQt6.QtCore import Qt, QObject, pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import QDialog, QAbstractButton, QDialogButtonBox, QCheckBox, QSpinBox, QDoubleSpinBox, QLineEdit
 from PyQt6.QtGui import QStandardItemModel, QStandardItem, QValidator
 from cn5X_config import *
-from dlgHelpProbe import *
+#from dlgHelpProbe import *
 from msgbox import *
 
 class cn5XHelpProbe(QObject):
