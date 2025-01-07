@@ -40,6 +40,7 @@ class grblJog():
     self.__jogSpeed = DEFAULT_JOG_SPEED
 
 
+
   @pyqtSlot(cnQPushButton, QtGui.QMouseEvent, float)
   @pyqtSlot(cnQPushButton, QtGui.QMouseEvent, float, float)
   def on_jog(self, cnButton, e, jogDistance, maxTravel=0):
@@ -81,13 +82,20 @@ class grblJog():
         print(cmdJog)
         self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
 
+
   def on_jog_move(self, axis, movement, jogDistance,  maxTravel=0):
     '''
     Deplacement relatif (G91) de "jogDistance" mm (G21) sur axe defini par le nom du bouton
     si jogDistance != 0, si jogDistance = 0, déplacement en coordonnées machine jusqu'à
     la course maxi.
     '''
+
+
     LOG(DEBUG,f"JOG: ax:{axis} {movement} Dist:{jogDistance} Max:{maxTravel} Status:{self.__grblCom.grblStatus()}-")
+
+   
+
+
     if jogDistance != 0:
       if movement == "Plus":
         value = jogDistance
@@ -95,18 +103,19 @@ class grblJog():
         value = -jogDistance
       LOG(DEBUG," Sended" + self.__grblCom.grblStatus())
       if self.__grblCom.grblStatus() in ['Idle', 'Jog']:
-        cmdJog = CMD_GRBL_JOG + "G91G21F{}{}{}".format(self.__jogSpeed, axis, value)
+        if type(axis) != type([]):
+          cmdJog = CMD_GRBL_JOG + "G91G21F{}{}{}".format(self.__jogSpeed, axis, value)
+        else:
+          axis_mv = ""
+          for ax in axis:
+            axis_mv += "{}{} ".format(ax,value)
+          cmdJog = CMD_GRBL_JOG + "G91G21F{}{}".format(self.__jogSpeed, axis_mv)
         self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
         LOG(DEBUG,cmdJog + " Sended")
+
     elif maxTravel != 0:  # jogDistance == 0 & maxTravel !=0
-      if movement == "Plus":
-        value = maxTravel
-      else:
-        value = 0
-      if self.__grblCom.grblStatus() in ['Idle', 'Jog']:
-        cmdJog = CMD_GRBL_JOG + "G53F{}{}{}".format(self.__jogSpeed, axis, value)
-        print(cmdJog)
-        self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
+      print("max traver !=0 not implemented")
+      
 
 
 

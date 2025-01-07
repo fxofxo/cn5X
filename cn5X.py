@@ -211,7 +211,7 @@ class winMain(QtWidgets.QMainWindow):
 
     self.__beeper = cn5XBeeper();
 
-    self.__jogAxisSelected = None
+    self.__jogAxisSelected = []
     
     self.__arretUrgence     = True
    
@@ -2069,14 +2069,17 @@ class winMain(QtWidgets.QMainWindow):
   def on_jog_axis_selection(self, axis):
     LOG(INFO, f"<on_jog_ng> Jog {axis}")
     LOG(DEBUG,self.__axisNames)
-    if self.__jogAxisSelected ==  axis:
-      self.__jogAxisSelected = None
+    if axis in self.__jogAxisSelected:
+      self.__jogAxisSelected.remove(axis)
       self.ui.jogMovement.setEnabled(False)
     else:
-      self.__jogAxisSelected = axis
+      self.__jogAxisSelected.insert(0,axis)
+      self.ui.jogMovement.setEnabled(True)
+
+    if len(self.__jogAxisSelected) > 0:
       self.ui.jogMovement.setEnabled(True)
     for idx, ax in enumerate(self.__axisNames):
-        if idx == self.__jogAxisSelected:
+        if idx in self.__jogAxisSelected:
           exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(idx))
         else:
           exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
@@ -2094,9 +2097,9 @@ class winMain(QtWidgets.QMainWindow):
           if qrb.isChecked():
             jogDistance = float(qrb.text().replace(' ', ''))
         LOG(DEBUG,jogDistance)
-        if self.__jogAxisSelected != None:
-          ax = self.__axisNames[self.__jogAxisSelected]
-          self.__jog.on_jog_move(ax,move,jogDistance)
+        if len(self.__jogAxisSelected) > 0 :
+          ax_list = list(map( lambda x: self.__axisNames[x]   , self.__jogAxisSelected))
+          self.__jog.on_jog_move(ax_list,move,jogDistance)
         else:
           LOG(INFO,"JOG Axis not selected")
     else:
