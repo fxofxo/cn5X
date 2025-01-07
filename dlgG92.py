@@ -214,4 +214,4 @@ class Ui_dlgG92(object):
 "G92"))
     self.chkAutoclose.setText(_translate("dlgG92", "Auto close"))
 
-import cn5X_rc
+

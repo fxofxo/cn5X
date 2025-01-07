@@ -32,14 +32,13 @@ APP_VERSION_DATE   = "20250101"
 DEFAULT_NB_AXIS    = 5 # Laisser 3 permet de gerer un Grbl original a 3 axes
 DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z','A','B']
 G5x_LIST = ["G54","G55","G56","G57","G58","G59"]
-
 COM_DEFAULT_BAUD_RATE = 115200
 SERIAL_READ_TIMEOUT   = 250      # ms
 GRBL_QUERY_DELAY      =  75      # ms
 
 DEFAULT_JOG_SPEED     = 300
 CONFIG_QTCHART_ENABLED = True
-CONFIG_ARDUINO_NANO   = False    #legacy grbl protocol instead grbl MEGA5x protocol
+CONFIG_ARDUINO_NANO   = True    #legacy grbl protocol instead grbl MEGA5x protocol
 
 
 ''' Mots GCode valides (cf. http://linuxcnc.org/docs/html/gcode/overview_fr.html) '''

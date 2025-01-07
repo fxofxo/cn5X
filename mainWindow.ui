@@ -5943,7 +5943,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutX+Y-.svg</normaloff>:/cn5X/images/btnProbeOutX+Y-.svg</iconset>
+             <normaloff>images/btnProbeOutX+Y-.svg</normaloff>images/btnProbeOutX+Y-.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -5978,7 +5978,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutY-.svg</normaloff>:/cn5X/images/btnProbeOutY-.svg</iconset>
+             <normaloff>images/btnProbeOutY-.svg</normaloff>images/btnProbeOutY-.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6013,7 +6013,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutX-Y-.svg</normaloff>:/cn5X/images/btnProbeOutX-Y-.svg</iconset>
+             <normaloff>images/btnProbeOutX-Y-.svg</normaloff>images/btnProbeOutX-Y-.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6048,7 +6048,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutX+.svg</normaloff>:/cn5X/images/btnProbeOutX+.svg</iconset>
+             <normaloff>images/btnProbeOutX+.svg</normaloff>images/btnProbeOutX+.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6086,7 +6086,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeInCercle.svg</normaloff>:/cn5X/images/btnProbeInCercle.svg</iconset>
+             <normaloff>images/btnProbeInCercle.svg</normaloff>images/btnProbeInCercle.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6121,7 +6121,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutX-.svg</normaloff>:/cn5X/images/btnProbeOutX-.svg</iconset>
+             <normaloff>images/btnProbeOutX-.svg</normaloff>images/btnProbeOutX-.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6156,7 +6156,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutX+Y+.svg</normaloff>:/cn5X/images/btnProbeOutX+Y+.svg</iconset>
+             <normaloff>images/btnProbeOutX+Y+.svg</normaloff>images/btnProbeOutX+Y+.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6191,7 +6191,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutY+.svg</normaloff>:/cn5X/images/btnProbeOutY+.svg</iconset>
+             <normaloff>images/btnProbeOutY+.svg</normaloff>images/btnProbeOutY+.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -6226,7 +6226,7 @@ Need to define non nul probe pull-off distance.</string>
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>:/cn5X/images/btnProbeOutX-Y+.svg</normaloff>:/cn5X/images/btnProbeOutX-Y+.svg</iconset>
+             <normaloff>images/btnProbeOutX-Y+.svg</normaloff>images/btnProbeOutX-Y+.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -7219,7 +7219,7 @@ origin</string>
               </property>
               <property name="icon">
                <iconset>
-                <normaloff>:/cn5X/images/btnProbeZ-.svg</normaloff>:/cn5X/images/btnProbeZ-.svg</iconset>
+                <normaloff>images/btnProbeZ-.svg</normaloff>images/btnProbeZ-.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -10640,7 +10640,7 @@ color: rgb(0,191,255)</string>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>45</width>
+                  <width>37</width>
                   <height>20</height>
                  </size>
                 </property>

@@ -51,12 +51,13 @@ from qwblackscreen import *
 from grblConfig import grblConfig
 from cn5X_apropos import cn5XAPropos
 from cn5X_helpProbe import cn5XHelpProbe
-#from grblG92 import dlgG92
-#from grblG28_30_1 import dlgG28_30_1
+from grblG92 import dlgG92
+from grblG28_30_1 import dlgG28_30_1
 from cn5X_jog import dlgJog
 from cn5X_beep import cn5XBeeper
 from cn5X_toolChange import dlgToolChange
 from plotGcode import plotGcode
+
 
 
 import mainWindow
@@ -176,8 +177,8 @@ class winMain(QtWidgets.QMainWindow):
 
     self.blackScreen = qwBlackScreen(self)
 
-    self.btnUrgencePictureLocale = ":/cn5X/images/btnUrgence.svg"
-    self.btnUrgenceOffPictureLocale = ":/cn5X/images/btnUrgenceOff.svg"
+    self.btnUrgencePictureLocale = "images/btnUrgence.svg"
+    self.btnUrgenceOffPictureLocale = "images/btnUrgenceOff.svg"
 
     # création du menu des langues
     self.createLangMenu()
