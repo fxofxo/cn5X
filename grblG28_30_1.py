@@ -172,11 +172,13 @@ class dlgG28_30_1(QDialog):
       self.setWindowFlags(Qt.WindowType.Window | Qt.WindowType.Dialog)
 
       RC = self.exec()
+      print("ewrrn RC")
       return RC
 
     else:
       self.__grblCom.gcodePush("{}".format(self.__Gpos))
-      return QDialog.Accepted
+      print("?Accepted")
+      #return QDialog.Accepted
 
 
   def on_btnYes(self):
