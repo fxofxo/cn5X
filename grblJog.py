@@ -87,16 +87,17 @@ class grblJog():
     si jogDistance != 0, si jogDistance = 0, déplacement en coordonnées machine jusqu'à
     la course maxi.
     '''
-    LOG(DEBUG,f"JOG: ax:{axis} {movement} Dist:{jogDistance} Max:{maxTravel}")
+    LOG(DEBUG,f"JOG: ax:{axis} {movement} Dist:{jogDistance} Max:{maxTravel} Status:{self.__grblCom.grblStatus()}-")
     if jogDistance != 0:
       if movement == "Plus":
         value = jogDistance
       else:
         value = -jogDistance
-
+      LOG(DEBUG," Sended" + self.__grblCom.grblStatus())
       if self.__grblCom.grblStatus() in ['Idle', 'Jog']:
         cmdJog = CMD_GRBL_JOG + "G91G21F{}{}{}".format(self.__jogSpeed, axis, value)
         self.__grblCom.gcodePush(cmdJog, COM_FLAG_NO_OK)
+        LOG(DEBUG,cmdJog + " Sended")
     elif maxTravel != 0:  # jogDistance == 0 & maxTravel !=0
       if movement == "Plus":
         value = maxTravel
@@ -112,6 +113,7 @@ class grblJog():
   def jogCancel(self):
     self.__grblCom.clearCom()
     self.__grblCom.realTimePush(REAL_TIME_JOG_CANCEL) # Commande realtime Jog Cancel
+    LOG(DEBUG," CANCEL sended")
 
 
   def setJogSpeed(self, speed: float):

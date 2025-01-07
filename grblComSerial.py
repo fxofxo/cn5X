@@ -28,6 +28,7 @@ from math import *
 from PyQt6.QtCore import QCoreApplication, QObject, QThread, QTimer, QEventLoop, pyqtSignal, pyqtSlot, QIODevice
 from cn5X_config import *
 from grblComStack import grblStack
+from tracelog import *
 
 
 class grblComSerial(QObject):
@@ -204,6 +205,14 @@ class grblComSerial(QObject):
       self.sig_alarm.emit(alarmNum)
       self.probeAttendu = False
     elif l[:1] == "<" and l[-1:] == ">":       # Real-time Status Reports
+      #GRBL std
+      #DECODE STATUS:<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>
+      #GRBL MEGA 5x
+      #DECODE STATUS:<Alarm|WPos:0.000,0.000,0.000,0.000|Bf:35,255|FS:0,0>
+      if l.find("|") < 0:
+        l = l.replace(",","|",1) 
+        pos = l.find("WPos")
+        l = l[0:pos-1] + ">" 
       self.__grblStatus = l[1:].split('|')[0]
       self.sig_status.emit(l)
     elif l[:5] == "[PRB:": # Probe result

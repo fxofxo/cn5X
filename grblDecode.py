@@ -535,6 +535,8 @@ class grblDecode(QObject):
         '''
         num=int(grblOutput[2:4])
         values=grblOutput[5:-1].split(",")
+        if len(values) < self.__nbAxis: #some grble not send AXS definition
+          self.__nbAxis = len(values)
         for i in range(6):
           if i < self.__nbAxis:
             self.__G5x[num][i] = float(values[i])

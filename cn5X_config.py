@@ -39,7 +39,7 @@ GRBL_QUERY_DELAY      =  75      # ms
 
 DEFAULT_JOG_SPEED     = 300
 CONFIG_QTCHART_ENABLED = True
-
+CONFIG_ARDUINO_NANO   = True    #legacy grbl protocol instead grbl MEGA5x protocol
 
 
 ''' Mots GCode valides (cf. http://linuxcnc.org/docs/html/gcode/overview_fr.html) '''
@@ -77,7 +77,10 @@ CMD_GRBL_SET_STARTUP_BLOCK1    = "$N1="
 CMD_GRBL_TOGGLE_CHECK_MODE     = "$C"
 CMD_GRBL_KILL_ALARM_LOCK       = "$X"
 CMD_GRBL_RUN_HOME_CYCLE        = "$H"
-CMD_GRBL_JOG                   = "$J="
+if CONFIG_ARDUINO_NANO:
+  CMD_GRBL_JOG                   = ""
+else:
+  CMD_GRBL_JOG                   = "$J="
 CMD_GRBL_RESET_SETTINGS        = "$RST=$"
 CMD_GRBL_RESET_OFFSETS         = "$RST=#"
 CMD_GRBL_RESET_ALL_EEPROM      = "$RST=*"

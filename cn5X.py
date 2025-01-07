@@ -2082,9 +2082,9 @@ class winMain(QtWidgets.QMainWindow):
           exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
 
   def on_jog_move(self, move):
-    LOG(DEBUG,move)
+    LOG(DEBUG,"JOG:" + move)
     state = self.__decode.get_MachineState()
-    if move == "Stop" and state == "Jog":
+    if move == "Stop" :
       #if self.__jogModContinue:  # ?¿
       self.__jog.jogCancel()
     elif state == GRBL_STATUS_IDLE:
@@ -2382,6 +2382,12 @@ class winMain(QtWidgets.QMainWindow):
 
   @pyqtSlot(str)
   def on_sig_config(self, data: str):
+    
+    #config data could be send with comments
+    #DECODE:$122=10.000 (z accel, mm/sec^2)
+    split  = data.split("(")
+    data= split[0]
+  
     # Repere la chaine "[AXS:5:XYZABCUVW]" pour recuperer le nombre d'axes et leurs noms
     if data[:5] == "[AXS:":
       self.__nbAxis           = int(data[1:-1].split(':')[1])
@@ -2393,8 +2399,8 @@ class winMain(QtWidgets.QMainWindow):
       '''self.updateAxisNumber()
       self.__decode.setNbAxis(self.__nbAxis)'''
       # Mise à jour classe grblProbe
-      self.__probe.setAxisNames(self.__axisNames)
-
+      self.__probe.setAxisNames(self.__axisNames) 
+        
     # Memorise les courses maxi pour calcul des jogs max.
     elif data[:4] == "$130":
       self.__maxTravel[0] = float(data[5:])
