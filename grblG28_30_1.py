@@ -232,9 +232,9 @@ class dlgG28_30_1(QDialog):
 
   def enableDisableAxis(self, axis: str, enabling: bool):
 
-    activeColor   = self.di.lblLblPosX.palette().color(QPalette.ColorGroup.Active, QPalette.ColorRole.WindowText).name()   # #000000
+    #activeColor   = self.di.lblLblPosX.palette().color(QPalette.ColorGroup.Active, QPalette.ColorRole.WindowText).name()   # #000000
     disabledColor = self.di.lblLblPosX.palette().color(QPalette.ColorGroup.Disabled, QPalette.ColorRole.WindowText).name() # #bebebe
-    
+    activeColor = "#000000"
     lblLblPos = self.di.frmMPos.findChild(QtWidgets.QLabel, "lblLblPos{}".format(axis))
     if lblLblPos is not None:
       lblLblPos.setEnabled(enabling)
@@ -242,7 +242,6 @@ class dlgG28_30_1(QDialog):
         lblLblPos.setStyleSheet("color: {};".format(activeColor))
       else:
         lblLblPos.setStyleSheet("color: {};".format(disabledColor))
-
     lblPos = self.di.frmMPos.findChild(QtWidgets.QLabel, "lblPos{}".format(axis))
     if lblPos is not None:
       lblPos.setEnabled(enabling)
