@@ -5538,7 +5538,7 @@ color:rgb(119, 118, 123)</string>
      <rect>
       <x>700</x>
       <y>5</y>
-      <width>511</width>
+      <width>531</width>
       <height>491</height>
      </rect>
     </property>
@@ -5556,7 +5556,7 @@ color:rgb(119, 118, 123)</string>
       <rect>
        <x>5</x>
        <y>5</y>
-       <width>481</width>
+       <width>521</width>
        <height>401</height>
       </rect>
      </property>
@@ -5587,7 +5587,7 @@ color:rgb(119, 118, 123)</string>
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>661</width>
+         <width>510</width>
          <height>341</height>
         </rect>
        </property>

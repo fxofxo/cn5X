@@ -1,4 +1,4 @@
-from  cn5X_config import CONFIG_QTCHART_ENABLED
+from  cn5X_config import CONFIG_QTCHART_ENABLED, DEFAULT_AXIS_NAMES
 
 import numpy as np
 import time
@@ -14,7 +14,7 @@ class plotGcode():
         self.widget = widget
         self.n_axis = 4
         self.axis_values = np.empty(0)
-        self.axis_names = ['X','Y','U','Z']
+        self.axis_names = DEFAULT_AXIS_NAMES
         self.pos = 0
         self.xplot = np.array(0)
         self.yplot = np.array(0)
