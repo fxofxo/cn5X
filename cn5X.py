@@ -2266,15 +2266,15 @@ class winMain(QtWidgets.QMainWindow):
       self.__gcode_recall_flag = False
 
 
-  @pyqtSlot(QtGui.QKeyEvent)
+  @pyqtSlot(QtGui.QKeyEvent) 
   def on_keyPressed(self, e):
     key = e.key()
-    if QKeySequence(key+int(e.modifiers())) == QKeySequence("Ctrl+C"):
+    if (e.modifiers() == Qt.KeyboardModifier.ControlModifier) and (key == Qt.Key.Key_C):
       pass
-    elif QKeySequence(key+int(e.modifiers())) == QKeySequence("Ctrl+X"):
+    elif (e.modifiers() == Qt.KeyboardModifier.ControlModifier) and (key == Qt.Key.Key_X):
       self.logGrbl.append("Ctrl+X")
       self.__grblCom.realTimePush(REAL_TIME_SOFT_RESET) # Envoi Ctrl+X.
-    elif key == Qt.Key_Up:
+    elif key == Qt.Key.Key_Up:
       # Rappel des dernières commandes GCode
       if len(self.__gcodes_stack) > 0:
         if self.__gcode_current_txt == "":
@@ -2286,7 +2286,7 @@ class winMain(QtWidgets.QMainWindow):
           self.ui.txtGCode.setSelection(0,len(self.ui.txtGCode.text()))
         elif self.__gcodes_stack_pos >= len(self.__gcodes_stack):
           self.__gcodes_stack_pos = len(self.__gcodes_stack) - 1
-    elif key == Qt.Key_Down:
+    elif key == Qt.Key.Key_Down:
       # Rappel des dernières commandes GCode
       if len(self.__gcodes_stack) > 0:
         self.__gcodes_stack_pos -= 1
