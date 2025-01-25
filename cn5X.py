@@ -655,21 +655,24 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       #self.ui.tabMainPanel.setEnabled(False)
-      self.ui.tabJog.setEnabled(False)
+      #self.ui.tabJog.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
-      self.ui.frameLedsStatus.setEnabled(False)
-      self.ui.frmHomeAlarm.setEnabled(False)
-      self.ui.frameMainBtns.setEnabled(False)
-      self.ui.frmOperationButtons.setEnabled(False)
+      self.ui.btnUrgence.setEnabled(False)
+     # self.ui.frameLedsStatus.setEnabled(False)
+     # self.ui.frameConnection.setEnabled(False)
+      self.ui.frameMain.setEnabled(False)
+     #self.ui.frmOperationButtons.setEnabled(False)
       self.ui.frmRelG.setEnabled(False)
       self.__decode.disableAxis(False)
       self.__decode.switchOFFLimitLeds()
+      self.ui.frmRun.setEnabled(False)
 
 
 
     elif self.__arretUrgence:   # Emergency Stop Activated
       # Connecte mais sous arret d'urgence : Tout est desactive sauf l'arret d'urgence
+      self.ui.btnUrgence.setEnabled(True)
       self.ui.btnUrgence.setIcon(QtGui.QIcon(self.btnUrgenceOffPictureLocale))
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
       self.ui.frmControleVitesse.setEnabled(False)
@@ -677,16 +680,17 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.grpJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       #self.ui.tabMainPanel.setEnabled(False)
-      self.ui.tabJog.setEnabled(False)
+      #self.ui.tabJog.setEnabled(False)
       self.ui.tabProbeXY.setEnabled(False)
       self.ui.tabProbeZ.setEnabled(False)
       self.ui.frameLedsStatus.setEnabled(True)
-      self.ui.frameMainBtns.setEnabled(False)
-      self.ui.frmHomeAlarm.setEnabled(True)
-      self.ui.frmOperationButtons.setEnabled(False)
+      self.ui.frameMain.setEnabled(False)
+      self.ui.frameConnection.setEnabled(True)
+      #self.ui.frmOperationButtons.setEnabled(False)
       #self.ui.frmRelG.setEnabled(False)
       self.__decode.disableAxis(False)
       self.__decode.switchOFFLimitLeds()
+      self.ui.frmRun.setEnabled(False)
 
     else:
       # Tout est en ordre, on active tout
@@ -698,13 +702,12 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.jogMovement.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(True)
       #self.ui.tabMainPanel.setEnabled(True)
-      self.ui.tabJog.setEnabled(True)
+     # self.ui.tabJog.setEnabled(True)
       self.ui.tabProbeXY.setEnabled(True)
       self.ui.tabProbeZ.setEnabled(True)
       self.ui.frameLedsStatus.setEnabled(True)
-      self.ui.frameMainBtns.setEnabled(True)
-      self.ui.frmHomeAlarm.setEnabled(True)
-      self.ui.frmOperationButtons.setEnabled(True)
+      self.ui.frameMain.setEnabled(True)
+      self.ui.frameConnection.setEnabled(True)
       self.ui.frmRelG.setEnabled(True)
       self.__decode.disableAxis(True)
       if self.__gcodeFile.isFileLoaded():
@@ -2072,13 +2075,12 @@ class winMain(QtWidgets.QMainWindow):
     LOG(DEBUG,self.__axisNames)
     if axis in self.__jogAxisSelected:
       self.__jogAxisSelected.remove(axis)
-      self.ui.jogMovement.setEnabled(False)
     else:
       self.__jogAxisSelected.insert(0,axis)
-      self.ui.jogMovement.setEnabled(True)
 
     if len(self.__jogAxisSelected) > 0:
       self.ui.jogMovement.setEnabled(True)
+      print("job enabled")
     for idx, ax in enumerate(self.__axisNames):
         if idx in self.__jogAxisSelected:
           exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(idx))
