@@ -70,7 +70,7 @@ class grblDecode(QObject):
       GRBL_STATUS_NOCON
     ]
     self.__validG5x = ["G28", "G30", "G54","G55","G56","G57","G58","G59", "G92"]
-    self.__G5actif = 54
+    self.__G5actif = None
     self.__G5x={
       28: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
       30: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -157,7 +157,7 @@ class grblDecode(QObject):
 
       if D in self.__validMachineState:
         if D != self.__machineState:
-          print(f"status change{D}")
+          TRACELOG(TRACE_DEBUG,f"status change{D}")
           self.setMachineState(D)
 
           if D == GRBL_STATUS_IDLE:
@@ -280,7 +280,7 @@ class grblDecode(QObject):
         for L in [ 'P', 'D', 'H', 'R', 'S']:
           if L in triggered:
             exec("self.ui.cnLed" + L + ".setLedStatus(True)")
-            print(f"Triggered {L}")
+            TRACELOG(TRACE_DEBUG,f"Triggered {L}")
           else:
             pass
             #exec("self.ui.cnLed" + L + ".setLedStatus(False)")
@@ -493,7 +493,7 @@ class grblDecode(QObject):
       return grblOutput
 
     elif grblOutput[:6] == "error:":
-      LOG(ERROR,"GRBL ERROR:{grblOutput}")
+      TRACELOG(TRACE_ERROR,"GRBL ERROR:{grblOutput}")
       errNum = int(float(grblOutput[6:]))
       return self.tr("Grbl error number {}: {},\n{}").format(str(errNum), grblError[errNum][1], grblError[errNum][2])
 
@@ -515,7 +515,7 @@ class grblDecode(QObject):
 
 
   def decodeGrblData(self, grblOutput):
-    #print(f"DECODE:{grblOutput}" )
+    #TRACELOG(TRACE_DEBUG,f"DECODE:{grblOutput}" )
     if grblOutput[:1] == "$": # Setting output
       if grblOutput[:2] == "$N": # startup blocks
         return grblOutput
@@ -534,6 +534,7 @@ class grblDecode(QObject):
         messages indicate the parameter data output from a "$#" (CMD_GRBL_GET_GCODE_PARAMATERS) user query.
         '''
         num=int(grblOutput[2:4])
+        TRACELOG(TRACE_DEBUG,f"foung G {num}")
         values=grblOutput[5:-1].split(",")
         if len(values) < self.__nbAxis: #some grble not send AXS definition
           self.__nbAxis = len(values)
@@ -584,12 +585,14 @@ class grblDecode(QObject):
 
       elif grblOutput[1:5] == "TLO:":
         ''' Tool length offset (for the default z-axis) '''
+        TRACELOG(TRACE_DEBUG,"found TLO")
         self.__toolLengthOffset = float(grblOutput[5:-1])
         # renvoie le résultat si $# demandé dans par l'utilisateur
         if self.__getNextGCodeParams:
           return grblOutput
 
       elif grblOutput[1:5] == "PRB:":
+        TRACELOG(TRACE_DEBUG,"found PRB")
         ''' Coordinates of the last probing cycle, suffix :1 => Success '''
         self.__probeCoord = grblOutput[5:-1].split(",")
         # renvoie le résultat si $# demandé dans par l'utilisateur
@@ -598,12 +601,44 @@ class grblDecode(QObject):
           self.__getNextProbe = False
           return grblOutput
 
-      elif grblOutput[:4] == "[GC:":
+
+      elif grblOutput[:5] == "[AXS:":
+        # Recupère le nombre d'axes et leurs noms
+        print("AXS received")
+        self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
+        self.__axisNames        = list(grblOutput[1:-1].split(':')[2])
+        if len(self.__axisNames) < self.__nbAxis:
+          # Il est posible qu'il y ait moins de lettres que le nombre d'axes si Grbl
+          # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
+          self.__nbAxis = len(self.__axisNames);
+        self.updateAxisDefinition()
+        return grblOutput
+
+      elif grblOutput[:4] == "[D:":
+        # Digital status
+        return grblOutput
+
+      elif grblOutput[:5] == "[OPT:":
+        compilOptions = grblOutput[1:-1].split(':')[1].split(',')[0]
+        if 'D' in compilOptions:
+          # Digital input actives
+          self.ui.frmDigitalIntput.setEnabled(True)
+        else:
+          # Digital input non actives
+          self.ui.frmDigitalInput.setEnabled(False)
+
+      else:
         '''
         traitement interogation $G : G-code Parser State Message
         [GC:G0 G54 G17 G21 G90 G94 M5 M9 T0 F0 S0]
-        '''
-        tblGcodeParser = grblOutput[4:-1].split(" ")
+         '''
+        '''FXO GRBL standar CG:  is not coming'''
+
+        if grblOutput[:4] == "[GC:":
+          tblGcodeParser = grblOutput[4:-1].split(" ")
+        else:
+          tblGcodeParser = grblOutput[1:-1].split(" ")
+
         for S in tblGcodeParser:
           if S in ["G54", "G55", "G56", "G57", "G58", "G59"]:
             # Preparation font pour modifier dynamiquement Bold/Normal
@@ -614,7 +649,8 @@ class grblDecode(QObject):
             self.ui.lblOffsetActif.setText("Offset {}".format(S))
             num=int(S[1:])
             if num != self.__G5actif:
-              eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(self.__G5actif))
+              if self.__G5actif != None:
+                eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(self.__G5actif))
               self.__G5actif = num
               eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(num))
               # Mise à jour des labels dépendant du système de coordonnées actif
@@ -627,7 +663,7 @@ class grblDecode(QObject):
               [57, self.ui.lblG57],
               [58, self.ui.lblG58],
               [59, self.ui.lblG59]
-                             ]:
+            ]:
               if N == num:
                 lbl.setStyleSheet("background-color:  rgb(0, 0, 63); color:rgb(248, 255, 192);")
                 font.setBold(True)
@@ -636,7 +672,7 @@ class grblDecode(QObject):
                 lbl.setStyleSheet("background-color: rgb(248, 255, 192); color: rgb(0, 0, 63);")
                 font.setBold(False)
                 lbl.setFont(font)
-            
+
 
           elif S in ["G17", "G18", "G19"]:
             self.ui.lblPlan.setText(S)
@@ -728,39 +764,18 @@ class grblDecode(QObject):
         # renvoie le résultat si $G demandé dans par l'utilisateur
         if self.__getNextGCodeState:
           self.__getNextGCodeState = False
-          return grblOutput
-      elif grblOutput[:5] == "[AXS:":
-        # Recupère le nombre d'axes et leurs noms
-        print("AXS received")
-        self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
-        self.__axisNames        = list(grblOutput[1:-1].split(':')[2])
-        if len(self.__axisNames) < self.__nbAxis:
-          # Il est posible qu'il y ait moins de lettres que le nombre d'axes si Grbl
-          # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
-          self.__nbAxis = len(self.__axisNames);
-        self.updateAxisDefinition()
         return grblOutput
 
-      elif grblOutput[:4] == "[D:":
-        # Digital status
-        return grblOutput
-
-      elif grblOutput[:5] == "[OPT:":
-        compilOptions = grblOutput[1:-1].split(':')[1].split(',')[0]
-        if 'D' in compilOptions:
-          # Digital input actives
-          self.ui.frmDigitalIntput.setEnabled(True)
-        else:
-          # Digital input non actives
-          self.ui.frmDigitalInput.setEnabled(False)
-
+      '''
       else:
         # Autre reponse [] ?
+        self.log(logSeverity.info.value, self.tr("1 Not decoded Grbl reply : [{}]").format(grblOutput))
         return grblOutput
-
+      '''
     else:
       # Autre reponse ?
-      if grblOutput != "": self.log(logSeverity.info.value, self.tr("Not decoded Grbl reply : [{}]").format(grblOutput))
+      if grblOutput != "":
+        self.log(logSeverity.info.value, self.tr("2 Not decoded Grbl reply : [{}]").format(grblOutput))
       return grblOutput
 
 
@@ -947,7 +962,7 @@ class grblDecode(QObject):
 
 
   def updateAxisLedStatus(self):
-    LOG(DEGUG,"UpdateAxisLEdStatus")
+    TRACELOG(TRACE_DEGUG,"UpdateAxisLEdStatus")
 
     for  idx , ax in enumerate(self.__axisNames):
       #Axis led
@@ -957,14 +972,12 @@ class grblDecode(QObject):
 
 
   def disableAxis(self, active):
-    LOG(DEBUG,f"fn DisabledAxis on {active}")
+    TRACELOG(TRACE_DEBUG,f"fn DisabledAxis on {active}")
     if active:
-      
       for Gx in G5x_LIST:
         eval( f"self.ui.btn{Gx}.setStyleSheet(UI_STYLE_BTN_OFF)"   )
 
       eval( f"self.ui.btnG{ self.__G5actif}.setStyleSheet(UI_STYLE_BTN_ON)"   )
-     
 
       for  idx , ax in enumerate(self.__axisNames):
         exec("self.ui.cnLed{:02d}.setLedStatus(True)".format(idx))
@@ -981,7 +994,7 @@ class grblDecode(QObject):
           self.ui.lblLblPosB.setStyleSheet("color: rgb(224, 224, 230);")
       if self.__nbAxis > 5:
           self.ui.lblLblPosC.setStyleSheet("color: rgb(224, 224, 230);")
-    else:
+    else: #deactive
       for Gx in G5x_LIST:
         eval( f"self.ui.btn{Gx}.setStyleSheet(UI_STYLE_BTN_DISABLE)"   )
       for  idx , ax in enumerate(self.__axisNames):
@@ -1010,7 +1023,7 @@ class grblDecode(QObject):
       exec("self.ui.cnLedLimit{:02d}".format(idx) + ".setLedStatus(False)")
 
   def updateAxisDefinition(self):
-    LOG(DEBUG,f"fn updateAxisDefinition --G{self.__G5actif}")
+    TRACELOG(TRACE_DEBUG,f"fn updateAxisDefinition --G{self.__G5actif}")
     ''' Mise à jour des lagels dépendant du système de coordonnées actif et du nombre d'axes '''
 
     for idx, ax in enumerate(self.__axisNames):

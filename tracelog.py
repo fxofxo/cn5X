@@ -1,8 +1,14 @@
-DEBUG = 0
-INFO = 1
-WARN = 2
-ERROR = 3
 
 
-def LOG(loglevel,msg):
-    print(f"{loglevel}: {msg}")
+
+TRACE_DEBUG = 0
+TRACE_INFO = 1
+TRACE_WARN = 2
+TRACE_ERROR = 3
+
+d = {TRACE_DEBUG:"DEBUG",TRACE_INFO:"INFO",TRACE_WARN:"WARN",TRACE_ERROR:"ERROR"}
+TRACE_LOG_LEVEL = TRACE_DEBUG
+
+def TRACELOG(loglevel,msg):
+    if loglevel >= TRACE_LOG_LEVEL:
+        print(f" {d[loglevel]}: {msg}")

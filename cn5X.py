@@ -411,9 +411,11 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnLinkOverride.clicked.connect(self.on_btnLinkOverride)
     self.ui.btnResetAvance.clicked.connect(self.on_btnResetAvance)
     self.ui.btnResetBroche.clicked.connect(self.on_btnResetBroche)
-    self.ui.btnKillAlarm.clicked.connect(self.on_btnKillAlarm)
+    #self.ui.btnKillAlarm.clicked.connect(self.on_btnKillAlarm)
+    self.ui.lblEtat.clicked.connect(self.on_btnKillAlarm)
     self.ui.btnHomeCycle.clicked.connect(self.on_btnHomeCycle)
     self.ui.btnReset.clicked.connect(self.on_btnReset)
+    self.ui.btnOpenFile.clicked.connect(self.on_mnuAppOuvrir)
     self.ui.btnStart.clicked.connect(self.startCycle)
     self.ui.btnPause.clicked.connect(self.pauseCycle)
     self.ui.btnStop.clicked.connect(self.stopCycle)
@@ -692,7 +694,7 @@ class winMain(QtWidgets.QMainWindow):
       self.__decode.switchOFFLimitLeds()
       self.ui.frmRun.setEnabled(False)
 
-    else:
+    else: #Connected and ready to operate
       # Tout est en ordre, on active tout
       self.ui.btnUrgence.setIcon(QtGui.QIcon(self.btnUrgencePictureLocale))
       self.ui.btnUrgence.setToolTip(self.tr("Emergency stop"))
@@ -710,6 +712,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frameConnection.setEnabled(True)
       self.ui.frmRelG.setEnabled(True)
       self.__decode.disableAxis(True)
+      self.__jogAxisSelected = []
       if self.__gcodeFile.isFileLoaded():
         self.ui.frmRun.setEnabled(True)
       else:
@@ -2071,8 +2074,8 @@ class winMain(QtWidgets.QMainWindow):
 
   @pyqtSlot(int)
   def on_jog_axis_selection(self, axis):
-    LOG(INFO, f"<on_jog_ng> Jog {axis}")
-    LOG(DEBUG,self.__axisNames)
+    TRACELOG(TRACE_INFO, f"<on_jog_ng> Jog {axis}")
+    TRACELOG(TRACE_DEBUG,self.__axisNames)
     if axis in self.__jogAxisSelected:
       self.__jogAxisSelected.remove(axis)
     else:
@@ -2088,7 +2091,7 @@ class winMain(QtWidgets.QMainWindow):
           exec("self.ui.btnJogSelectAxis{:02d}.setStyleSheet(UI_STYLE_BTN_OFF)".format(idx))
 
   def on_jog_move(self, move):
-    LOG(DEBUG,"JOG:" + move)
+    TRACELOG(TRACE_DEBUG,"JOG:" + move)
     state = self.__decode.get_MachineState()
     if move == "Stop" :
       #if self.__jogModContinue:  # ?¿
@@ -2099,12 +2102,11 @@ class winMain(QtWidgets.QMainWindow):
         for qrb in [ self.ui.rbtJog0005, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000,self.ui.rbtJog5000]:
           if qrb.isChecked():
             jogDistance = float(qrb.text().replace(' ', ''))
-        LOG(DEBUG,jogDistance)
         if len(self.__jogAxisSelected) > 0 :
           ax_list = list(map( lambda x: self.__axisNames[x]   , self.__jogAxisSelected))
           self.__jog.on_jog_move(ax_list,move,jogDistance)
         else:
-          LOG(INFO,"JOG Axis not selected")
+          TRACELOG(TRACE_WARN,"JOG Axis not selected")
     else:
         self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
         return
@@ -2127,7 +2129,7 @@ class winMain(QtWidgets.QMainWindow):
     for qrb in [ self.ui.rbtJog0001, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000]:
       if qrb.isChecked():
         jogDistance = float(qrb.text().replace(' ', ''))
-    LOG(DEBUG,jogDistance)
+    TRACELOG(TRACE_DEBUG,jogDistance)
     if jogDistance != 0:
       self.__jogModContinue = False
       while cnButton.isMouseDown():  # on envoi qu'après avoir relâché le bouton
@@ -2370,6 +2372,7 @@ class winMain(QtWidgets.QMainWindow):
   def on_sig_status(self, data: str):
     retour = self.__decode.decodeGrblStatus(data)
     if retour != "":
+      print(retour)
       self.logGrbl.append(retour)
     if self.__cycleRun and self.__decode.get_MachineState() == GRBL_STATUS_RUN:
       self.__pBoxArmee = True
@@ -2382,8 +2385,8 @@ class winMain(QtWidgets.QMainWindow):
   @pyqtSlot(str)
   def on_sig_data(self, data: str):
     retour = self.__decode.decodeGrblData(data)
-    if retour is not None and retour != "":
-      self.logGrbl.append(retour)
+   #if retour is not None and retour != "":
+   #   self.logGrbl.append(retour)
 
 
   @pyqtSlot(str)
@@ -2775,7 +2778,8 @@ class winMain(QtWidgets.QMainWindow):
     unitePouces.triggered.connect(lambda: self.__grblCom.gcodePush("G90"))
     self.cMenu.addAction(unitePouces)
     uniteMM = QtWidgets.QAction(self.tr("G91 - relative coordinates movements"), self)
-    uniteMM.triggered.connect(lambda: self.__grblCom.gcodePush("G91"))
+    uniteMM.triggered.connect(lambda: self.__grblCom.gcodePush("G91cd .."
+                                                               "ls"))
     self.cMenu.addAction(uniteMM)
     self.cMenu.popup(QtGui.QCursor.pos())
 

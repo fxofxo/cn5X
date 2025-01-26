@@ -24,10 +24,13 @@
 from enum import Enum
 from PyQt6 import QtGui
 
+from tracelog import TRACE_DEBUG,TRACE_WARN,TRACE_INFO,TRACE_ERROR
+
 ORG_NAME           = "fxo"
 APP_NAME           = "cn5X++"
 APP_VERSION_STRING = "0.8.9"
 APP_VERSION_DATE   = "20250101"
+
 
 DEFAULT_NB_AXIS    = 5 # Laisser 3 permet de gerer un Grbl original a 3 axes
 DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z','A','B']
@@ -53,6 +56,7 @@ UI Styles
 UI_STYLE_BTN_ON= 'background:rgb(15, 193, 24); color:rgb(11, 11, 123)'
 UI_STYLE_BTN_OFF = 'background:rgb(0, 0, 139) ;color:rgb(249,240, 107);'
 UI_STYLE_BTN_DISABLE = 'background:rgb(153, 153, 153) ;color:rgb(249,240, 107);'
+
 class logSeverity(Enum):
   info    = 0
   warning = 1
