@@ -4515,7 +4515,7 @@ color:rgb(19, 11, 123)</string>
        </size>
       </property>
      </widget>
-     <widget class="QFrame" name="frameDIO">
+     <widget class="QFrame" name="frmDigitalInput">
       <property name="geometry">
        <rect>
         <x>170</x>

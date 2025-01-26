@@ -977,7 +977,8 @@ class grblDecode(QObject):
       for Gx in G5x_LIST:
         eval( f"self.ui.btn{Gx}.setStyleSheet(UI_STYLE_BTN_OFF)"   )
 
-      eval( f"self.ui.btnG{ self.__G5actif}.setStyleSheet(UI_STYLE_BTN_ON)"   )
+      if self.__G5actif != None:
+        eval( f"self.ui.btnG{ self.__G5actif}.setStyleSheet(UI_STYLE_BTN_ON)"   )
 
       for  idx , ax in enumerate(self.__axisNames):
         exec("self.ui.cnLed{:02d}.setLedStatus(True)".format(idx))
