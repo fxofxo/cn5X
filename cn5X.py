@@ -58,7 +58,13 @@ from cn5X_beep import cn5XBeeper
 from cn5X_toolChange import dlgToolChange
 from plotGcode import plotGcode
 
-
+RBT_XY = 0
+RBT_AZ = 1
+RBT_XYAZ = 2
+JOG_H_PLUS = 3
+JOG_H_MINUS = 4
+JOG_V_PLUS = 5
+JOG_V_MINUS = 6
 
 import mainWindow
 
@@ -399,9 +405,21 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnJogMinus.clicked.connect(lambda: self.on_jog_move("Minus"))
     self.ui.btnJogStop.clicked.connect(lambda:self.on_jog_move( "Stop"))
 
+
   #  self.ui.btnJogSelectAxis02.mouseReleaseEvent.connect(self.on_jog_ng)
   #  self.ui.btnJogSelectAxis03.mouseReleaseEvent.connect(self.on_jog_ng)
   #  self.ui.btnJogSelectAxis04.mouseReleaseEvent.connect(self.on_jog_ng)
+
+  # multijog
+
+    self.ui.rbtXY.clicked.connect(lambda: self.on_multi_jog(RBT_XY))
+    self.ui.rbtAZ.clicked.connect(lambda: self.on_multi_jog(RBT_AZ))
+    self.ui.rbtXYAZ.clicked.connect(lambda: self.on_multi_jog(RBT_XYAZ))
+    self.ui.rbtXYAZ.setChecked(True)
+    self.ui.btnJogHplus.clicked.connect(lambda:self.on_multi_jog(JOG_H_PLUS))
+    self.ui.btnJogHminus.clicked.connect(lambda:self.on_multi_jog(JOG_H_MINUS))
+    self.ui.btnJogVplus.clicked.connect(lambda:self.on_multi_jog(JOG_V_PLUS))
+    self.ui.btnJogVminus.clicked.connect(lambda:self.on_multi_jog(JOG_V_MINUS))
 
     self.ui.rbRapid025.clicked.connect(lambda: self.__grblCom.realTimePush(REAL_TIME_RAPID_25_POURCENT))
     self.ui.rbRapid050.clicked.connect(lambda: self.__grblCom.realTimePush(REAL_TIME_RAPID_50_POURCENT))
@@ -654,7 +672,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
       self.ui.frmControleVitesse.setEnabled(False)
       self.ui.frmWMPOS.setEnabled(False)
-      self.ui.grpJog.setEnabled(False)
+      self.ui.frmJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       #self.ui.tabMainPanel.setEnabled(False)
       #self.ui.tabJog.setEnabled(False)
@@ -679,7 +697,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Double click to\nunlock the emergency stop"))
       self.ui.frmControleVitesse.setEnabled(False)
       self.ui.frmWMPOS.setEnabled(False)
-      self.ui.grpJog.setEnabled(False)
+      self.ui.frmJog.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(False)
       #self.ui.tabMainPanel.setEnabled(False)
       #self.ui.tabJog.setEnabled(False)
@@ -700,7 +718,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.btnUrgence.setToolTip(self.tr("Emergency stop"))
       self.ui.frmControleVitesse.setEnabled(True)
       self.ui.frmWMPOS.setEnabled(True)
-      self.ui.grpJog.setEnabled(True)
+      self.ui.frmJog.setEnabled(True)
       self.ui.jogMovement.setEnabled(False)
       self.ui.frmGcodeInput.setEnabled(True)
       #self.ui.tabMainPanel.setEnabled(True)
@@ -2110,6 +2128,62 @@ class winMain(QtWidgets.QMainWindow):
     else:
         self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
         return
+  #@pyqtSlot(QRadioButton, QtGui.QMouseEvent)
+  def on_multi_jog(self, cmd):
+    TRACELOG(TRACE_DEBUG,f"on_multijog:{cmd}")
+    state = self.__decode.get_MachineState()
+    if state != GRBL_STATUS_IDLE:
+      self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
+      return
+
+
+    if cmd == RBT_XY:
+        self.ui.lblXA.setText("X")
+        self.ui.lblYZ.setText("Y")
+    elif cmd == RBT_AZ:
+        self.ui.lblXA.setText("A")
+        self.ui.lblYZ.setText("Z")
+    elif cmd == RBT_XYAZ:
+      self.ui.lblXA.setText("XA")
+      self.ui.lblYZ.setText("YZ")
+    else:
+      jogDistance = 0
+      for qrb in [ self.ui.rbtJog0005, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000,self.ui.rbtJog5000]:
+        if qrb.isChecked():
+          jogDistance = float(qrb.text().replace(' ', ''))
+      for axg in [self.ui.rbtAZ, self.ui.rbtXY, self.ui.rbtXYAZ]:
+        if axg.isChecked():
+          axis = axg.text()
+      if cmd == JOG_H_MINUS:
+        move = "Minus"
+        if axis == "XYAZ":
+            ax_list = ["X","A"]
+        else:
+            ax_list = [axis[0]]
+      elif cmd == JOG_H_PLUS:
+        move = "Plus"
+        if axis == "XYAZ":
+          ax_list = ["X","A"]
+        else:
+          ax_list = [axis[0]]
+      elif cmd == JOG_V_MINUS:
+        move = "Minus"
+        if axis == "XYAZ":
+          ax_list = ["Y","Z"]
+        else:
+          ax_list = [axis[1]]
+      elif cmd == JOG_V_PLUS:
+        move = "Plus"
+        if axis == "XYAZ":
+          ax_list = ["Y","Z"]
+        else:
+          ax_list = [axis[1]]
+
+
+      # On anticipe l'état GRBL_STATUS_JOG
+      self.__decode.setMachineState(GRBL_STATUS_JOG)
+      self.__jog.on_jog_move(ax_list,move,jogDistance)
+
 
 
   ### to deptatesDEPRECATED...
