@@ -6,6 +6,7 @@ from PyQt6 import QtCore, QtWidgets, uic,QtGui
 if CONFIG_QTCHART_ENABLED:
     from PyQt6 import QtCharts
 
+from tracelog import *
 XMAX = 500
 DMIN = 1
 class plotGcode():
@@ -19,13 +20,13 @@ class plotGcode():
         self.xplot = np.array(0)
         self.yplot = np.array(0)
         self.yplot = np.array(0)
-        self.uplot = np.array(0)
+        self.aplot = np.array(0)
         self.zplot = np.array(0)
         self.xprv_p = 0
-        self.uprv_p = 0
+        self.aprv_p = 0
         if CONFIG_QTCHART_ENABLED:
             self.chart_xy = QtCharts.QChart()
-            self.chart_uz = QtCharts.QChart()
+            self.chart_az = QtCharts.QChart()
 
             #self.xy_serie = QtChart.QScatterSeries()
             #self.xy_serie.setMarkerSize(5.0)
@@ -34,27 +35,27 @@ class plotGcode():
             self.xy_base_serie.setColor(QtGui.QColor("cyan"))
             self.xy_serie.setColor(QtGui.QColor("red"))
 
-            self.uz_base_serie = QtCharts.QLineSeries()
-            self.uz_serie = QtCharts.QLineSeries()
-            self.uz_base_serie.setColor(QtGui.QColor("cyan"))
-            self.uz_serie.setColor(QtGui.QColor("red"))
+            self.az_base_serie = QtCharts.QLineSeries()
+            self.az_serie = QtCharts.QLineSeries()
+            self.az_base_serie.setColor(QtGui.QColor("cyan"))
+            self.az_serie.setColor(QtGui.QColor("red"))
 
 
             self.chart_xy.addSeries(self.xy_base_serie)
             self.chart_xy.addSeries(self.xy_serie)
-            self.chart_uz.addSeries(self.uz_base_serie)
-            self.chart_uz.addSeries(self.uz_serie)
+            self.chart_az.addSeries(self.az_base_serie)
+            self.chart_az.addSeries(self.az_serie)
 
             self.chart_xy.createDefaultAxes()
-            self.chart_uz.createDefaultAxes()
+            self.chart_az.createDefaultAxes()
             self.chart_xy.legend().hide()
-            self.chart_uz.legend().hide()
+            self.chart_az.legend().hide()
 
 
             # self.chart.setAnimationOptions(QtChart.QChart.SeriesAnimations)
 
             self.chartview_xy = QtCharts.QChartView(self.chart_xy)
-            self.chartview_uz = QtCharts.QChartView(self.chart_uz)
+            self.chartview_az = QtCharts.QChartView(self.chart_az)
 
             # self.chart_container.setContentsMargins(0, 0, 0, 0)
             # lay = QtWidgets.QHBoxLayout(self.chart_container)
@@ -62,7 +63,7 @@ class plotGcode():
             lay = QtWidgets.QVBoxLayout(widget)
             lay.setContentsMargins(0, 0, 0, 0)
             lay.addWidget(self.chartview_xy)
-            lay.addWidget(self.chartview_uz)
+            lay.addWidget(self.chartview_az)
 
 
     def load_gcode_file(self, filename):
@@ -72,45 +73,57 @@ class plotGcode():
 
 
     def read_file(self,filename):
+        self.axis_values = np.empty((0,self.n_axis),float)
+        valid_Gcodes = ["G0","G00","G1","G01","G2","G02","G3","G03"]
         with open(filename,"r") as f:
             for line in f:
                 line = line[: -1]  # get rid of \n char
                 fields = line.split(' ')
 
-                if fields[0] != "G1" and fields[0] != "G0":
+                if fields[0]  not in valid_Gcodes:
                     continue
                 #
-                print(fields)
+                TRACELOG(TRACE_DEBUG,f"fields:{fields}")
+
                 n_fields = len(fields)
                # if (len(fields) - 1 ) /2 > self.n_axis:
                #     self.n_axis = int ( (len(fields) - 1 ) /2 )
 
-                if np.size(self.axis_values) == 0:
-                    self.axis_values = np.empty((0,self.n_axis),float)
+                #if np.size(self.axis_values) == 0:
+                 #   self.axis_values = np.empty((0,self.n_axis),float)
                 row = [0,0,0,0]
-                for ax in range(1,self.n_axis+1):
-                    print(f"ax·{ax}")
+
+                for ax in range(1,n_fields):
                     data = fields[ax]
-                    if not (data[0] in self.axis_names):
-                        continue
-                    elif len(data)>1:
-                        axis = data[0]
-                        value = float(data[1:])
-                        row_pos = self.axis_names.index(axis)
-                        row[row_pos] = value
+                    if data is not None and data != '':
+                        if not (data[0] in self.axis_names):
+                            continue
+                        elif len(data)>1:
+                            axis = data[0]
+                            value = float(data[1:])
+                            row_pos = self.axis_names.index(axis)
+                            row[row_pos] = value
 
 
 
 
                 self.axis_values = np.append(self.axis_values,[row],axis=0)
 
-            print(self.axis_values)
-            print(self.axis_values.shape)
+            TRACELOG(TRACE_DEBUG,f"axis values: {self.axis_values}")
+            TRACELOG(TRACE_DEBUG,f"shape:{self.axis_values.shape}")
             max_value_axis = np.max(self.axis_values,axis=0)
+            min_value_axis = np.min(self.axis_values,axis=0)
+            TRACELOG(TRACE_INFO,f"MAX {max_value_axis} MIN: {min_value_axis}")
             self.xmax = max_value_axis[0]
             self.ymax = max_value_axis[1]
-            self.umax = max_value_axis[2]
+            self.amax = max_value_axis[2]
             self.zmax = max_value_axis[3]
+            self.xmin = min_value_axis[0]
+            self.ymin = min_value_axis[1]
+            self.amin = min_value_axis[2]
+            self.zmin = min_value_axis[3]
+
+
             self.n = len(self.axis_values)
             #self.set_limits()
 
@@ -121,7 +134,7 @@ class plotGcode():
     def filter_by_dist(self):
         if CONFIG_QTCHART_ENABLED:
             self.filter_axe_dist(self.axis_values[:, [0, 1]], self.xy_base_serie)
-            self.filter_axe_dist(self.axis_values[:, [2, 3]], self.uz_base_serie)
+            self.filter_axe_dist(self.axis_values[:, [2, 3]], self.az_base_serie)
 
 
     def filter_axe_dist(self, xy_values, serie):
@@ -149,7 +162,7 @@ class plotGcode():
         if CONFIG_QTCHART_ENABLED:
             self.xy_serie.append(QtCore.QPointF(p[0],p[1]))
             if len(p) > 3:
-                self.uz_serie.append(QtCore.QPointF(p[3],p[2]))
+                self.az_serie.append(QtCore.QPointF(p[3], p[2]))
     def set_limits(self):
         print("setLimits")
         widget_w = self.widget.width()
@@ -157,10 +170,10 @@ class plotGcode():
         print(f"{widget_w} x {widget_h}")
         offset = 3
         print(f"{self.xmax} - {self.ymax}")
-        print(f"{self.umax} - {self.zmax}")
-        x_min = -offset
-        y_min = -offset
-        x_max = max(self.xmax,self.umax)
+        print(f"{self.amax} - {self.zmax}")
+        x_min = self.xmin - offset
+        y_min = self.ymin - offset
+        x_max = max(self.xmax, self.amax)
         y_max = max(self.ymax,self.zmax)
         gcode_ratio = y_max/x_max
         plot_ratio = widget_h / widget_w
@@ -176,8 +189,8 @@ class plotGcode():
         if CONFIG_QTCHART_ENABLED:
             self.chart_xy.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(x_min, x_max)
             self.chart_xy.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(y_min, y_max)
-            self.chart_uz.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(x_min, x_max)
-            self.chart_uz.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(y_min, y_max)
+            self.chart_az.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(x_min, x_max)
+            self.chart_az.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(y_min, y_max)
 
 
 

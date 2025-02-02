@@ -2131,10 +2131,7 @@ class winMain(QtWidgets.QMainWindow):
   #@pyqtSlot(QRadioButton, QtGui.QMouseEvent)
   def on_multi_jog(self, cmd):
     TRACELOG(TRACE_DEBUG,f"on_multijog:{cmd}")
-    state = self.__decode.get_MachineState()
-    if state != GRBL_STATUS_IDLE:
-      self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
-      return
+
 
 
     if cmd == RBT_XY:
@@ -2147,6 +2144,10 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.lblXA.setText("XA")
       self.ui.lblYZ.setText("YZ")
     else:
+      state = self.__decode.get_MachineState()
+      if state != GRBL_STATUS_IDLE:
+        self.log(logSeverity.warning.value, self.tr(f"job not Idle:{state}"))
+        return
       jogDistance = 0
       for qrb in [ self.ui.rbtJog0005, self.ui.rbtJog0010, self.ui.rbtJog0100, self.ui.rbtJog1000,self.ui.rbtJog5000]:
         if qrb.isChecked():

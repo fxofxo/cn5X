@@ -4897,10 +4897,10 @@ font: 700 9pt &quot;Sans&quot;;</string>
     <widget class="QFrame" name="frmJog">
      <property name="geometry">
       <rect>
-       <x>5</x>
+       <x>0</x>
        <y>151</y>
        <width>360</width>
-       <height>151</height>
+       <height>161</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -4987,10 +4987,10 @@ font: 700 9pt &quot;Sans&quot;;</string>
      <widget class="QFrame" name="frameStar">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>30</y>
-        <width>121</width>
-        <height>121</height>
+        <width>105</width>
+        <height>105</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -5006,10 +5006,10 @@ color:rgb(1, 118, 123)</string>
       <widget class="QPushButton" name="btnJogHminus">
        <property name="geometry">
         <rect>
-         <x>31</x>
-         <y>40</y>
-         <width>30</width>
-         <height>30</height>
+         <x>2</x>
+         <y>35</y>
+         <width>35</width>
+         <height>35</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -5023,10 +5023,10 @@ color:rgb(1, 118, 123)</string>
       <widget class="QPushButton" name="btnJogHplus">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>40</y>
-         <width>30</width>
-         <height>30</height>
+         <x>68</x>
+         <y>35</y>
+         <width>35</width>
+         <height>35</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -5040,27 +5040,28 @@ color:rgb(1, 118, 123)</string>
       <widget class="QPushButton" name="btnJogVplus">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>11</y>
-         <width>30</width>
-         <height>30</height>
+         <x>35</x>
+         <y>2</y>
+         <width>35</width>
+         <height>35</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">background:rgb(153, 193, 241);
+
 color:rgb(1, 118, 123)</string>
        </property>
        <property name="text">
-        <string>U</string>
+        <string>A</string>
        </property>
       </widget>
       <widget class="QPushButton" name="btnJogVminus">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>70</y>
-         <width>30</width>
-         <height>30</height>
+         <x>35</x>
+         <y>69</y>
+         <width>35</width>
+         <height>35</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -5071,47 +5072,13 @@ color:rgb(1, 118, 123)</string>
         <string>V</string>
        </property>
       </widget>
-      <widget class="QLabel" name="lblXA">
-       <property name="geometry">
-        <rect>
-         <x>6</x>
-         <y>50</y>
-         <width>22</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color:rgb(246, 245, 244);
-font: 700 13pt &quot;Sans&quot;;</string>
-       </property>
-       <property name="text">
-        <string>XA</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="lblYZ">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>100</y>
-         <width>25</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color:rgb(246, 245, 244);
-font: 700 13pt &quot;Sans&quot;;</string>
-       </property>
-       <property name="text">
-        <string>YZ</string>
-       </property>
-      </widget>
       <widget class="cnQPushButton" name="btnJogStop">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>40</y>
-         <width>31</width>
-         <height>31</height>
+         <x>35</x>
+         <y>36</y>
+         <width>34</width>
+         <height>34</height>
         </rect>
        </property>
        <property name="maximumSize">
@@ -5142,8 +5109,8 @@ color:rgb(1, 118, 123)</string>
      <widget class="QWidget" name="frmJogIncrement" native="true">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>0</y>
+        <x>160</x>
+        <y>30</y>
         <width>71</width>
         <height>141</height>
        </rect>
@@ -5311,13 +5278,47 @@ color:rgb(1, 118, 123)</string>
        </item>
       </layout>
      </widget>
+     <widget class="QLabel" name="lblXA">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>75</y>
+        <width>22</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(246, 245, 244);
+font: 700 13pt &quot;Sans&quot;;</string>
+      </property>
+      <property name="text">
+       <string>XA</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblYZ">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>140</y>
+        <width>25</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(246, 245, 244);
+font: 700 13pt &quot;Sans&quot;;</string>
+      </property>
+      <property name="text">
+       <string>YZ</string>
+      </property>
+     </widget>
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>90</y>
-        <width>120</width>
-        <height>61</height>
+        <x>240</x>
+        <y>110</y>
+        <width>101</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="frameShape">
