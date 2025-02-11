@@ -22,7 +22,7 @@
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 grblError = [
-  [0, "No error."],
+  [0, "No error.",""],
   [1, "Expected command letter","G-code words consist of a letter and a value. Letter was not found."],
   [2, "Bad number format","Missing the expected G-code word value or numeric value format is not valid."],
   [3, "Invalid statement","Grbl '$' system command was not recognized or supported."],

@@ -15,7 +15,7 @@ class plotGcode():
         self.widget = widget
         self.n_axis = 4
         self.axis_values = np.empty(0)
-        self.axis_names = DEFAULT_AXIS_NAMES
+        self.axis_names = DEFAULT_AXIS_NAMES #['X','Y','A',"Z"] #
         self.pos = 0
         self.xplot = np.array(0)
         self.yplot = np.array(0)
@@ -102,6 +102,7 @@ class plotGcode():
                             axis = data[0]
                             value = float(data[1:])
                             row_pos = self.axis_names.index(axis)
+                            TRACELOG(TRACE_DEBUG,f"{axis}-{row_pos}")
                             row[row_pos] = value
 
 
@@ -111,17 +112,18 @@ class plotGcode():
 
             TRACELOG(TRACE_DEBUG,f"axis values: {self.axis_values}")
             TRACELOG(TRACE_DEBUG,f"shape:{self.axis_values.shape}")
+            TRACELOG(TRACE_DEBUG,self.axis_names)
             max_value_axis = np.max(self.axis_values,axis=0)
             min_value_axis = np.min(self.axis_values,axis=0)
             TRACELOG(TRACE_INFO,f"MAX {max_value_axis} MIN: {min_value_axis}")
             self.xmax = max_value_axis[0]
             self.ymax = max_value_axis[1]
-            self.amax = max_value_axis[2]
-            self.zmax = max_value_axis[3]
+            self.zmax = max_value_axis[2]
+            self.amax = max_value_axis[3]
             self.xmin = min_value_axis[0]
             self.ymin = min_value_axis[1]
-            self.amin = min_value_axis[2]
-            self.zmin = min_value_axis[3]
+            self.zmin = min_value_axis[2]
+            self.amin = min_value_axis[3]
 
 
             self.n = len(self.axis_values)
@@ -132,9 +134,10 @@ class plotGcode():
         return np.sqrt(np.sum( d * d))
 
     def filter_by_dist(self):
+        # X,Y,Z,A
         if CONFIG_QTCHART_ENABLED:
             self.filter_axe_dist(self.axis_values[:, [0, 1]], self.xy_base_serie)
-            self.filter_axe_dist(self.axis_values[:, [2, 3]], self.az_base_serie)
+            self.filter_axe_dist(self.axis_values[:, [3, 2]], self.az_base_serie)
 
 
     def filter_axe_dist(self, xy_values, serie):
@@ -157,40 +160,40 @@ class plotGcode():
         self.pos = self.pos % self.n
         self.xy_serie.append(QtCore.QPointF(p[0], p[1]))
         t1 = time.time()
-        print(t0-t1)
+        TRACELOG(TRACE_DEBUG,t0-t1)
     def add_point(self,p): # (x,y, z, u)
         if CONFIG_QTCHART_ENABLED:
             self.xy_serie.append(QtCore.QPointF(p[0],p[1]))
             if len(p) > 3:
                 self.az_serie.append(QtCore.QPointF(p[3], p[2]))
     def set_limits(self):
-        print("setLimits")
+        TRACELOG(TRACE_DEBUG,"setLimits")
         widget_w = self.widget.width()
         widget_h = self.widget.height() / 2 # Two chartview on widget
-        print(f"{widget_w} x {widget_h}")
+        TRACELOG(TRACE_DEBUG,f" widged size {widget_w} x {widget_h}")
         offset = 3
-        print(f"{self.xmax} - {self.ymax}")
-        print(f"{self.amax} - {self.zmax}")
-        x_min = self.xmin - offset
-        y_min = self.ymin - offset
-        x_max = max(self.xmax, self.amax)
-        y_max = max(self.ymax,self.zmax)
-        gcode_ratio = y_max/x_max
+        TRACELOG(TRACE_DEBUG,f"xy max {self.xmax} - {self.ymax}")
+        TRACELOG(TRACE_DEBUG,f"az max {self.amax} - {self.zmax}")
+        h_min = self.xmin - offset
+        v_min = self.ymin - offset
+        h_max = max(self.xmax, self.amax)
+        v_max = max(self.ymax,self.zmax)
+        gcode_ratio = v_max/h_max
         plot_ratio = widget_h / widget_w
         if gcode_ratio <= plot_ratio:
-            y_max = (x_max + offset ) *(  widget_h / widget_w)
+            v_max = (h_max + offset ) *(  widget_h / widget_w)
         else:
-            x_max = (y_max + offset) * ( widget_w / widget_h)
-        print(f" {x_max}-{y_max}")
-        print(f" fileratio: {y_max/x_max}")
-        print(f" widgetration: {(  widget_h / widget_w)}")
+            h_max = (v_max + offset) * ( widget_w / widget_h)
+        TRACELOG(TRACE_DEBUG,f"max axis {h_max}   -  {v_max}")
+        TRACELOG(TRACE_DEBUG,f" fileratio: {v_max/h_max}")
+        TRACELOG(TRACE_DEBUG,f" widgetration: {(  widget_h / widget_w)}")
 
 
         if CONFIG_QTCHART_ENABLED:
-            self.chart_xy.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(x_min, x_max)
-            self.chart_xy.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(y_min, y_max)
-            self.chart_az.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(x_min, x_max)
-            self.chart_az.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(y_min, y_max)
+            self.chart_xy.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(h_min, h_max)
+            self.chart_xy.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(v_min, v_max)
+            self.chart_az.axes(QtCore.Qt.Orientation.Horizontal)[0].setRange(h_min, h_max)
+            self.chart_az.axes(QtCore.Qt.Orientation.Vertical)[0].setRange(v_min, v_max)
 
 
 
