@@ -13092,6 +13092,9 @@ background:rgb(98, 160, 234)</string>
    </property>
   </action>
   <action name="mnuGoToG28">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Go to G28 location...</string>
    </property>
@@ -13148,11 +13151,14 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Confirm define G28.1 location</string>
    </property>
    <property name="visible">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="mnuConfirm_define_G30">
@@ -13162,11 +13168,14 @@ If no positions are stored with G30.1 then all axes will go to the machine origi
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Confirm define G30.1 location</string>
    </property>
    <property name="visible">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="mnuHelpProbe_single_axis">

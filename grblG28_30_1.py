@@ -64,9 +64,9 @@ class dlgG28_30_1(QDialog):
       self.di.lblMessage.setText(text)
       self.enableDisableCheckBoxes(True)
       # Affichage confirmation ou non...
-      self.__dontConfirm = False
+      self.__dontConfirm = self.__settings.value("dontConfirm{}".format(self.__Gpos), False, type=bool)
       self.di.chkDontShow.setChecked(self.__dontConfirm)
-      self.di.chkDontShow.setVisible(False)
+      self.di.chkDontShow.setVisible(True)
     
     # Image G28, G28.1, G30 ou G30.1
     self.di.imageDeco.setIcon(QtGui.QIcon(os.path.join(os.path.dirname(__file__), "images/question{}.svg".format(self.__Gpos))))

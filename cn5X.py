@@ -1028,10 +1028,23 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.mnuGoToG28.setText("Go to G28 location")
     else:
       self.ui.mnuGoToG28.setText("Go to G28 location...")
+
     if self.__settings.value("dontConfirmG30", False, type=bool):
       self.ui.mnuGoToG30.setText("Go to G30 location")
     else:
       self.ui.mnuGoToG30.setText("Go to G30 location...")
+    
+    if self.__settings.value("dontConfirmG28.1", False, type=bool):
+      self.ui.mnuDefineG28.setText("Define G28 location")
+    else:
+      self.ui.mnuDefineG28.setText("Define G28 location...")
+    
+    if self.__settings.value("dontConfirmG30.1", False, type=bool):
+      self.ui.mnuDefineG30.setText("Define G30 location")
+    else:
+      self.ui.mnuDefineG30.setText("Define G30 location...")
+
+    
 
 
   @pyqtSlot()
@@ -1077,6 +1090,7 @@ class winMain(QtWidgets.QMainWindow):
 
   @pyqtSlot()
   def on_mnuDefineG28(self):
+    print("on_mnuDEfineG28")
     ''' Appel de la boite de dialogue G28.1 '''
     dlg = dlgG28_30_1("G28.1", self.__grblCom, self.__decode, self.__nbAxis, self.__axisNames)
     dlg.setParent(self)
