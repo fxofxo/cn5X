@@ -74,14 +74,25 @@ class plotGcode():
 
     def read_file(self,filename):
         self.axis_values = np.empty((0,self.n_axis),float)
-        valid_Gcodes = ["G0","G00","G1","G01","G2","G02","G3","G03"]
+        valid_Gcodes = ["G0","G00","G1","G01","G2","G02","G3","G03"] #For ploting...
+        replace_chars = self.axis_names.copy()
+        replace_chars.append("F")
         with open(filename,"r") as f:
             for line in f:
                 line = line[: -1]  # get rid of \n char
-                fields = line.split(' ')
-
-                if fields[0]  not in valid_Gcodes:
+                print(line)
+                if line.find(" ") == -1: #deal with compact line g01x2z2
+                    print("No spaces")
+                   
+                    print(replace_chars)
+                    for c in replace_chars:
+                        line = line.replace(c, " "+c)
+                print(line)
+                if line[:3].strip() not in valid_Gcodes:
                     continue
+                fields = line.split(' ')
+                print(fields)
+
                 #
                 TRACELOG(TRACE_DEBUG,f"fields:{fields}")
 
@@ -102,7 +113,6 @@ class plotGcode():
                             axis = data[0]
                             value = float(data[1:])
                             row_pos = self.axis_names.index(axis)
-                            TRACELOG(TRACE_DEBUG,f"{axis}-{row_pos}")
                             row[row_pos] = value
 
 
