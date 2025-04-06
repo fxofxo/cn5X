@@ -50,6 +50,7 @@ class grblDecode(QObject):
     self.ui = ui
     self.log = log
     self.__grblCom   = grbl
+    self.__sensorsNames = ['P','D','H','R','S']
     self.__nbAxis    = DEFAULT_NB_AXIS
     self.__axisNames = DEFAULT_AXIS_NAMES                #Dynamic axis name grbl ramps
     self.ui_axis_dict = {'X': 'X', 'Y': 'Y', 'Z': 'Z', 'A':'A','B':'B','C':'C','U':'A', 'V': 'Z'}
@@ -142,7 +143,7 @@ class grblDecode(QObject):
 
 
   def decodeGrblStatus(self, grblOutput):
-
+    #TRACELOG(TRACE_DEBUG,"STATUS:" + grblOutput)
     if grblOutput[0] != "<" or grblOutput[-1] != ">":
       return self.tr("grblDecode.py.decodeGrblStatus():error ! \n[{}] Incorrect status.").format(grblOutput)
 
@@ -279,15 +280,14 @@ class grblDecode(QObject):
         # Affichage voyants d'interface (except limit led for axis)
         for L in [ 'P', 'D', 'H', 'R', 'S']:
           if L in triggered:
-            exec("self.ui.cnLed" + L + ".setLedStatus(True)")
-            TRACELOG(TRACE_DEBUG,f"Triggered {L}")
+            exec("self.ui.cnLed" + L + ".setLedStatus(True)")   
           else:
-            pass
-            #exec("self.ui.cnLed" + L + ".setLedStatus(False)")
+            exec("self.ui.cnLed" + L + ".setLedStatus(False)")
        # Beep lorsque le probe entre en contact
         if 'P' in triggered:
           if not self.probeStatus:
-            self.beeper.beep(1760, 0.25, 16000)
+            #self.beeper.beep(1760, 0.25, 16000)
+            self.beeper.beep(10) #vlume
             self.probeStatus = True
         else:
           if self.probeStatus:
@@ -515,7 +515,7 @@ class grblDecode(QObject):
 
 
   def decodeGrblData(self, grblOutput):
-    #TRACELOG(TRACE_DEBUG,f"DECODE:{grblOutput}" )
+    #TRACELOG(TRACE_DEBUG,f"DATA:{grblOutput}" )
     if grblOutput[:1] == "$": # Setting output
       if grblOutput[:2] == "$N": # startup blocks
         return grblOutput
@@ -529,16 +529,23 @@ class grblDecode(QObject):
 
     elif grblOutput[:1] == "[" and grblOutput[-1:] == "]":
       ''' Push Messages: '''
-      if grblOutput[1:4] in self.__validG5x: # ["G28", "G30", "G54","G55","G56","G57","G58","G59", "G92"]
+      #TRACELOG(TRACE_DEBUG,f"DATA:{grblOutput}" )
+      grbl_split = grblOutput[1:-1].split(":")
+      grbl_code = grbl_split[0]
+      if (len(grbl_split)>1):
+        grbl_data = grbl_split[1]
+      if grbl_code in self.__validG5x: # ["G28", "G30", "G54","G55","G56","G57","G58","G59", "G92"]
         '''
         messages indicate the parameter data output from a "$#" (CMD_GRBL_GET_GCODE_PARAMATERS) user query.
         '''
         num=int(grblOutput[2:4])
-        TRACELOG(TRACE_DEBUG,f"foung G {num}")
+        TRACELOG(TRACE_DEBUG,f"found {num}")
         values=grblOutput[5:-1].split(",")
         if len(values) < self.__nbAxis: #some grble not send AXS definition
           self.__nbAxis = len(values)
+        print(values)
         for i in range(6):
+        
           if i < self.__nbAxis:
             self.__G5x[num][i] = float(values[i])
           else:
@@ -583,15 +590,17 @@ class grblDecode(QObject):
         if self.__getNextGCodeParams:
           return grblOutput
 
-      elif grblOutput[1:5] == "TLO:":
+      elif grbl_code == "TLO":
         ''' Tool length offset (for the default z-axis) '''
         TRACELOG(TRACE_DEBUG,"found TLO")
-        self.__toolLengthOffset = float(grblOutput[5:-1])
+        TRACELOG(TRACE_INFO,"TLO IGNORED")
+        
+        #self.__toolLengthOffset = float(grblOutput[5:-1])
         # renvoie le résultat si $# demandé dans par l'utilisateur
         if self.__getNextGCodeParams:
           return grblOutput
 
-      elif grblOutput[1:5] == "PRB:":
+      elif grbl_code == "PRB":
         TRACELOG(TRACE_DEBUG,"found PRB")
         ''' Coordinates of the last probing cycle, suffix :1 => Success '''
         self.__probeCoord = grblOutput[5:-1].split(",")
@@ -1013,6 +1022,12 @@ class grblDecode(QObject):
           self.ui.lblLblPosB.setStyleSheet("color: rgb(0, 0, 0);")
       if self.__nbAxis > 5:
           self.ui.lblLblPosC.setStyleSheet("color: rgb(0, 0, 0);")
+
+
+  def SetSensorLeds(self,setOn):
+    for s in self.__sensorsNames:
+      exec(f"self.ui.cnLed{s}.setLedStatus({setOn})")
+
 
   def switchONLimitLed(self, ax, setON ):
     if ax in self.__axisNames:

@@ -32,7 +32,7 @@ APP_VERSION_STRING = "0.8.9"
 APP_VERSION_DATE   = "20250101"
 
 
-DEFAULT_NB_AXIS    = 5 # Laisser 3 permet de gerer un Grbl original a 3 axes
+DEFAULT_NB_AXIS    = 3 # Laisser 3 permet de gerer un Grbl original a 3 axes
 DEFAULT_AXIS_NAMES = ['X', 'Y', 'Z','A','B']
 G5x_LIST = ["G54","G55","G56","G57","G58","G59"]
 COM_DEFAULT_BAUD_RATE = 115200

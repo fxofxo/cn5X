@@ -31,7 +31,7 @@ from grblCom import grblCom
 from msgbox import *
 from compilOptions import grblCompilOptions
 from qweditmask import qwEditMask
-
+from tracelog import *
 
 class upperCaseValidator(QValidator):
   def validate(self, string, pos):
@@ -140,14 +140,16 @@ class grblConfig(QDialog):
     self.__di.lneN0.setValidator(self.ucase)
     self.__di.lneN1.setValidator(self.ucase)
     self.__di.lneStatusReport.textChanged.connect(lambda: self.textChange(self.__di.lneStatusReport))
-
+    self.__di.hide()
     self.__grblCom = grbl
-    self.__grblCom.sig_init.connect(self.on_sig_init)
-    self.__grblCom.sig_config.connect(self.on_sig_config)
-
+    #self.__grblCom.sig_init.connect(self.on_sig_init)
+    #self.__grblCom.sig_config.connect(self.on_sig_config)
+    TRACELOG(TRACE_DEBUG,"grblConfig init")
 
   def showDialog(self):
+
     # Centrage de la boite de dialogue sur la fenetre principale
+    self.__nbAxis
     ParentX = self.parent().geometry().x()
     ParentY = self.parent().geometry().y()
     ParentWidth = self.parent().geometry().width()
@@ -180,7 +182,7 @@ class grblConfig(QDialog):
     if   data[:1] == "$":
       # Onglet materiel
       if data[:3] == '$0=':
-        self.__di.spinStepPulse.setValue(int(data.split("=")[1]))
+        self.__di.spinStepPulse.setValue(int(float(data.split("=")[1])))
       elif data[:3] == '$1=':
         self.__di.spinStepIdleDelay.setValue(int(data.split("=")[1]))
       elif data[:3] == '$2=':
@@ -256,9 +258,9 @@ class grblConfig(QDialog):
         self.__di.dsbHomingPullOff.setValue(float(data.split("=")[1]))
       # Onglet Broche
       elif data[:4] == '$30=':
-        self.__di.spinMaxSpindle.setValue(int(data.split("=")[1]))
+        self.__di.spinMaxSpindle.setValue(int(float(data.split("=")[1])))
       elif data[:4] == '$31=':
-        self.__di.spinMinSpindle.setValue(int(data.split("=")[1]))
+        self.__di.spinMinSpindle.setValue(int(float(data.split("=")[1])))
       elif data[:4] == '$32=':
         if data.split("=")[1] == '0':
           self.__di.chkLaserMode.setCheckState(Qt.CheckState.Unchecked)
@@ -419,6 +421,14 @@ class grblConfig(QDialog):
       self.__di.lblRateA.setText(self.tr("{} Max rate, mm/min ($113)").format(names[3]))
       self.__di.lblAccelA.setText(self.tr("{} Acceleration, mm/sec^2 ($123)").format(names[3]))
       self.__di.lblTravelA.setText(self.tr("{} Max travel, mm ($133)").format(names[3]))
+      self.__di.lblStepsA.setEnabled(True)
+      self.__di.lblRateA.setEnabled(True)
+      self.__di.lblAccelA.setEnabled(True)
+      self.__di.lblTravelA.setEnabled(True)
+      self.__di.dsbStepsA.setEnabled(True)
+      self.__di.dsbMaxRateA.setEnabled(True)
+      self.__di.dsbAccelA.setEnabled(True)
+      self.__di.dsbTravelA.setEnabled(True)
     else:
       self.__di.lblStepsA.setText(self.tr("- steps/mm ($103)"))
       self.__di.lblRateA.setText(self.tr("- Max rate, mm/min ($113)"))
@@ -438,6 +448,7 @@ class grblConfig(QDialog):
       self.__di.lblRateB.setText(self.tr("{} Max rate, mm/min ($114)").format(names[4]))
       self.__di.lblAccelB.setText(self.tr("{} Acceleration, mm/sec^2 ($124)").format(names[4]))
       self.__di.lblTravelB.setText(self.tr("{} Max travel, mm ($134)").format(names[4]))
+      self.__di.lblStepsA.setEnabled(True)
     else:
       self.__di.lblStepsB.setText(self.tr("- steps/mm ($104)"))
       self.__di.lblRateB.setText(self.tr("- Max rate, mm/min ($114)"))
@@ -457,6 +468,7 @@ class grblConfig(QDialog):
       self.__di.lblRateC.setText(self.tr("{} Max rate, mm/min ($115)").format(names[5]))
       self.__di.lblAccelC.setText(self.tr("{} Acceleration, mm/sec^2 ($125)").format(names[5]))
       self.__di.lblTravelC.setText(self.tr("{} Max travel, mm ($135)").format(names[5]))
+      self.__di.lblStepsA.setEnabled(True)
     else:
       self.__di.lblStepsC.setText(self.tr("- steps/mm ($105)"))
       self.__di.lblRateC.setText(self.tr("- Max rate, mm/min ($115)"))

@@ -11970,7 +11970,7 @@ background:rgb(98, 160, 234)</string>
          </size>
         </property>
         <property name="text">
-         <string notr="true">_</string>
+         <string notr="true">P</string>
         </property>
        </widget>
       </item>
@@ -12042,7 +12042,7 @@ background:rgb(98, 160, 234)</string>
          </size>
         </property>
         <property name="text">
-         <string notr="true">_</string>
+         <string notr="true">D</string>
         </property>
        </widget>
       </item>
@@ -12114,7 +12114,7 @@ background:rgb(98, 160, 234)</string>
          </size>
         </property>
         <property name="text">
-         <string notr="true">_</string>
+         <string notr="true">H</string>
         </property>
        </widget>
       </item>
@@ -12186,7 +12186,7 @@ background:rgb(98, 160, 234)</string>
          </size>
         </property>
         <property name="text">
-         <string notr="true">_</string>
+         <string notr="true">R</string>
         </property>
        </widget>
       </item>
@@ -12252,7 +12252,7 @@ background:rgb(98, 160, 234)</string>
          </size>
         </property>
         <property name="text">
-         <string notr="true">_</string>
+         <string notr="true">S</string>
         </property>
        </widget>
       </item>

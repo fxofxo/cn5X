@@ -208,7 +208,7 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblCom.sig_error.connect(self.on_sig_error)
     self.__grblCom.sig_alarm.connect(self.on_sig_alarm)
     self.__grblCom.sig_status.connect(self.on_sig_status)
-    self.__grblCom.sig_config.connect(self.on_sig_config)
+    self.__grblCom.sig_config.connect(self.on_sig_config )
     self.__grblCom.sig_data.connect(self.on_sig_data)
     self.__grblCom.sig_emit.connect(self.on_sig_emit)
     self.__grblCom.sig_recu.connect(self.on_sig_recu)
@@ -226,6 +226,8 @@ class winMain(QtWidgets.QMainWindow):
     def arretUrgence():
       return self.__arretUrgence
     
+   
+
     self.__decode = grblDecode(self.ui, self.log, self.__grblCom, self.__beeper, arretUrgence)
     # fxoQT self.__decode.sig_log.connect(self.on_sig_log)
     #self.__pBox.setDecoder(self.__decode)    
@@ -259,6 +261,14 @@ class winMain(QtWidgets.QMainWindow):
     self.__maxTravel        = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__firstGetSettings = False
     self.__jogModContinue   = False
+
+    self.__dlgConfig = grblConfig(self.__grblCom, self.__nbAxis, self.__axisNames)
+
+    self.__dlgConfig.setParent(self)
+    self.__dlgConfig.sig_config_changed.connect(self.on_sig_config_changed)
+    self.__dlgConfig.sig_log.connect(self.on_sig_log)
+
+
 
     '''---------- Preparation de l'interface ----------'''
 
@@ -686,6 +696,7 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frmRelG.setEnabled(False)
       self.__decode.disableAxis(False)
       self.__decode.switchOFFLimitLeds()
+      self.__decode.SetSensorLeds(False)
       self.ui.frmRun.setEnabled(False)
 
 
@@ -708,8 +719,8 @@ class winMain(QtWidgets.QMainWindow):
       self.ui.frameConnection.setEnabled(True)
       #self.ui.frmOperationButtons.setEnabled(False)
       #self.ui.frmRelG.setEnabled(False)
-      self.__decode.disableAxis(False)
-      self.__decode.switchOFFLimitLeds()
+      #self.__decode.disableAxis(False)
+      #self.__decode.switchOFFLimitLeds()
       self.ui.frmRun.setEnabled(False)
 
     else: #Connected and ready to operate
@@ -885,11 +896,9 @@ class winMain(QtWidgets.QMainWindow):
     ''' Appel de la boite de dialogue de configuration
     '''
     self.__grblConfigLoaded = True
-    dlgConfig = grblConfig(self.__grblCom, self.__nbAxis, self.__axisNames)
-    dlgConfig.setParent(self)
-    dlgConfig.sig_config_changed.connect(self.on_sig_config_changed)
-    dlgConfig.sig_log.connect(self.on_sig_log)
-    dlgConfig.showDialog()
+
+    self.__dlgConfig.showDialog()
+    TRACELOG(TRACE_DEBUG,"config dialogs ends")
     self.__grblConfigLoaded = False
     # Rafraichi la config
     self.__grblCom.gcodeInsert(CMD_GRBL_GET_SETTINGS)
@@ -2480,27 +2489,27 @@ class winMain(QtWidgets.QMainWindow):
 
   @pyqtSlot(str)
   def on_sig_config(self, data: str):
-    
+    #TRACELOG(TRACE_DEBUG,"cn5x on_sig_config")
     #config data could be send with comments
     #DECODE:$122=10.000 (z accel, mm/sec^2)
     split  = data.split("(")
     data= split[0]
   
     # Repere la chaine "[AXS:5:XYZABCUVW]" pour recuperer le nombre d'axes et leurs noms
-    if data[:5] == "[AXS:":
+    '''if data[:5] == "[AXS:":
+      TRACELOG(TRACE_INFO,"axis names updated")
       self.__nbAxis           = int(data[1:-1].split(':')[1])
       self.__axisNames        = list(data[1:-1].split(':')[2])
       if len(self.__axisNames) < self.__nbAxis:
         # Il est posible qu'il y ait moins de lettres que le nombre d'axes si Grbl
         # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
-        self.__nbAxis = len(self.__axisNames);
-      '''self.updateAxisNumber()
-      self.__decode.setNbAxis(self.__nbAxis)'''
+        self.__nbAxis = len(self.__axisNames)
+        self.__decode.setNbAxis(self.__nbAxis)
       # Mise à jour classe grblProbe
-      self.__probe.setAxisNames(self.__axisNames) 
+      self.__probe.setAxisNames(self.__axisNames) '''
         
     # Memorise les courses maxi pour calcul des jogs max.
-    elif data[:4] == "$130":
+    if data[:4] == "$130":
       self.__maxTravel[0] = float(data[5:])
     elif data[:4] == "$131":
       self.__maxTravel[1] = float(data[5:])
@@ -2513,12 +2522,15 @@ class winMain(QtWidgets.QMainWindow):
     elif data[:4] == "$135":
       self.__maxTravel[5] = float(data[5:])
 
-    if not self.__grblConfigLoaded:
+    if self.__grblConfigLoaded:
+       self.__dlgConfig.on_sig_config(data)
+    else:
       retour = self.__decode.decodeGrblData(data)
       if retour is not None and retour != "":
         self.logGrbl.append(retour)
       else:
         self.logGrbl.append(data)
+     
 
 
   @pyqtSlot(str)

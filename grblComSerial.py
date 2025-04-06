@@ -220,9 +220,9 @@ class grblComSerial(QObject):
       if self.probeAttendu:
         self.sig_probe.emit(l)
         self.probeAttendu = False
-    elif l[:1] == "$" or l[:5] == "[VER:" or l[:5] == "[AXS:" or l[:5] == "[OPT:": # Setting output
+    elif l[:1] == '$' or l[:5] == "[VER:" or l[:5] == "[AXS:" or l[:5] == "[OPT:": # Setting output
       self.sig_config.emit(l)
-    else:
+    else: 
       self.sig_data.emit(l)
 
 
@@ -310,7 +310,7 @@ class grblComSerial(QObject):
         try:
           l = buff.decode().strip()
           self.sig_debug.emit(self.tr("grblComSerial.__openComPort(): line received: \"") + l + "\"")
-          if l[:5] == "Grbl " and l[-5:] == "help]": # Init string : Grbl V.Mx ['$' for help]
+          if l[:4] == "Grbl" and l[-5:] == "help]": # Init string : Grbl V.Mx ['$' for help]
             self.sig_debug.emit(self.tr("grblComSerial.__openComPort(): Grbl init string received in {:0.0f} ms, OK.").format(time.time()*1000 - tDebut))
             self.sig_init.emit(l)
             self.__initOK = True
