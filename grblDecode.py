@@ -495,7 +495,14 @@ class grblDecode(QObject):
     elif grblOutput[:6] == "error:":
       TRACELOG(TRACE_ERROR,"GRBL ERROR:{grblOutput}")
       errNum = int(float(grblOutput[6:]))
-      return self.tr("Grbl error number {}: {},\n{}").format(str(errNum), grblError[errNum][1], grblError[errNum][2])
+      n_err_text = len(grblError)
+      if errNum < n_err_text:
+        text1 =  grblError[errNum][1]
+        text2 =  grblError[errNum][2]
+        msg = f"Grbl error number {errNum}: {text1},\n{text2}" 
+      else:
+        msg = f"unknwon error:{errNum}"
+      return self.tr(msg)
 
     elif grblOutput[:6] == "ALARM:":
       print(f"RESPONSE:{grblOutput}")
