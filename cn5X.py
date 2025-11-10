@@ -216,6 +216,8 @@ class winMain(QtWidgets.QMainWindow):
     self.__grblCom.sig_activity.connect(self.on_sig_activity)
     self.__grblCom.sig_serialLock.connect(self.on_sig_serialLock)
 
+  
+
     self.__beeper = cn5XBeeper();
 
     self.__jogAxisSelected = []
@@ -229,6 +231,7 @@ class winMain(QtWidgets.QMainWindow):
    
 
     self.__decode = grblDecode(self.ui, self.log, self.__grblCom, self.__beeper, arretUrgence)
+    self.__decode.sig_axn.connect(self.on_sig_axn)
     # fxoQT self.__decode.sig_log.connect(self.on_sig_log)
     #self.__pBox.setDecoder(self.__decode)    
     self.__grblCom.setDecodeur(self.__decode)
@@ -255,8 +258,8 @@ class winMain(QtWidgets.QMainWindow):
     self.__cycleRun         = False
     self.__cyclePause       = False
     self.__grblConfigLoaded = False
-    self.__nbAxis           = DEFAULT_NB_AXIS
-    self.__axisNames        = DEFAULT_AXIS_NAMES
+    self.__nbAxis           = self.__decode.get_nbAxis()
+    self.__axisNames        = self.__decode.getAxisNames()
     #self.__decode.updateAxisDefinition()
     self.__maxTravel        = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     self.__firstGetSettings = False
@@ -467,7 +470,7 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.lblPosA.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(3))
     self.ui.lblPosB.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(4))
     self.ui.lblPosC.customContextMenuRequested.connect(lambda: self.on_lblPosContextMenu(5))
-    '''
+   
     self.ui.lblPlan.customContextMenuRequested.connect(self.on_lblPlanContextMenu)
     self.ui.lblUnites.customContextMenuRequested.connect(self.on_lblUnitesContextMenu)
     self.ui.lblCoord.customContextMenuRequested.connect(self.on_lblCoordContextMenu)
@@ -477,7 +480,7 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.lblG57.customContextMenuRequested.connect(lambda: self.on_lblGXXContextMenu(4))
     self.ui.lblG58.customContextMenuRequested.connect(lambda: self.on_lblGXXContextMenu(5))
     self.ui.lblG59.customContextMenuRequested.connect(lambda: self.on_lblGXXContextMenu(6))
-
+    '''
     self.ui.rbtProbeInsideXY.toggled.connect(self.setProbeButtonsToolTip)
     
     # Changement d'onglets
@@ -914,6 +917,7 @@ class winMain(QtWidgets.QMainWindow):
       axesTraites = []
       gcodeString = "G10P0L20"
       for a in self.__axisNames:
+        TRACELOG(TRACE_DEBUG,f"mnuG5X {a}is in {self.__axisNames}")
         if a not in axesTraites:
           gcodeString += "{}0".format(a)
           axesTraites.append(a)
@@ -2400,9 +2404,15 @@ class winMain(QtWidgets.QMainWindow):
           self.ui.txtGCode.setText(self.__gcode_current_txt)
           self.__gcodes_stack_pos = -1
 
+  @pyqtSlot(int, str)
+  def on_sig_axn( self, nAxis:int, data:str):
+    if nAxis != self.__nbAxis:
+      self.__nbAsix = self.__decode.get_nbAxis()
+      self.__axisNames = self.__decode.getAxisNames()
 
   @pyqtSlot(int, str)
   def on_sig_log(self, severity: int, data: str):
+    TRACELOG(TRACE_DEBUG,"sig_log received on cn5X")
     if severity == logSeverity.info.value:
       self.logCn5X.setTextColor(TXT_COLOR_GREEN)
       self.logCn5X.append(time.strftime("%Y-%m-%d %H:%M:%S") + " : Info    : " + data)
@@ -2822,6 +2832,7 @@ class winMain(QtWidgets.QMainWindow):
     axesTraites = []
     gcodeString = "G10P0L20"
     for a in self.__axisNames:
+      TRACELOG(TRACE_DEBUG,f"G10 for axid {a}")
       if a not in axesTraites:
         gcodeString += "{}0 ".format(a)
         axesTraites.append(a)

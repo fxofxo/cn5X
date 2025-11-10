@@ -66,7 +66,7 @@ Interface design:
 
 designer
 pyrcc5 cn5X.qrc -o cn5X_rc.py <BR>
-pyuic5 mainWindow.ui >mainWindow.py 
+pyuic6 mainWindow.ui >mainWindow.py 
 
 
 

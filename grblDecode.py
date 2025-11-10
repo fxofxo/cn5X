@@ -42,7 +42,8 @@ class grblDecode(QObject):
   - Stocke des valeurs des parametres decodes.
   '''
 
-  sig_log     = pyqtSignal(int, str) # Message de fonctionnement du composant
+  #sig_log     = pyqtSignal(int, str) # Message de fonctionnement du composant
+  sig_axn     = pyqtSignal(int, str) # Mesage of axis info
 
   def __init__(self, ui, log, grbl: grblCom, beeper: cn5XBeeper, arretUrgence):
     super().__init__()
@@ -125,6 +126,11 @@ class grblDecode(QObject):
       raise RuntimeError(self.tr("The number of axis should be between 3 and 6!"))
     self.__nbAxis = val
 
+  def get_nbAxis(self):
+    return self.__nbAxis
+  
+  def getAxisNames(self):
+    return self.__axisNames
 
   def getNextStatus(self):
     self.__getNextStatusOutput = True
@@ -144,6 +150,7 @@ class grblDecode(QObject):
 
   def decodeGrblStatus(self, grblOutput):
     #TRACELOG(TRACE_DEBUG,"STATUS:" + grblOutput)
+    #TRACELOG(TRACE_DEBUG,f"axis {self.__axisNames}")
     if grblOutput[0] != "<" or grblOutput[-1] != ">":
       return self.tr("grblDecode.py.decodeGrblStatus():error ! \n[{}] Incorrect status.").format(grblOutput)
 
@@ -229,19 +236,19 @@ class grblDecode(QObject):
         tblPos = D[4:].split(",")
         for I in range(len(tblPos)):
           self.__wco[I] = float(tblPos[I])
-        self.ui.lblWcoX.setText('{:+0.3f}'.format(self.__wco[0]))
-        self.ui.lblWcoY.setText('{:+0.3f}'.format(self.__wco[1]))
-        self.ui.lblWcoZ.setText('{:+0.3f}'.format(self.__wco[2]))
+        self.ui.lblWcoX.setText('{:+08.3f}'.format(self.__wco[0]))
+        self.ui.lblWcoY.setText('{:+08.3f}'.format(self.__wco[1]))
+        self.ui.lblWcoZ.setText('{:+08.3f}'.format(self.__wco[2]))
         if self.__nbAxis > 3:
-          self.ui.lblWcoA.setText('{:+0.3f}'.format(self.__wco[3]))
+          self.ui.lblWcoA.setText('{:+08.3f}'.format(self.__wco[3]))
         else:
           self.ui.lblWcoA.setText("-")
         if self.__nbAxis > 4:
-          self.ui.lblWcoB.setText('{:+0.3f}'.format(self.__wco[4]))
+          self.ui.lblWcoB.setText('{:+08.3f}'.format(self.__wco[4]))
         else:
           self.ui.lblWcoB.setText("-")
         if self.__nbAxis > 5:
-          self.ui.lblWcoC.setText('{:+0.3f}'.format(self.__wco[5]))
+          self.ui.lblWcoC.setText('{:+08.3f}'.format(self.__wco[5]))
         else:
           self.ui.lblWcoC.setText("-")
 
@@ -418,6 +425,7 @@ class grblDecode(QObject):
       if self.__nbAxis > 3:
         self.ui.lblMPosA.setText('{:+08.3f}'.format(float(self.__mpos[3])))
         self.ui.lblWPosA.setText('{:+08.3f}'.format(float(self.__wpos[3])))
+      '''
       else:
         self.ui.lblMPosA.setText("-")
       if self.__nbAxis > 4:
@@ -430,6 +438,7 @@ class grblDecode(QObject):
         self.ui.lblPosB.setToolTip(self.tr("Machine Position (WPos)."))
       else:
         self.ui.lblPosC.setText("-")
+      '''  
       # plot advance
       if self.__mwpos_callback != None:
         self.__mwpos_callback([float(i) for i in  self.__wpos])
@@ -548,33 +557,35 @@ class grblDecode(QObject):
         num=int(grblOutput[2:4])
         TRACELOG(TRACE_DEBUG,f"found {num}")
         values=grblOutput[5:-1].split(",")
-        if len(values) < self.__nbAxis: #some grble not send AXS definition
+        if len(values) < self.__nbAxis: #some grbl not send AXS definition
           self.__nbAxis = len(values)
         print(values)
         for i in range(6):
-        
           if i < self.__nbAxis:
             self.__G5x[num][i] = float(values[i])
           else:
             self.__G5x[num][i] = float("0")
         if num == self.__G5actif:
           for i in range(len(values)):
+            print(f"G5X {i}")
             self.__offsetG5x[i] = float(values[i])
-          self.ui.lblG5xX.setText('{:+0.3f}'.format(self.__G5x[num][0]))
-          self.ui.lblG5xY.setText('{:+0.3f}'.format(self.__G5x[num][1]))
-          self.ui.lblG5xZ.setText('{:+0.3f}'.format(self.__G5x[num][2]))
+             
+          self.ui.lblG5xX.setText('{:+08.3f}'.format(self.__G5x[num][i])) 
+          self.ui.lblG5xY.setText('{:+08.3f}'.format(self.__G5x[num][1]))
+          self.ui.lblG5xZ.setText('{:+08.3f}'.format(self.__G5x[num][2]))
           if self.__nbAxis > 3:
-            self.ui.lblG5xA.setText('{:+0.3f}'.format(self.__G5x[num][3]))
+            self.ui.lblG5xA.setText('{:+08.3f}'.format(self.__G5x[num][3]))
           else:
             self.ui.lblG5xA.setText("-")
           if self.__nbAxis > 4:
-            self.ui.lblG5xB.setText('{:+0.3f}'.format(self.__G5x[num][4]))
+            self.ui.lblG5xB.setText('{:+08.3f}'.format(self.__G5x[num][4]))
           else:
             self.ui.lblG5xB.setText("-")
           if self.__nbAxis > 5:
-            self.ui.lblG5xC.setText('{:+0.3f}'.format(self.__G5x[num][5]))
+            self.ui.lblG5xC.setText('{:+08.3f}'.format(self.__G5x[num][5]))
           else:
             self.ui.lblG5xC.setText("-")
+          
         if num == 92:
           for i in range(len(values)):
             self.__offsetG92[i] = float(values[i])
@@ -599,8 +610,8 @@ class grblDecode(QObject):
 
       elif grbl_code == "TLO":
         ''' Tool length offset (for the default z-axis) '''
-        TRACELOG(TRACE_DEBUG,"found TLO")
-        TRACELOG(TRACE_INFO,"TLO IGNORED")
+        #TRACELOG(TRACE_DEBUG,"found TLO")
+        #TRACELOG(TRACE_INFO,"TLO IGNORED")
         
         #self.__toolLengthOffset = float(grblOutput[5:-1])
         # renvoie le résultat si $# demandé dans par l'utilisateur
@@ -623,10 +634,12 @@ class grblDecode(QObject):
         print("AXS received")
         self.__nbAxis           = int(grblOutput[1:-1].split(':')[1])
         self.__axisNames        = list(grblOutput[1:-1].split(':')[2])
+        TRACELOG(TRACE_INFO,f"nAxis {self.__nbAxis} {self.__axisNames}")
         if len(self.__axisNames) < self.__nbAxis:
           # Il est posible qu'il y ait moins de lettres que le nombre d'axes si Grbl
           # implémente l'option REPORT_VALUE_FOR_AXIS_NAME_ONCE
           self.__nbAxis = len(self.__axisNames);
+        self.sig_axn.emit(self.__nbAxis,"update axis")
         self.updateAxisDefinition()
         return grblOutput
 
@@ -671,7 +684,7 @@ class grblDecode(QObject):
               eval("self.ui.btnG{:02d}.setStyleSheet(UI_STYLE_BTN_ON)".format(num))
               # Mise à jour des labels dépendant du système de coordonnées actif
               self.updateAxisDefinition()
-
+            '''
             for N, lbl in [
               [54, self.ui.lblG54],
               [55, self.ui.lblG55],
@@ -688,8 +701,7 @@ class grblDecode(QObject):
                 lbl.setStyleSheet("background-color: rgb(248, 255, 192); color: rgb(0, 0, 63);")
                 font.setBold(False)
                 lbl.setFont(font)
-
-
+            '''
           elif S in ["G17", "G18", "G19"]:
             self.ui.lblPlan.setText(S)
             if S == 'G17': self.ui.lblPlan.setToolTip(self.tr(" Working plane = XY "))
@@ -1071,71 +1083,71 @@ class grblDecode(QObject):
     self.ui.mnuG5X_origine_2.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[1]))
     self.ui.mnuG5X_origine_3.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[2]))
 
-    self.ui.lblLblPosX.setStyleSheet("color: rgb(224, 224, 230);")
-    self.ui.lblLblPosY.setStyleSheet("color: rgb(224, 224, 230);")
-    self.ui.lblLblPosZ.setStyleSheet("color: rgb(224, 224, 230);")
+    #self.ui.lblLblPosX.setStyleSheet("color: rgb(224, 224, 230);")
+    #self.ui.lblLblPosY.setStyleSheet("color: rgb(224, 224, 230);")
+    #self.ui.lblLblPosZ.setStyleSheet("color: rgb(224, 224, 230);")
     if self.__nbAxis > 3:
       self.ui.lblLblPosA.setText(self.__axisNames[3])
       self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
       #self.ui.lblLblPosA.setEnabled(True)
       #self.ui.lblLblPosA.setStyleSheet("")
       #self.ui.lblPosA.setEnabled(True)
-      self.ui.lblPosA.setStyleSheet("")
+      #self.ui.lblPosA.setStyleSheet("")
       self.ui.lblG5xA.setStyleSheet("")
       self.ui.lblG92A.setStyleSheet("")
       self.ui.lblWcoA.setStyleSheet("")
       self.ui.mnuG5X_origine_4.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[3]))
       self.ui.mnuG5X_origine_4.setEnabled(True)
     else:
-      self.ui.lblLblPosA.setText("")
+      #self.ui.lblLblPosA.setText("")
       #self.ui.lblLblPosA.setEnabled(False)
-      self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
+      #self.ui.lblLblPosA.setStyleSheet("color: rgb(224, 224, 230);")
       #self.ui.lblPosA.setEnabled(False)
-      self.ui.lblPosA.setStyleSheet("color: rgb(224, 224, 230);")
+      #self.ui.lblPosA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG5xA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG92A.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblWcoA.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.mnuG5X_origine_4.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_4.setEnabled(False)
     if self.__nbAxis > 4:
-      self.ui.lblLblPosB.setText(self.__axisNames[4])
-      self.ui.lblLblPosB.setEnabled(True)
-      self.ui.lblLblPosB.setStyleSheet("")
-      self.ui.lblPosB.setEnabled(True)
-      self.ui.lblPosB.setStyleSheet("")
+      #self.ui.lblLblPosB.setText(self.__axisNames[4])
+      #self.ui.lblLblPosB.setEnabled(True)
+      #self.ui.lblLblPosB.setStyleSheet("")
+      #self.ui.lblPosB.setEnabled(True)
+      #self.ui.lblPosB.setStyleSheet("")
       self.ui.lblG5xB.setStyleSheet("")
       self.ui.lblG92B.setStyleSheet("")
       self.ui.lblWcoB.setStyleSheet("")
       self.ui.mnuG5X_origine_5.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[4]))
       self.ui.mnuG5X_origine_5.setEnabled(True)
     else:
-      self.ui.lblLblPosB.setText("")
-      self.ui.lblLblPosB.setEnabled(False)
-      self.ui.lblLblPosB.setStyleSheet("color: rgb(224, 224, 230);")
-      self.ui.lblPosB.setEnabled(False)
-      self.ui.lblPosB.setStyleSheet("color: rgb(224, 224, 230);")
+      #self.ui.lblLblPosB.setText("")
+      #self.ui.lblLblPosB.setEnabled(False)
+      #self.ui.lblLblPosB.setStyleSheet("color: rgb(224, 224, 230);")
+      #self.ui.lblPosB.setEnabled(False)
+      #self.ui.lblPosB.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG5xB.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG92B.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblWcoB.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.mnuG5X_origine_5.setText("Place the G{} origin of axis - here".format(self.__G5actif))
       self.ui.mnuG5X_origine_5.setEnabled(False)
     if self.__nbAxis > 5:
-      self.ui.lblLblPosC.setText(self.__axisNames[5])
-      self.ui.lblLblPosC.setEnabled(True)
-      self.ui.lblLblPosC.setStyleSheet("")
-      self.ui.lblPosC.setEnabled(True)
-      self.ui.lblPosC.setStyleSheet("")
+      #self.ui.lblLblPosC.setText(self.__axisNames[5])
+      #self.ui.lblLblPosC.setEnabled(True)
+      #self.ui.lblLblPosC.setStyleSheet("")
+      #self.ui.lblPosC.setEnabled(True)
+      #self.ui.lblPosC.setStyleSheet("")
       self.ui.lblG5xC.setStyleSheet("")
       self.ui.lblG92C.setStyleSheet("")
       self.ui.lblWcoC.setStyleSheet("")
       self.ui.mnuG5X_origine_6.setText("Place the G{} origin of axis {} here".format(self.__G5actif, self.__axisNames[5]))
       self.ui.mnuG5X_origine_6.setEnabled(True)
     else:
-      self.ui.lblLblPosC.setText("")
-      self.ui.lblLblPosC.setEnabled(False)
-      self.ui.lblLblPosC.setStyleSheet("color: rgb(224, 224, 230);")
-      self.ui.lblPosC.setEnabled(False)
-      self.ui.lblPosC.setStyleSheet("color: rgb(224, 224, 230);")
+      #self.ui.lblLblPosC.setText("")
+      #self.ui.lblLblPosC.setEnabled(False)
+      #self.ui.lblLblPosC.setStyleSheet("color: rgb(224, 224, 230);")
+      #self.ui.lblPosC.setEnabled(False)
+      #self.ui.lblPosC.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG5xC.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblG92C.setStyleSheet("color: rgb(224, 224, 230);")
       self.ui.lblWcoC.setStyleSheet("color: rgb(224, 224, 230);")
