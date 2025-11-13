@@ -28,7 +28,7 @@ from cn5X_config import *
 from grblCom import grblCom
 from dlgG92 import *
 from msgbox import *
-
+from tracelog import *
 class dlgG92(QObject):
   ''' Classe assurant la gestion de la boite de dialogue G92 '''
 
@@ -43,8 +43,8 @@ class dlgG92(QObject):
     self.__nbAxis    = axisNumber
     self.__axisNames = axisNames
 
-    self.__settings = QSettings(QSettings.NativeFormat, QSettings.UserScope, ORG_NAME, APP_NAME)
-    self.di.chkAutoclose.setChecked(self.__settings.value("G92/autoCloseDialog", False, type=bool))
+    #self.__settings = QSettings(QSettings.NativeFormat, QSettings.UserScope, ORG_NAME, APP_NAME)
+    #self.di.chkAutoclose.setChecked(self.__settings.value("G92/autoCloseDialog", False, type=bool))
 
     # Mémorise les couleurs standard des spin boxes
     self.activeColor   = self.di.dsbG92valeurX.palette().color(QPalette.Active, QPalette.WindowText).name()
@@ -174,6 +174,7 @@ class dlgG92(QObject):
     '''
     Construit et envoi l'ordre G92 à Grbl
     '''
+    TRACELOG(TRACE_DEBUG,"on_btnSetOriginG92")
     originGcode = "G92"
     if self.di.chkDefineX.isChecked(): originGcode += "X{}".format(float(self.di.dsbG92valeurX.value()))
     if self.di.chkDefineY.isChecked(): originGcode += "Y{}".format(float(self.di.dsbG92valeurY.value()))
@@ -181,7 +182,7 @@ class dlgG92(QObject):
     if self.di.chkDefineA.isChecked(): originGcode += "A{}".format(float(self.di.dsbG92valeurA.value()))
     if self.di.chkDefineB.isChecked(): originGcode += "B{}".format(float(self.di.dsbG92valeurB.value()))
     if self.di.chkDefineC.isChecked(): originGcode += "C{}".format(float(self.di.dsbG92valeurC.value()))
-
+    TRACELOG(TRACE_DEBUG,f"on_btnSetOriginG92 -- {originGcode}")
     # Envoi du changement d'origine à Grbl
     self.__grblCom.gcodePush(originGcode)
     if self.di.chkAutoclose.isChecked():
@@ -190,6 +191,7 @@ class dlgG92(QObject):
 
 
   def on_btnSetOriginG92_1(self):
+    TRACELOG(TRACE_DEBUG,"on_btnSetOriginG92_1")
     ''' Envoi G92.1 '''
     self.__grblCom.gcodePush("G92.1")
     if self.di.chkAutoclose.isChecked():

@@ -355,7 +355,13 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.mnuSaveG92.triggered.connect(self.on_mnuSaveG92)
     self.ui.mnuRestoreG92.triggered.connect(self.on_mnuRestoreG92)
     self.ui.mnuG92_1.triggered.connect(self.on_mnuG92_1)
-    
+
+    self.ui.btnG92All.clicked.connect(self.on_btnG92All)
+    self.ui.btnG92X.clicked.connect(lambda: self.on_btnG92('X'))
+    self.ui.btnG92Y.clicked.connect(lambda: self.on_btnG92('Y'))
+    self.ui.btnG92Z.clicked.connect(lambda: self.on_btnG92('Z'))
+    self.ui.btnG92A.clicked.connect(lambda: self.on_btnG92('A'))
+
     self.ui.mnuJog_to.triggered.connect(self.on_mnuJog_to)
 
     # Sous-menu G28/G30
@@ -452,6 +458,8 @@ class winMain(QtWidgets.QMainWindow):
     self.ui.btnStop.clicked.connect(self.stopCycle)
     self.ui.btnG28.clicked.connect(self.on_gotoG28)
     self.ui.btnG30.clicked.connect(self.on_gotoG30)
+    
+
     self.ui.gcodeTable.customContextMenuRequested.connect(self.on_gcodeTableContextMenu)
     QShortcut(Qt.Key.Key_F7, self.ui.gcodeTable, activated=self.on_GCodeTable_key_F7_Pressed)
     QShortcut(Qt.Key.Key_F8, self.ui.gcodeTable, activated=self.on_GCodeTable_key_F8_Pressed)
@@ -936,6 +944,21 @@ class winMain(QtWidgets.QMainWindow):
         gcodeString += "{}{}".format(a, MPos)
         axesTraites.append(a)
     self.__grblCom.gcodePush(gcodeString)
+
+  @pyqtSlot()
+  def on_btnG92All(self):
+    G92code = "G92 "
+    for x in self.__axisNames:
+      G92code+= f"{x}0"
+    TRACELOG(TRACE_DEBUG,G92code)
+    self.__grblCom.gcodePush(G92code)
+ 
+
+  @pyqtSlot(str)
+  def on_btnG92(self,axis):
+    G92code = f"G92 {axis}0"
+    TRACELOG(TRACE_DEBUG,G92code)
+    self.__grblCom.gcodePush(G92code)
 
 
   @pyqtSlot()
