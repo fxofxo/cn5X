@@ -1833,7 +1833,7 @@ color: rgb(255, 255, 255);
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btnCG92A">
+            <widget class="QPushButton" name="btnG92A">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -6705,7 +6705,7 @@ color:rgb(19, 11, 123)</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabPlot">
       <attribute name="title">
